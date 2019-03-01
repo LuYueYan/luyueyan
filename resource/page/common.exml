@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="commonSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="1691450117b" ></w:Config>
+	<e:Image source="bg_3_jpg" anchorOffsetY="0" horizontalCenter="0" top="0" height="1336.85"/>
+	<e:Image id="bee" source="bee_png" y="200" x="323"/>
+	<e:Group id="buildingGroup" width="100%" height="100%" left="0" top="0"/>
+</e:Skin>

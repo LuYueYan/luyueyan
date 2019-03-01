@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="gameOverSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16913edb994" ></w:Config>
+	<e:Image source="bg_2_jpg" anchorOffsetY="0" horizontalCenter="0" top="0" height="1339.88"/>
+	<e:Group id="leftMore" width="748.48" height="443.94" y="202" anchorOffsetY="0" anchorOffsetX="0" left="0"/>
+	<e:Button id="again" label="再来一次" x="170" y="669.94"/>
+	<e:Button id="openBall" label="再来一次" x="481.64" y="667"/>
+	<e:Group id="energy" width="413.64" height="118.18" y="209" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
+		<e:Image source="bee_png" verticalCenter="0" left="0"/>
+		<e:Label id="energyNum" text="x 50" x="120" verticalCenter="0"/>
+		<e:Image id="getEnergy" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
+	</e:Group>
+	<e:Group id="travel_1" width="413.64" height="118.18" y="351.43" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0">
+		<e:Image id="travel_1_img" source="bee_png" verticalCenter="0" left="0"/>
+		<e:Label id="travel_1_name" text="Label" x="120" verticalCenter="0"/>
+		<e:Image id="shareBtn_1" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
+	</e:Group>
+	<e:Group width="413.64" height="118.18" y="496.88" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0" id="energy1">
+		<e:Image id="travel_2_img" source="bee_png" verticalCenter="0" left="0"/>
+		<e:Label id="travel_2_name" text="Label" x="120" verticalCenter="0"/>
+		<e:Image id="shareBtn_2" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
+	</e:Group>
+</e:Skin>

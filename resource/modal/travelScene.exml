@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="travelSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="169233e32f7" ></w:Config>
+	<e:Group id="content" width="625.75" height="813.64" y="180.73" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0"/>
+	<e:Image id="closeBtn" source="bee_png" x="570" y="58" touchEnabled="true"/>
+</e:Skin>
