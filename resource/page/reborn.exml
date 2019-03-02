@@ -9,5 +9,5 @@
 	<e:Image source="img_bg_time_png" y="415" horizontalCenter="0"/>
 	<e:Image id="timing" source="img_time_05_png" y="559" horizontalCenter="0"/>
 	<e:Image id="rebornBtn" source="btn_revival_png" y="872" touchEnabled="true" horizontalCenter="0"/>
-	<e:Label id="ignoreBtn" text="不了>" y="995" textColor="0xab9dff" size="28" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+	<e:Label id="ignoreBtn" text="不了>" y="995" textColor="0xab9dff" size="28" fontFamily="Microsoft YaHei" horizontalCenter="0" visible="false"/>
 </e:Skin>

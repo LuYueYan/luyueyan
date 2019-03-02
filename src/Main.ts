@@ -104,11 +104,11 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        // AdMaster.init();
-        // soundMaster.init();
-        // CallbackMaster.init();
+        AdMaster.init();
+        soundMaster.init();
+        CallbackMaster.init();
         this.addChild(new startScene());
-        // this.addChild(new circle())
+        
         //添加右上角转发
         platform.onShareAppMessage({})
     }

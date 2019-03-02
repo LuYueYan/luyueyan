@@ -28,6 +28,7 @@ class DeviceMaster {
 		DeviceMaster.SYSTEM_INFO = platform.getSystemInfoSync()
 		DeviceMaster.model = DeviceMaster.SYSTEM_INFO.model;
 		DeviceMaster.system = DeviceMaster.SYSTEM_INFO.system;
+		
 		DeviceMaster.screenWidth = DeviceMaster.SYSTEM_INFO.screenWidth
 		DeviceMaster.screenHeight = DeviceMaster.SYSTEM_INFO.screenHeight
 

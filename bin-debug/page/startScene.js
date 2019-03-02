@@ -27,12 +27,13 @@ var startScene = (function (_super) {
     };
     startScene.prototype.init = function () {
         var that = this;
+        that.bgImg.height = that.stage.stageHeight;
         setTimeout(function () {
             if (AdMaster.cacheBannerAd) {
                 AdMaster.openBannerAd({ width: 700, height: 300 });
             }
         }, 1000);
-        this.goldText.text = '能量果 ' + userDataMaster.gold;
+        this.goldText.text = '' + userDataMaster.gold;
         var list = [
             { appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
             { appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
@@ -60,7 +61,7 @@ var startScene = (function (_super) {
         userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
     };
     startScene.prototype.updateData = function (evt) {
-        this.goldText.text = '能量果 ' + userDataMaster.gold;
+        this.goldText.text = '' + userDataMaster.gold;
     };
     startScene.prototype.moreFun = function (item) {
         var type = 1;

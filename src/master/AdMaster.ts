@@ -23,11 +23,11 @@ class AdMaster {
 
 	//是否初始化成功 0未初始，1开始初始化，2初始化成功，3初始化失败
 	public static INIT_STATUS: number = 0;
-  
+
 	//视频播放结束的回调
 	public static closeSuccess: Function = null;
 	public static initClose: boolean = false;//是否初始化视频广告关闭函数
-	public static noVideo:boolean=false;//是否有视频广告
+	public static noVideo: boolean = false;//是否有视频广告
 	//实例化
 	public static shared: AdMaster;
 	public static getInstance() {
@@ -75,7 +75,7 @@ class AdMaster {
 
 			AdMaster.cacheVideoAd.onError(err => {
 				console.log(1, err)
-				AdMaster.noVideo=true;
+				AdMaster.noVideo = true;
 			})
 		}
 
@@ -159,6 +159,32 @@ class AdMaster {
 		if (AdMaster.cacheBannerAd) {
 			AdMaster.cacheBannerAd.hide()
 			// AdMaster.randomCacheBannerAd()
+		}
+	}
+
+	//广告调用
+	public static useVideo(success: Function = null, fail: Function = null) {
+		//分享/观看视频获取道具
+		if (AdMaster.cacheVideoAd) {
+			if (!AdMaster.noVideo) {
+				let v = true;
+				AdMaster.openVideoAd((res) => {
+					if (res && res.isEnded || res === undefined) {
+						// 正常播放结束，可以下发游戏奖励
+						if (v) {
+							success && success();
+						}
+					}
+					v = false;
+				})
+			} else {
+				platform.showModal({
+					title: '温馨提示',
+					content: "今日视频次数已经用完，请明日再来哦~"
+				})
+			}
+		} else {
+			fail && fail();
 		}
 	}
 }

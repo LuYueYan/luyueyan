@@ -184,6 +184,35 @@ var AdMaster = (function () {
             // AdMaster.randomCacheBannerAd()
         }
     };
+    //广告调用
+    AdMaster.useVideo = function (success, fail) {
+        if (success === void 0) { success = null; }
+        if (fail === void 0) { fail = null; }
+        //分享/观看视频获取道具
+        if (AdMaster.cacheVideoAd) {
+            if (!AdMaster.noVideo) {
+                var v_1 = true;
+                AdMaster.openVideoAd(function (res) {
+                    if (res && res.isEnded || res === undefined) {
+                        // 正常播放结束，可以下发游戏奖励
+                        if (v_1) {
+                            success && success();
+                        }
+                    }
+                    v_1 = false;
+                });
+            }
+            else {
+                platform.showModal({
+                    title: '温馨提示',
+                    content: "今日视频次数已经用完，请明日再来哦~"
+                });
+            }
+        }
+        else {
+            fail && fail();
+        }
+    };
     //Banner广告列表
     AdMaster.banner = [];
     //是否有Banner广告

@@ -166,11 +166,10 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        // AdMaster.init();
-        // soundMaster.init();
-        // CallbackMaster.init();
+        AdMaster.init();
+        soundMaster.init();
+        CallbackMaster.init();
         this.addChild(new startScene());
-        // this.addChild(new circle())
         //添加右上角转发
         platform.onShareAppMessage({});
     };

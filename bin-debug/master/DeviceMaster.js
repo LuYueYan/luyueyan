@@ -14,6 +14,7 @@ var DeviceMaster = (function () {
         DeviceMaster.SYSTEM_INFO = platform.getSystemInfoSync();
         DeviceMaster.model = DeviceMaster.SYSTEM_INFO.model;
         DeviceMaster.system = DeviceMaster.SYSTEM_INFO.system;
+        console.log(DeviceMaster.SYSTEM_INFO);
         DeviceMaster.screenWidth = DeviceMaster.SYSTEM_INFO.screenWidth;
         DeviceMaster.screenHeight = DeviceMaster.SYSTEM_INFO.screenHeight;
         DeviceMaster.scaleWidth = DeviceMaster.screenWidth / DeviceMaster.stageWidth;

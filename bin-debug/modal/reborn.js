@@ -14,6 +14,8 @@ var reborn = (function (_super) {
         if (score === void 0) { score = 0; }
         var _this = _super.call(this) || this;
         _this.score = 0;
+        _this.terval = null;
+        _this.current_time = 5;
         _this.score = score;
         return _this;
     }
@@ -27,6 +29,13 @@ var reborn = (function (_super) {
     reborn.prototype.init = function () {
         var that = this;
         this.scoreText.text = this.score + "";
+        this.terval = setInterval(function () {
+            that.current_time > 1 && that.current_time--;
+            that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
+            if (that.current_time <= 1) {
+                clearInterval(that.terval);
+            }
+        }, 1000);
         setTimeout(function () {
             that.ignoreBtn.visible = true;
         }, 5000);

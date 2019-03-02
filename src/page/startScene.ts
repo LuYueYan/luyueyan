@@ -1,4 +1,5 @@
 class startScene extends eui.Component implements eui.UIComponent {
+	public bgImg:eui.Image;
 	public goldText: eui.Label;
 	public collection: eui.Image;
 	public moreGroup: eui.Group;
@@ -37,12 +38,18 @@ class startScene extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
+		that.bgImg.height=that.stage.stageHeight;
 		setTimeout(function () {
 			if (AdMaster.cacheBannerAd) {
 				AdMaster.openBannerAd({ width: 700, height: 300 });
 			}
 		}, 1000);
-		this.goldText.text = '能量果 ' + userDataMaster.gold;
+	
+		let match=DeviceMaster.model.match(/iPhone ?X/ig);
+		if(match){
+			that.collection.y=80;
+		}
+		this.goldText.text = '' + userDataMaster.gold;
 		let list = [
 			{ appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
 			{ appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
@@ -66,7 +73,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 		userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this)
 	}
 	public updateData(evt: eui.CollectionEvent): void {
-		this.goldText.text = '能量果 ' + userDataMaster.gold;
+		this.goldText.text = '' + userDataMaster.gold;
 	}
 	public moreFun(item) {
 		let type = 1;

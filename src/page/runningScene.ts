@@ -136,7 +136,8 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			that.bee.mass = 8000;
 		}
 		let hit = that.flowerArr[0].body.overlaps(that.bee);
-		if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0) {
+		let top=(that.bee.position[1]+that.bee.displays[0].height/2/that.factor)-(that.flowerArr[0].body.position[1]+that.flowerArr[0].body.displays[0].height/2/that.factor);
+		if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0&&top>=0&&top<=2) {
 			//    if(that.flowerArr[0].body.position[1]>6){
 			// 	   that.moveSpeed=2;
 			//    }else{
