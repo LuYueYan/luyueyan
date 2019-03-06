@@ -17,19 +17,26 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public moveSpeed = 1;
 	public hitNum = 0;
 	public themeArr = [
-		{ index: 1, num: 15, width: 340, fillColor: 0x41276E },
-		{ index: 2, num: 15, width: 200, fillColor: 0x56143B },
-		{ index: 3, num: 15, width: 230, fillColor: 0x103787 }
-	]
+		{ index: 1, num: 15, width: 340,top:60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
+		{ index: 2, num: 15, width: 340,top:45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+		{ index: 3, num: 15, width: 340,top:34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
+		{ index: 4, num: 15, width: 200,top:30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+		{ index: 5, num: 15, width: 310,top:70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+		{ index: 6, num: 15, width: 340,top:80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+		{ index: 7, num: 15, width: 200,top:48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+		{ index: 8, num: 15, width: 340,top:62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
+		{ index: 9, num: 15, width: 340,top:45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+		{ index: 10, num: 15, width: 330,top:30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
+	];
 
 	//throughModal
 	public through: throughModal;
 	public list = [];
 	public chooseList = [];
 	public terval = null;
-   
-   public adaptation=0;//适配长度
-     
+
+	public adaptation = 0;//适配长度
+	public bgLinear;//渐变背景
 	public constructor(theme = 1, score = 0, hitNum = 0) {
 		super();
 		this.currentTheme = theme;
@@ -49,8 +56,8 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		this.adaptation=(this.stage.stageHeight-1334)/this.factor;
-	
+		this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
+		this.createBg(0x7a3fc3, 0x30368d);
 		//创建world
 		this.world = new p2.World();
 		this.world.sleepMode = p2.World.BODY_SLEEPING;//睡眠策略，提高性能
@@ -61,7 +68,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.createFlower('left', 10);
 		this.createFlower('right', 12);
 		this.createFlower('left', 14);
-		that.bg_rect.fillColor = that.themeArr[that.currentTheme - 1].fillColor;
 		//右边墙壁
 		var planeBody: p2.Body = new p2.Body({ mass: 1, position: [16, 0], type: p2.Body.STATIC, material: new p2.Material(3) });//创建墙壁
 		var shape: p2.Shape = new p2.Box({ width: 1, height: 60 });
@@ -76,9 +82,22 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		planeBody.displays = [];//与每个形状对应的显示对象
 		this.world.addBody(planeBody);
 		this.ceilArr.push(planeBody);
-		egret.Tween.get(that.startBtn,{loop:true}).to({scaleX:0.8,scaleY:0.8},1000).to({scaleX:1,scaleY:1},1000)
+		egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 0.8, scaleY: 0.8 }, 1000).to({ scaleX: 1, scaleY: 1 }, 1000)
 		this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+	}
+	public createBg(begin: number, end: number) {
+		if (!this.bgLinear) {
+			this.bgLinear = new egret.Sprite();
+			this.addChildAt(this.bgLinear, 0);
+		}
+		this.bgLinear.graphics.clear();
+		let matix: egret.Matrix = this.bgLinear.matrix;
+		matix.createGradientBox(750 / 2, this.stage.stageHeight / 2, Math.PI / 2, 750 / 4, this.stage.stageHeight / 4);
+		this.bgLinear.graphics.beginGradientFill(egret.GradientType.LINEAR, [begin, end], [1, 1], [0, 255], matix);
+		this.bgLinear.graphics.drawRect(0, 0, 750, this.stage.stageHeight);
+		this.bgLinear.graphics.endFill();
+
 	}
 	public startFun() {
 		this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this)
@@ -99,6 +118,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.currentTimer = egret.getTimer();
 		var stageHeight: number = egret.MainContext.instance.stage.stageHeight;//获取舞台高度？？？？
 		var l = this.world.bodies.length;//所有body的长度
+		let margin=that.themeArr[that.currentTheme-1].top;
 		for (var i: number = 0; i < l; i++) {
 			var boxBody: p2.Body = this.world.bodies[i];
 			var len = boxBody.displays.length;
@@ -108,11 +128,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 					box.x = boxBody.position[0] * this.factor;
 					box.y = stageHeight - boxBody.position[1] * this.factor;//坐标系不一样，所以要转换
 					box.rotation = 360 - (boxBody.angle + boxBody.shapes[j].angle) * 180 / Math.PI;//旋转
+
 					if (j == 1) {
-						box.y -= boxBody.displays[0].height / 2 - 50;
-					}
-					if (j == 2) {
-						box.y -= boxBody.displays[0].height / 2 - 50;
+						box.y -= (boxBody.displays[0].height / 2-margin)*boxBody.displays[0].scaleY;
 						box.rotation = 180;
 					}
 				}
@@ -137,16 +155,16 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			that.bee.mass = 8000;
 		}
 		let hit = that.flowerArr[0].body.overlaps(that.bee);
-		let top=(that.bee.position[1]+that.bee.displays[0].height/2/that.factor)-(that.flowerArr[0].body.position[1]+that.flowerArr[0].body.displays[0].height/2/that.factor);
-		if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0&&top>=0&&top<=2) {
+		let top = (that.bee.position[1] + that.bee.displays[0].height / 2 / that.factor) - (that.flowerArr[0].body.position[1] + that.flowerArr[0].body.displays[0].height / 2 / that.factor);
+		if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && top >= 0 && top <= 2) {
 			//    if(that.flowerArr[0].body.position[1]>6){
 			// 	   that.moveSpeed=2;
 			//    }else{
 			// 	   that.moveSpeed=1;
 			//    }
 			if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
-				console.log('center')
-				that.flowerArr[0].body.displays[2].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[2]);
+				// console.log('center')
+				that.flowerArr[0].body.displays[1].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[1]);
 			}
 
 			that.bee.mass = 5000;
@@ -179,19 +197,25 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			}
 			that.hitNum++;
 			let judgeHitNum = that.hitNum == that.themeArr[that.currentTheme - 1].num;
+			
 			if (judgeHitNum) {
 				that.hitNum = 0;
-				that.throughFun()
-			}
-			for (let i = 0; i < that.flowerArr.length; i++) {
-				that.flowerArr[i].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
-				if (i == 0) {
-					that.flowerArr[i].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png')
-				} else {
-					that.flowerArr[i].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_2_png')
+				that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
+				this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end)
+				// that.throughFun()
+               let current = that.themeArr[that.currentTheme - 1].name;
+				for (let i = 0; i < that.flowerArr.length; i++) {
+					that.flowerArr[i].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
+					if (i == 0) {
+						that.flowerArr[i].body.displays[0].texture = RES.getRes(current + '1_png')
+					} else {
+						that.flowerArr[i].body.displays[0].texture = RES.getRes(current + '2_png');
+					}
 				}
 			}
-			egret.Tween.get(that.flowerArr[0].body.displays[2]).to({ height: 200 }, 500);
+			let cur = that.themeArr[that.currentTheme - 1].name;
+			that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png')
+			egret.Tween.get(that.flowerArr[0].body.displays[1]).to({ height: 200 }, 500);
 			let type = r.params.type == 'right' ? 'left' : 'right';
 			that.createFlower(type);
 		}
@@ -205,13 +229,13 @@ class runningScene extends eui.Component implements eui.UIComponent {
 					that.world.removeBody(that.removeArr[x].body);
 					that.removeArr[x].body.displays[0] && that.removeArr[x].body.displays[0].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[0]);
 					that.removeArr[x].body.displays[1] && that.removeArr[x].body.displays[1].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[1]);
-					that.removeArr[x].body.displays[2] && that.removeArr[x].body.displays[2].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[2]);
 					that.removeArr.shift();
 					x > 0 && x--;
 				}
 			}
 		}
 		if (that.flowerArr[0].params.type !== "center") {
+			let cur = that.themeArr[that.currentTheme - 1].name;
 			for (let i = 0; i < 5; i++) {
 				if (that.flowerArr[i].body.displays[0].scaleX < 1) {
 					that.flowerArr[i].body.displays[0].scaleX += 0.001 * that.moveSpeed;
@@ -219,12 +243,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 					that.flowerArr[i].body.displays[1].scaleX += 0.001 * that.moveSpeed;
 					that.flowerArr[i].body.displays[1].scaleY += 0.001 * that.moveSpeed;
 					that.flowerArr[i].body.velocity[1] = -2 * that.moveSpeed;
-					if (i == 0) {
-						that.flowerArr[i].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png')
-						// if (that.flowerArr[i].body.displays[2].height == 0) {
-						// 	egret.Tween.get(that.flowerArr[i].body.displays[2]).to({ height: 200 }, 500);
-						// }
-					}
+					// if (i == 0) {
+					// 	that.flowerArr[i].body.displays[0].texture = RES.getRes(cur + '1_png')
+					// }
 				}
 			}
 		}
@@ -257,7 +278,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	}
 	public createBee() {
 		var boxShape: p2.Shape = new p2.Box({ width: 0.5, height: 2.36, material: new p2.Material(1) });
-		this.bee = new p2.Body({ mass: 5000, position: [7.5, 20+this.adaptation] });
+		this.bee = new p2.Body({ mass: 5000, position: [7.5, 20 + this.adaptation] });
 		this.bee.gravityScale = 0;
 		this.bee.collisionResponse = false;
 		this.bee.addShape(boxShape);
@@ -271,10 +292,11 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.addChild(display);
 	}
 	public createFlower(type = 'left', y = 14) {
-		let width = this.themeArr[this.currentTheme - 1].width / this.factor;
+		let that = this;
+		let width = that.themeArr[that.currentTheme - 1].width / that.factor;
 		var boxShape: p2.Shape = new p2.Box({ width, height: 11.1, material: new p2.Material(2) });
 		var boxBody: p2.Body = new p2.Body({ mass: 500, gravityScale: 0, type: p2.Body.KINEMATIC });
-		var display = this.createBitmapByName('img_castle_' + this.currentTheme + '_2_png');
+		var display = that.createBitmapByName(that.themeArr[that.currentTheme - 1].name + '2_png');
 		display.anchorOffsetX = display.width / 2;
 		display.anchorOffsetY = display.height / 2;
 		display.x = display.width / 2;
@@ -283,41 +305,33 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		display.scaleY = 0.8;
 		let ran = Math.random() > 0.5 ? -Math.random() * 1 : Math.random() * 1;
 		if (type == 'center') {
-			boxBody.position = [7.5, 6+this.adaptation];
-			display.texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png');
+			boxBody.position = [7.5, 6 + that.adaptation];
+			display.texture = RES.getRes(that.themeArr[that.currentTheme - 1].name + '1_png');
 		} else if (type == 'left') {
-			boxBody.position = [5 + ran, y+this.adaptation]
+			boxBody.position = [5 + ran, y + that.adaptation]
 		} else {
-			boxBody.position = [12 + ran, y+this.adaptation]
+			boxBody.position = [12 + ran, y + that.adaptation]
 		}
-		var lightShape: p2.Shape = new p2.Box({ width: 1.86, height: 1.36, material: new p2.Material(2) });
-		let light = this.createBitmapByName('img_light_png');
-		light.anchorOffsetX = light.width / 2;
-		light.anchorOffsetY = light.height / 2;
-		light.x = light.width / 2;
-		light.y = light.height / 2 - (<p2.Box>boxShape).height * this.factor / 2;
-		light.scaleX = 0.8;
-		light.scaleY = 0.8;
 
-		var lightningShape: p2.Shape = new p2.Box({ width: 1.86, height: 1.36, material: new p2.Material(2) });
-		let lightning = this.createBitmapByName('linear_light_png');
+		var lightningShape: p2.Shape = new p2.Box({ width: 0.36, height: 4, material: new p2.Material(2) });
+		let lightning = that.createBitmapByName('linear_light_png');
 
 		lightning.x = lightning.width / 2;
-		lightning.y = light.height / 2 - (<p2.Box>boxShape).height * this.factor / 2;
+		lightning.y = - (<p2.Box>boxShape).height * that.factor / 2;
 		lightning.anchorOffsetX = lightning.width / 2;
 		lightning.height = 0;
 		lightning.rotation = 180;
-		boxBody.displays = [display, light, lightning];
+		boxBody.displays = [display, lightning];
 		boxBody.addShape(boxShape);
-		boxBody.addShape(lightShape);
+
 		boxBody.addShape(lightningShape);
-		this.world.addBody(boxBody);
+		that.world.addBody(boxBody);
 		setTimeout(() => {
-			this.flowerGroup.addChildAt(display, 0);
-			this.flowerGroup.addChildAt(light, 1);
-			this.flowerGroup.addChildAt(lightning, 2);
+			that.flowerGroup.addChildAt(display, 0);
+
+			that.flowerGroup.addChildAt(lightning, 1);
 		}, 100)
-		this.flowerArr.push({ body: boxBody, params: { type, haveHit: false } });
+		that.flowerArr.push({ body: boxBody, params: { type, haveHit: false } });
 	}
 	public touchFun(e: egret.TouchEvent) {
 		this.bee.velocity = [0, -50];

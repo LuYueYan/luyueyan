@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="houseSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
-	<w:Config id="16922ab1364" ></w:Config>
-	<e:Group id="content" width="630" height="770" x="60" y="220" anchorOffsetX="0" anchorOffsetY="0"/>
-	<e:Image id="closeBtn" source="bee_png" x="560" y="86" touchEnabled="true"/>
-</e:Skin>

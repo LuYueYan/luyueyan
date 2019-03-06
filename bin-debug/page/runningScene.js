@@ -25,9 +25,16 @@ var runningScene = (function (_super) {
         _this.moveSpeed = 1;
         _this.hitNum = 0;
         _this.themeArr = [
-            { index: 1, num: 15, width: 340, fillColor: 0x41276E },
-            { index: 2, num: 15, width: 200, fillColor: 0x56143B },
-            { index: 3, num: 15, width: 230, fillColor: 0x103787 }
+            { index: 1, num: 15, width: 340, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
+            { index: 2, num: 15, width: 340, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+            { index: 3, num: 15, width: 340, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
+            { index: 4, num: 15, width: 200, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+            { index: 5, num: 15, width: 310, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+            { index: 6, num: 15, width: 340, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+            { index: 7, num: 15, width: 200, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+            { index: 8, num: 15, width: 340, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
+            { index: 9, num: 15, width: 340, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+            { index: 10, num: 15, width: 330, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
         ];
         _this.list = [];
         _this.chooseList = [];
@@ -53,6 +60,7 @@ var runningScene = (function (_super) {
     runningScene.prototype.init = function () {
         var that = this;
         this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
+        this.createBg(0x7a3fc3, 0x30368d);
         //创建world
         this.world = new p2.World();
         this.world.sleepMode = p2.World.BODY_SLEEPING; //睡眠策略，提高性能
@@ -63,7 +71,6 @@ var runningScene = (function (_super) {
         this.createFlower('left', 10);
         this.createFlower('right', 12);
         this.createFlower('left', 14);
-        that.bg_rect.fillColor = that.themeArr[that.currentTheme - 1].fillColor;
         //右边墙壁
         var planeBody = new p2.Body({ mass: 1, position: [16, 0], type: p2.Body.STATIC, material: new p2.Material(3) }); //创建墙壁
         var shape = new p2.Box({ width: 1, height: 60 });
@@ -81,6 +88,18 @@ var runningScene = (function (_super) {
         egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 0.8, scaleY: 0.8 }, 1000).to({ scaleX: 1, scaleY: 1 }, 1000);
         this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
         this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+    };
+    runningScene.prototype.createBg = function (begin, end) {
+        if (!this.bgLinear) {
+            this.bgLinear = new egret.Sprite();
+            this.addChildAt(this.bgLinear, 0);
+        }
+        this.bgLinear.graphics.clear();
+        var matix = this.bgLinear.matrix;
+        matix.createGradientBox(750 / 2, this.stage.stageHeight / 2, Math.PI / 2, 750 / 4, this.stage.stageHeight / 4);
+        this.bgLinear.graphics.beginGradientFill(egret.GradientType.LINEAR, [begin, end], [1, 1], [0, 255], matix);
+        this.bgLinear.graphics.drawRect(0, 0, 750, this.stage.stageHeight);
+        this.bgLinear.graphics.endFill();
     };
     runningScene.prototype.startFun = function () {
         this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
@@ -111,9 +130,6 @@ var runningScene = (function (_super) {
                     box.y = stageHeight - boxBody.position[1] * this.factor; //坐标系不一样，所以要转换
                     box.rotation = 360 - (boxBody.angle + boxBody.shapes[j].angle) * 180 / Math.PI; //旋转
                     if (j == 1) {
-                        box.y -= boxBody.displays[0].height / 2 - 50;
-                    }
-                    if (j == 2) {
                         box.y -= boxBody.displays[0].height / 2 - 50;
                         box.rotation = 180;
                     }
@@ -146,8 +162,8 @@ var runningScene = (function (_super) {
             // 	   that.moveSpeed=1;
             //    }
             if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
-                console.log('center');
-                that.flowerArr[0].body.displays[2].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[2]);
+                // console.log('center')
+                that.flowerArr[0].body.displays[1].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[1]);
             }
             that.bee.mass = 5000;
             this.score += 10;
@@ -184,18 +200,23 @@ var runningScene = (function (_super) {
             var judgeHitNum = that.hitNum == that.themeArr[that.currentTheme - 1].num;
             if (judgeHitNum) {
                 that.hitNum = 0;
-                that.throughFun();
-            }
-            for (var i_1 = 0; i_1 < that.flowerArr.length; i_1++) {
-                that.flowerArr[i_1].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
-                if (i_1 == 0) {
-                    that.flowerArr[i_1].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png');
+                that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
+                this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
+                // that.throughFun()
+                var current = that.themeArr[that.currentTheme - 1].name;
+                for (var i_1 = 0; i_1 < that.flowerArr.length; i_1++) {
+                    that.flowerArr[i_1].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
+                    if (i_1 == 0) {
+                        that.flowerArr[i_1].body.displays[0].texture = RES.getRes(current + '1_png');
+                    }
+                    else {
+                        that.flowerArr[i_1].body.displays[0].texture = RES.getRes(current + '2_png');
+                    }
                 }
-                else {
-                    that.flowerArr[i_1].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_2_png');
-                }
             }
-            egret.Tween.get(that.flowerArr[0].body.displays[2]).to({ height: 200 }, 500);
+            var cur = that.themeArr[that.currentTheme - 1].name;
+            that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png');
+            egret.Tween.get(that.flowerArr[0].body.displays[1]).to({ height: 200 }, 500);
             var type = r.params.type == 'right' ? 'left' : 'right';
             that.createFlower(type);
         }
@@ -209,13 +230,13 @@ var runningScene = (function (_super) {
                     that.world.removeBody(that.removeArr[x].body);
                     that.removeArr[x].body.displays[0] && that.removeArr[x].body.displays[0].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[0]);
                     that.removeArr[x].body.displays[1] && that.removeArr[x].body.displays[1].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[1]);
-                    that.removeArr[x].body.displays[2] && that.removeArr[x].body.displays[2].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[2]);
                     that.removeArr.shift();
                     x > 0 && x--;
                 }
             }
         }
         if (that.flowerArr[0].params.type !== "center") {
+            var cur = that.themeArr[that.currentTheme - 1].name;
             for (var i_2 = 0; i_2 < 5; i_2++) {
                 if (that.flowerArr[i_2].body.displays[0].scaleX < 1) {
                     that.flowerArr[i_2].body.displays[0].scaleX += 0.001 * that.moveSpeed;
@@ -223,12 +244,9 @@ var runningScene = (function (_super) {
                     that.flowerArr[i_2].body.displays[1].scaleX += 0.001 * that.moveSpeed;
                     that.flowerArr[i_2].body.displays[1].scaleY += 0.001 * that.moveSpeed;
                     that.flowerArr[i_2].body.velocity[1] = -2 * that.moveSpeed;
-                    if (i_2 == 0) {
-                        that.flowerArr[i_2].body.displays[0].texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png');
-                        // if (that.flowerArr[i].body.displays[2].height == 0) {
-                        // 	egret.Tween.get(that.flowerArr[i].body.displays[2]).to({ height: 200 }, 500);
-                        // }
-                    }
+                    // if (i == 0) {
+                    // 	that.flowerArr[i].body.displays[0].texture = RES.getRes(cur + '1_png')
+                    // }
                 }
             }
         }
@@ -276,13 +294,13 @@ var runningScene = (function (_super) {
         this.addChild(display);
     };
     runningScene.prototype.createFlower = function (type, y) {
-        var _this = this;
         if (type === void 0) { type = 'left'; }
         if (y === void 0) { y = 14; }
-        var width = this.themeArr[this.currentTheme - 1].width / this.factor;
+        var that = this;
+        var width = that.themeArr[that.currentTheme - 1].width / that.factor;
         var boxShape = new p2.Box({ width: width, height: 11.1, material: new p2.Material(2) });
         var boxBody = new p2.Body({ mass: 500, gravityScale: 0, type: p2.Body.KINEMATIC });
-        var display = this.createBitmapByName('img_castle_' + this.currentTheme + '_2_png');
+        var display = that.createBitmapByName(that.themeArr[that.currentTheme - 1].name + '2_png');
         display.anchorOffsetX = display.width / 2;
         display.anchorOffsetY = display.height / 2;
         display.x = display.width / 2;
@@ -291,41 +309,31 @@ var runningScene = (function (_super) {
         display.scaleY = 0.8;
         var ran = Math.random() > 0.5 ? -Math.random() * 1 : Math.random() * 1;
         if (type == 'center') {
-            boxBody.position = [7.5, 6 + this.adaptation];
-            display.texture = RES.getRes('img_castle_' + this.currentTheme + '_1_png');
+            boxBody.position = [7.5, 6 + that.adaptation];
+            display.texture = RES.getRes(that.themeArr[that.currentTheme - 1].name + '1_png');
         }
         else if (type == 'left') {
-            boxBody.position = [5 + ran, y + this.adaptation];
+            boxBody.position = [5 + ran, y + that.adaptation];
         }
         else {
-            boxBody.position = [12 + ran, y + this.adaptation];
+            boxBody.position = [12 + ran, y + that.adaptation];
         }
-        var lightShape = new p2.Box({ width: 1.86, height: 1.36, material: new p2.Material(2) });
-        var light = this.createBitmapByName('img_light_png');
-        light.anchorOffsetX = light.width / 2;
-        light.anchorOffsetY = light.height / 2;
-        light.x = light.width / 2;
-        light.y = light.height / 2 - boxShape.height * this.factor / 2;
-        light.scaleX = 0.8;
-        light.scaleY = 0.8;
         var lightningShape = new p2.Box({ width: 1.86, height: 1.36, material: new p2.Material(2) });
-        var lightning = this.createBitmapByName('linear_light_png');
+        var lightning = that.createBitmapByName('linear_light_png');
         lightning.x = lightning.width / 2;
-        lightning.y = light.height / 2 - boxShape.height * this.factor / 2;
+        lightning.y = -boxShape.height * that.factor / 2;
         lightning.anchorOffsetX = lightning.width / 2;
         lightning.height = 0;
         lightning.rotation = 180;
-        boxBody.displays = [display, light, lightning];
+        boxBody.displays = [display, lightning];
         boxBody.addShape(boxShape);
-        boxBody.addShape(lightShape);
         boxBody.addShape(lightningShape);
-        this.world.addBody(boxBody);
+        that.world.addBody(boxBody);
         setTimeout(function () {
-            _this.flowerGroup.addChildAt(display, 0);
-            _this.flowerGroup.addChildAt(light, 1);
-            _this.flowerGroup.addChildAt(lightning, 2);
+            that.flowerGroup.addChildAt(display, 0);
+            that.flowerGroup.addChildAt(lightning, 1);
         }, 100);
-        this.flowerArr.push({ body: boxBody, params: { type: type, haveHit: false } });
+        that.flowerArr.push({ body: boxBody, params: { type: type, haveHit: false } });
     };
     runningScene.prototype.touchFun = function (e) {
         this.bee.velocity = [0, -50];

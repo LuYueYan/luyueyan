@@ -28,41 +28,14 @@ var throughModal = (function (_super) {
         var that = this;
         var blurFliter = new egret.BlurFilter(4, 4);
         that.process.filters = [blurFliter];
-        // for (let i = 0; i < 3; i++) {
-        // 	let ran = Math.random() > 0.5 ? 2 : 1;
-        // 	that.list.push(ran);
-        // 	that['item_' + i].texture = RES.getRes('img_spirit_0' + ran + '_png');
-        // }
+        for (var i = 0; i < 3; i++) {
+            var ran = Math.random() > 0.5 ? 2 : 1;
+            that.list.push(ran);
+            that['item_' + i].texture = RES.getRes('img_click_0' + ran + '_png');
+        }
         // that.timeFun()
         // that.tap_1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { that.chooseFun(1) }, this);
         // that.tap_2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { that.chooseFun(2) }, this);
-    };
-    throughModal.prototype.chooseFun = function (type) {
-        var len = this.chooseList.length;
-        if (this.list[len] == type) {
-            this.chooseList.push(type);
-            if (this.chooseList.length == 3) {
-                //通过
-                clearInterval(this.terval);
-                this.endFun(true);
-            }
-        }
-    };
-    throughModal.prototype.timeFun = function () {
-        var that = this;
-        that.terval = setInterval(function () {
-            if (that.processMask.width > 0) {
-                that.processMask.width -= 20;
-            }
-            else {
-                clearInterval(that.terval);
-                that.endFun(false);
-            }
-        }, 200);
-    };
-    throughModal.prototype.endFun = function (type) {
-        console.log(999, type);
-        this.parent.removeChild(this);
     };
     return throughModal;
 }(eui.Component));
