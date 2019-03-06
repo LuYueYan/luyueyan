@@ -33,6 +33,10 @@ var startScene = (function (_super) {
                 AdMaster.openBannerAd({ width: 700, height: 300 });
             }
         }, 1000);
+        // let match=DeviceMaster.model.match(/iPhone ?X/ig);
+        // if(match){
+        // 	that.collection.y=80;
+        // }
         this.goldText.text = '' + userDataMaster.gold;
         var list = [
             { appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
@@ -80,11 +84,13 @@ var startScene = (function (_super) {
     };
     startScene.prototype.houseFun = function () {
         var that = this;
-        that.addChild(new houseScene());
+        that.addChild(new myBalls());
+        that.houseTip.visible = false;
     };
     startScene.prototype.travelFun = function () {
         var that = this;
         this.addChild(new travelScene());
+        that.travelTip.visible = false;
     };
     startScene.prototype.rankFun = function () {
         var that = this;
@@ -93,6 +99,7 @@ var startScene = (function (_super) {
     startScene.prototype.shareFun = function () {
         var that = this;
         CallbackMaster.openShare(null, false);
+        that.shareTip.visible = false;
     };
     startScene.prototype.friendFun = function () {
         var that = this;
@@ -101,6 +108,7 @@ var startScene = (function (_super) {
     startScene.prototype.energyFun = function () {
         var that = this;
         that.addChild(new dayEnergy());
+        that.energyTip.visible = false;
     };
     startScene.prototype.startFun = function () {
         var that = this;

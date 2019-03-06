@@ -91,5 +91,20 @@
         "path": "modal\\getEnergyModal.ts",
         "class": "getEnergyModal",
         "parentPath": ""
+    },
+    "1694667f962": {
+        "path": "modal\\getSuccess.ts",
+        "class": "getSuccess",
+        "parentPath": ""
+    },
+    "1694680da76": {
+        "path": "modal\\myBalls.ts",
+        "class": "myBalls",
+        "parentPath": ""
+    },
+    "1694683479d": {
+        "path": "modal\\myBalls.ts",
+        "class": "myBalls",
+        "parentPath": ""
     }
 }

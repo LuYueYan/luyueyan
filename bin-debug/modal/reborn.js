@@ -28,6 +28,7 @@ var reborn = (function (_super) {
     };
     reborn.prototype.init = function () {
         var that = this;
+        this.bgImg.height = this.stage.stageHeight;
         this.scoreText.text = this.score + "";
         this.terval = setInterval(function () {
             that.current_time > 1 && that.current_time--;

@@ -21,11 +21,21 @@ var dayEnergy = (function (_super) {
         this.init();
     };
     dayEnergy.prototype.init = function () {
-        this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
+        if (!userDataMaster.todayEnergy) {
+            this.getBtn.texture = RES.getRes('btn_receive_04_png');
+        }
+        else {
+            this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
+        }
         this.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
     };
     dayEnergy.prototype.getFun = function () {
+        userDataMaster.updateTodayEnergy();
+        this.getBtn.texture = RES.getRes('btn_receive_04_png');
+        userDataMaster.myGold += 100;
+        this.addChild(new getSuccess(1, 'x 100'));
+        this.getBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
     };
     dayEnergy.prototype.shareFun = function () {
         CallbackMaster.openShare(null, false, '&type=energy');

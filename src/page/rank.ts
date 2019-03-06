@@ -28,7 +28,7 @@ class rank extends eui.Component implements eui.UIComponent {
 		platform.openDataContext.postMessage({
 			type: "rank",
 			width: 600,
-			height: 700
+			height: 780
 		});
 		let rank = platform.openDataContext.createDisplayObject()
 		this.friendGroup.addChild(rank);
@@ -70,6 +70,7 @@ class rank extends eui.Component implements eui.UIComponent {
 		// 		let data = res.data.data;
 		// 		that.endPage = res.data.last_page;
 		// 		that.sourceArr.removeAll();
+		// this.pageText.text=that.worldPage+' / '+that.endPage;
 		// 		for (let i = 0; i < data.length; i++) {
 		// 			data[i].index = (that.worldPage - 1) * res.data.per_page + i + 1;
 		// 			that.sourceArr.addItem(data[i]);
@@ -78,6 +79,7 @@ class rank extends eui.Component implements eui.UIComponent {
 		// })
 	}
 	public friendFun() {
+		this.pageText.visible = false;
 		this.friend.texture = RES.getRes('img_tittle_a1_png');
 		this.world.texture = RES.getRes('img_tittle_b2_png');
 		this.friendGroup.visible = true;
@@ -85,6 +87,7 @@ class rank extends eui.Component implements eui.UIComponent {
 		this.currentType = 'friend';
 	}
 	public worldFun() {
+		this.pageText.visible = true;
 		this.friend.texture = RES.getRes('img_tittle_a2_png');
 		this.world.texture = RES.getRes('img_tittle_b1_png');
 		this.friendGroup.visible = false;
@@ -95,8 +98,8 @@ class rank extends eui.Component implements eui.UIComponent {
 		platform.openDataContext.postMessage({
 			type: "rank",
 			page: type,
-			width:600,
-			height: 700
+			width: 600,
+			height: 780
 		});
 	}
 	public goHomeFun() {

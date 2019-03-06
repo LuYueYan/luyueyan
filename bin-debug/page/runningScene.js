@@ -20,7 +20,6 @@ var runningScene = (function (_super) {
         _this.flowerArr = [];
         _this.ceilArr = [];
         _this.removeArr = [];
-        _this.flowerGroup = new eui.Group();
         _this.score = 0; //分数
         _this.currentTheme = 1;
         _this.moveSpeed = 1;
@@ -54,7 +53,6 @@ var runningScene = (function (_super) {
     runningScene.prototype.init = function () {
         var that = this;
         this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
-        this.addChild(this.flowerGroup);
         //创建world
         this.world = new p2.World();
         this.world.sleepMode = p2.World.BODY_SLEEPING; //睡眠策略，提高性能
@@ -80,14 +78,15 @@ var runningScene = (function (_super) {
         planeBody.displays = []; //与每个形状对应的显示对象
         this.world.addBody(planeBody);
         this.ceilArr.push(planeBody);
+        egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 0.8, scaleY: 0.8 }, 1000).to({ scaleX: 1, scaleY: 1 }, 1000);
         this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
         this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
     };
     runningScene.prototype.startFun = function () {
         this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
         this.removeChild(this.startBtn);
         this.bee.gravityScale = 1;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
     };
     runningScene.prototype.onEnterFrame = function () {
         var that = this;

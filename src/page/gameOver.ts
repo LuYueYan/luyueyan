@@ -1,36 +1,39 @@
 class gameOver extends eui.Component implements eui.UIComponent {
+	public scoreText: eui.Label;
+	public homeBtn: eui.Image;
+	public leftMore: eui.Group;
 	public again: eui.Button;
 	public openBall: eui.Button;
-	public leftMore: eui.Group;
-	public energy: eui.Group;
 	public energyNum: eui.Label;
 	public getEnergy: eui.Image;
+	public travel_0: eui.Group;
+	public travel_img_0: eui.Image;
+	public travel_name_0: eui.Label;
+	public shareBtn_0: eui.Image;
 	public travel_1: eui.Group;
-	public travel_1_img: eui.Image;
-	public travel_1_name: eui.Label;
+	public travel_img_1: eui.Image;
+	public travel_name_1: eui.Label;
 	public shareBtn_1: eui.Image;
-	public energy1: eui.Group;
-	public travel_2_img: eui.Image;
-	public travel_2_name: eui.Label;
-	public shareBtn_2: eui.Image;
-
 
 	public dataGroup: eui.DataGroup;
 	public sourceArr: eui.ArrayCollection;
 	public dataArr = [
-		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
-		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/bee.png',appid:'',path:'' },
+		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
+		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/bee.png', appid: '', path: '' },
 
-	]
-	public constructor(score = 0) {
+	];
+	public score = 0;
+	public ballId = 1;//这局用的球类型
+	public constructor(score = 0, ballId = 1) {
 		super();
-	
+		this.score = score;
+		this.ballId = ballId;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -47,6 +50,9 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		}
 	}
 	public init() {
+		this.scoreText.text = this.score + '';
+
+
 		this.sourceArr = new eui.ArrayCollection(this.dataArr);
 		this.dataGroup = new eui.DataGroup();
 		this.dataGroup.dataProvider = this.sourceArr;
@@ -60,20 +66,30 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		this.leftMore.addChild(this.dataGroup);
 
 		this.again.addEventListener(egret.TouchEvent.TOUCH_TAP, this.againFun, this);
+		this.shareBtn_0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
 		this.shareBtn_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
-		this.shareBtn_2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
 		this.getEnergy.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
+		this.openBall.addEventListener(egret.TouchEvent.TOUCH_TAP, this.ballFun, this);
+		this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
 	}
-	public getFun(){
+	public homeFun() {
+		let parent = this.parent;
+		parent.removeChild(this);
+		parent.addChild(new startScene())
+	}
+	public getFun() {
 
 	}
-	public shareFun(){
-		CallbackMaster.openShare(null,false);
+	public shareFun() {
+		CallbackMaster.openShare(null, false);
 	}
 	public againFun() {
 		let parent = this.parent;
 		parent.removeChild(this);
-		parent.addChild(new runningScene())
+		parent.addChild(new runningScene());
+	}
+	public ballFun() {
+		this.addChild(new myBalls())
 	}
 
 }

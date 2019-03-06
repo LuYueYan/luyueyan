@@ -32,7 +32,7 @@ var rank = (function (_super) {
         platform.openDataContext.postMessage({
             type: "rank",
             width: 600,
-            height: 700
+            height: 780
         });
         var rank = platform.openDataContext.createDisplayObject();
         this.friendGroup.addChild(rank);
@@ -76,6 +76,7 @@ var rank = (function (_super) {
         // 		let data = res.data.data;
         // 		that.endPage = res.data.last_page;
         // 		that.sourceArr.removeAll();
+        // this.pageText.text=that.worldPage+' / '+that.endPage;
         // 		for (let i = 0; i < data.length; i++) {
         // 			data[i].index = (that.worldPage - 1) * res.data.per_page + i + 1;
         // 			that.sourceArr.addItem(data[i]);
@@ -84,6 +85,7 @@ var rank = (function (_super) {
         // })
     };
     rank.prototype.friendFun = function () {
+        this.pageText.visible = false;
         this.friend.texture = RES.getRes('img_tittle_a1_png');
         this.world.texture = RES.getRes('img_tittle_b2_png');
         this.friendGroup.visible = true;
@@ -91,6 +93,7 @@ var rank = (function (_super) {
         this.currentType = 'friend';
     };
     rank.prototype.worldFun = function () {
+        this.pageText.visible = true;
         this.friend.texture = RES.getRes('img_tittle_a2_png');
         this.world.texture = RES.getRes('img_tittle_b1_png');
         this.friendGroup.visible = false;
@@ -102,7 +105,7 @@ var rank = (function (_super) {
             type: "rank",
             page: type,
             width: 600,
-            height: 700
+            height: 780
         });
     };
     rank.prototype.goHomeFun = function () {

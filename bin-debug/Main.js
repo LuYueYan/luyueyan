@@ -102,7 +102,7 @@ var Main = (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
+                        // DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
                         userDataMaster.init();
                         option = platform.getLaunchOptionsSync();
                         if (option && option.query && option.query.uid) {
@@ -166,9 +166,9 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        AdMaster.init();
+        // AdMaster.init();
         soundMaster.init();
-        CallbackMaster.init();
+        // CallbackMaster.init();
         this.addChild(new startScene());
         //添加右上角转发
         platform.onShareAppMessage({});

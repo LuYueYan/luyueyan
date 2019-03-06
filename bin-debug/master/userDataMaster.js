@@ -65,9 +65,11 @@ var userDataMaster = (function () {
     };
     Object.defineProperty(userDataMaster, "myGold", {
         get: function () {
+            //获取能量果总数
             return userDataMaster.gold;
         },
         set: function (gold) {
+            //更新能量果总数
             userDataMaster.gold = gold;
             userDataMaster.myCollection.replaceItemAt(gold, 0);
         },
@@ -94,9 +96,11 @@ var userDataMaster = (function () {
     };
     Object.defineProperty(userDataMaster, "myTravels", {
         get: function () {
+            //旅行印记获取
             return userDataMaster.travels;
         },
         set: function (travels) {
+            //修改旅行印记
             userDataMaster.travels = travels;
             userDataMaster.myCollection.replaceItemAt(travels, 2);
         },
@@ -115,6 +119,22 @@ var userDataMaster = (function () {
     });
     userDataMaster.getUserInfo = function (uid) {
         //获取用户道具信息
+    };
+    Object.defineProperty(userDataMaster, "todayEnergy", {
+        get: function () {
+            //获取今日可领取能量状态
+            if (userDataMaster.dayEnergy == getToday()) {
+                //今日已领取
+                return false;
+            }
+            return true;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    userDataMaster.updateTodayEnergy = function () {
+        //更改今日能量状态
+        userDataMaster.dayEnergy = getToday();
     };
     userDataMaster.createLoginBtn = function (left, top, width, height) {
         return __awaiter(this, void 0, void 0, function () {
@@ -194,15 +214,15 @@ var userDataMaster = (function () {
     userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: false }; //用户信息
     userDataMaster.gold = 0; //能量果
     userDataMaster.cats = [
-        { id: 1, name: '肉肉球', state: true, process: 0 },
-        { id: 2, name: '球球球', state: false, process: 0 },
-        { id: 3, name: '球球球', state: false, process: 0 },
-        { id: 4, name: '球球球', state: false, process: 0 },
-        { id: 5, name: '球球球', state: false, process: 0 },
-        { id: 6, name: '球球球', state: false, process: 0 },
-        { id: 7, name: '球球球', state: false, process: 0 },
-        { id: 8, name: '球球球', state: false, process: 0 },
-        { id: 9, name: '球球球', state: false, process: 0 }
+        { id: 1, name: '肉肉球1', state: true, process: 0 },
+        { id: 2, name: '球球球2', state: false, process: 0 },
+        { id: 3, name: '球球球3', state: false, process: 0 },
+        { id: 4, name: '球球球4', state: false, process: 0 },
+        { id: 5, name: '球球球5', state: false, process: 0 },
+        { id: 6, name: '球球球6', state: false, process: 0 },
+        { id: 7, name: '球球球7', state: false, process: 0 },
+        { id: 8, name: '球球球8', state: false, process: 0 },
+        { id: 9, name: '球球球9', state: false, process: 0 }
     ];
     userDataMaster.travels = [
         { id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },

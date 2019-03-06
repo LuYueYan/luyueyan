@@ -9,15 +9,15 @@ class userDataMaster {
 	public static myInfo: any = { uid: 0, openId: '', is_new_user: false };//用户信息
 	public static gold = 0;//能量果
 	public static cats = [
-		{ id: 1, name: '肉肉球', state: true, process: 0 },
-		{ id: 2, name: '球球球', state: false, process: 0 },
-		{ id: 3, name: '球球球', state: false, process: 0 },
-		{ id: 4, name: '球球球', state: false, process: 0 },
-		{ id: 5, name: '球球球', state: false, process: 0 },
-		{ id: 6, name: '球球球', state: false, process: 0 },
-		{ id: 7, name: '球球球', state: false, process: 0 },
-		{ id: 8, name: '球球球', state: false, process: 0 },
-		{ id: 9, name: '球球球', state: false, process: 0 }
+		{ id: 1, name: '肉肉球1', state: true, process: 0 },
+		{ id: 2, name: '球球球2', state: false, process: 0 },
+		{ id: 3, name: '球球球3', state: false, process: 0 },
+		{ id: 4, name: '球球球4', state: false, process: 0 },
+		{ id: 5, name: '球球球5', state: false, process: 0 },
+		{ id: 6, name: '球球球6', state: false, process: 0 },
+		{ id: 7, name: '球球球7', state: false, process: 0 },
+		{ id: 8, name: '球球球8', state: false, process: 0 },
+		{ id: 9, name: '球球球9', state: false, process: 0 }
 	];
 	public static travels= [
 		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
@@ -30,6 +30,7 @@ class userDataMaster {
 		{ id: 8, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
 		{ id: 9, name: '光之旅', image: 'resource/assets/Aimages/bee.png' }
 	];
+	public static dayEnergy;
 	public static myCollection: eui.ArrayCollection;
 	public static shareUid = 0;//分享人id
 	public static bestScore = 0;//历史最高分
@@ -56,9 +57,11 @@ class userDataMaster {
 		userDataMaster.login();
 	}
 	public static get myGold() {
+		//获取能量果总数
 		return userDataMaster.gold;
 	}
 	public static set myGold(gold) {
+		//更新能量果总数
 		userDataMaster.gold = gold;
 		userDataMaster.myCollection.replaceItemAt(gold, 0);
 	}
@@ -77,9 +80,11 @@ class userDataMaster {
 		userDataMaster.myCollection.replaceItemAt(cats, 1);
 	}
 	public static get myTravels(){
+		//旅行印记获取
 		return userDataMaster.travels;
 	}
 	public static set myTravels(travels){
+		//修改旅行印记
 		userDataMaster.travels=travels;
 		userDataMaster.myCollection.replaceItemAt(travels, 2);
 	}
@@ -92,6 +97,18 @@ class userDataMaster {
 	public static getUserInfo(uid) {
 		//获取用户道具信息
 
+	}
+	public static get todayEnergy(){
+		//获取今日可领取能量状态
+		if(userDataMaster.dayEnergy==getToday()){
+			//今日已领取
+			return false;
+		}
+		return true;
+	}
+	public static updateTodayEnergy(){
+		//更改今日能量状态
+		userDataMaster.dayEnergy=getToday();
 	}
 
 	public static async createLoginBtn(left, top, width, height) {

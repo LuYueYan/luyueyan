@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="rebornSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16928b7ac6a" ></w:Config>
-	<e:Image source="img_bg_revival_png" height="1334" width="750"/>
+	<e:Image id="bgImg" source="img_bg_revival_jpg" height="1334"/>
 	<e:Label text="失足跌落，当前得分" y="152" size="24" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 	<e:Rect width="600" height="110" y="270" ellipseWidth="150" fillAlpha="0.2" horizontalCenter="0"/>
 	<e:Label text="哎呀，差一点就超越好友啦" y="310.86" fontFamily="Microsoft YaHei" size="28" textColor="0xab9dff" x="138"/>

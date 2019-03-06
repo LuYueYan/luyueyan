@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="gameOverSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="16913edb994" ></w:Config>
-	<e:Image source="bg_2_jpg" anchorOffsetY="0" horizontalCenter="0" top="0" height="1339.88"/>
-	<e:Group id="leftMore" width="748.48" height="443.94" y="202" anchorOffsetY="0" anchorOffsetX="0" left="0"/>
-	<e:Button id="again" label="再来一次" x="170" y="669.94"/>
-	<e:Button id="openBall" label="再来一次" x="481.64" y="667"/>
-	<e:Group id="energy" width="413.64" height="118.18" y="209" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
-		<e:Image source="bee_png" verticalCenter="0" left="0"/>
-		<e:Label id="energyNum" text="x 50" x="120" verticalCenter="0"/>
-		<e:Image id="getEnergy" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
-	</e:Group>
-	<e:Group id="travel_1" width="413.64" height="118.18" y="351.43" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0">
-		<e:Image id="travel_1_img" source="bee_png" verticalCenter="0" left="0"/>
-		<e:Label id="travel_1_name" text="Label" x="120" verticalCenter="0"/>
-		<e:Image id="shareBtn_1" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
-	</e:Group>
-	<e:Group width="413.64" height="118.18" y="496.88" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0" id="energy1">
-		<e:Image id="travel_2_img" source="bee_png" verticalCenter="0" left="0"/>
-		<e:Label id="travel_2_name" text="Label" x="120" verticalCenter="0"/>
-		<e:Image id="shareBtn_2" source="bee_png" x="289.91" verticalCenter="0" touchEnabled="true"/>
-	</e:Group>
+	<e:Image anchorOffsetY="0" horizontalCenter="0" top="0" height="1334" source="img_bg_revival_jpg"/>
+	<e:Image source="img_tittle_06_png" y="72" horizontalCenter="0"/>
+	<e:Label id="scoreText" text="0" y="253" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
+	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="58" touchEnabled="true"/>
+	<e:Group id="leftMore" width="748.48" height="443.94" y="202" anchorOffsetY="0" anchorOffsetX="0" left="0" visible="false"/>
+	<e:Button id="again" label="" x="78" y="913">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_receive_07_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="openBall" label="" x="386" y="913" touchEnabled="true">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_receive_08_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Scroller width="650" height="442" y="428" anchorOffsetY="0" horizontalCenter="0">
+		<e:Group>
+			<e:Group x="0" y="0" scaleX="1" scaleY="1">
+				<e:Group y="0" width="650" height="160" x="0">
+				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
+				<e:Image x="30" y="20" source="img_gift_fruit_png"/>
+				<e:Label text="能量果" x="180" y="30" fontFamily="Microsoft YaHei" size="28"/>
+				<e:Label text="获取更多的能量果 可以喂养球球小精灵哦 " x="180" y="76" width="218" size="20" fontFamily="Microsoft YaHei" textColor="0xab9dff" lineSpacing="5"/>
+				<e:Label id="energyNum" text="x 50" x="294" y="33" fontFamily="Microsoft YaHei" size="28" textColor="0xffea00"/>
+				<e:Image id="getEnergy" x="434" touchEnabled="true" y="45" source="btn_receive_05_png"/>
+				</e:Group>
+				<e:Group id="travel_0" width="650" height="160" y="170" anchorOffsetX="0" anchorOffsetY="0" x="0">
+				<e:Image id="travel_img_0" x="30" verticalCenter="0" source="img_imprinting_a1_png"/>
+				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
+				<e:Label id="travel_name_0" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
+				<e:Image id="shareBtn_0" x="434" touchEnabled="true" y="45" source="btn_receive_06_png"/>
+				</e:Group>
+				<e:Group id="travel_1" width="650" height="160" y="340" anchorOffsetX="0" anchorOffsetY="0" x="0">
+				<e:Image id="travel_img_1" source="img_imprinting_a1_png" x="30" verticalCenter="0"/>
+				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
+				<e:Label id="travel_name_1" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
+				<e:Image id="shareBtn_1" source="btn_receive_06_png" x="434" touchEnabled="true" y="45"/>
+				</e:Group>
+			</e:Group>
+		</e:Group>
+	</e:Scroller>
 </e:Skin>

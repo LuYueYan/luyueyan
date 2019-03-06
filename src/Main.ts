@@ -58,7 +58,7 @@ class Main extends eui.UILayer {
     }
 
     private async runGame() {
-        DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
+        // DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
         userDataMaster.init();
         let option = platform.getLaunchOptionsSync();
         if (option && option.query && option.query.uid) {
@@ -104,9 +104,9 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        AdMaster.init();
+        // AdMaster.init();
         soundMaster.init();
-        CallbackMaster.init();
+        // CallbackMaster.init();
         this.addChild(new startScene());
         
         //添加右上角转发

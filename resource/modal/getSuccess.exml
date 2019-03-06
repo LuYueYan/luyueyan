@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="getSuccessSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+	<w:Config id="1694667f962" ></w:Config>
+	<ns1:grayBg y="1.52"/>
+	<e:Group width="713" height="890.36" y="160" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0.5">
+		<e:Image source="img_bg_gift_png" top="0" horizontalCenter="0"/>
+		<e:Label id="ignoreBtn" text="不了&gt;" y="836" fontFamily="Microsoft YaHei" size="28" touchEnabled="true" textColor="0xab9dff" horizontalCenter="0" visible="false"/>
+		<e:Image id="title" horizontalCenter="0.5" top="28" source="img_tittle_04_png"/>
+		<e:Image id="type_2" source="img_elf_fire_png" y="219.5" horizontalCenter="0.5" visible="false"/>
+		<e:Group id="type_1" x="215" y="179.5" visible="false">
+			<e:Image source="img_fruit_big_png" y="47.5" x="66"/>
+			<e:Image source="img_base_01_png" x="0" y="0"/>
+		</e:Group>
+		<e:Label id="word" text="火火球" y="514" horizontalCenter="0.5" textColor="0x9382ff" size="28" fontFamily="Microsoft YaHei"/>
+		<e:Image id="shareBtn" y="717" touchEnabled="true" horizontalCenter="0" source="btn_show_png"/>
+	</e:Group>
+</e:Skin>

@@ -11,7 +11,7 @@
 		"libs/physics/physics.js"
 	],
 	"game": [
-		"bin-debug/modal/getEnergyModal.js",
+		"bin-debug/modal/getSuccess.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
@@ -26,10 +26,12 @@
 		"bin-debug/modal/ballItem.js",
 		"bin-debug/modal/dayEnergy.js",
 		"bin-debug/modal/friendHelp.js",
+		"bin-debug/modal/getEnergyModal.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/modal/grayBg.js",
 		"bin-debug/modal/houseScene.js",
 		"bin-debug/modal/moreItem.js",
+		"bin-debug/modal/myBalls.js",
 		"bin-debug/modal/rankItem.js",
 		"bin-debug/modal/reborn.js",
 		"bin-debug/modal/throughModal.js",

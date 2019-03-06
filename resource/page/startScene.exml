@@ -29,4 +29,8 @@
 		<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="45"/>
 		</e:layout>
 	</e:Group>
+	<e:Image id="houseTip" source="img_label_01_png" x="144" y="883"/>
+	<e:Image id="travelTip" source="img_label_02_png" x="324" y="883"/>
+	<e:Image id="shareTip" source="img_label_03_png" x="598" y="883"/>
+	<e:Image id="energyTip" source="img_label_04_png" x="673" y="607"/>
 </e:Skin>

@@ -30,7 +30,9 @@
 		"dayEnergy": "resource/modal/dayEnergy.exml",
 		"circle": "resource/page/circle.exml",
 		"throughModal": "resource/modal/throughModal.exml",
-		"getEnergyModal": "resource/modal/getEnergyModal.exml"
+		"getEnergyModal": "resource/modal/getEnergyModal.exml",
+		"getSuccess": "resource/modal/getSuccess.exml",
+		"myBalls": "resource/modal/myBalls.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -51,9 +53,11 @@
 		"resource/modal/dayEnergy.exml",
 		"resource/modal/friendHelp.exml",
 		"resource/modal/getEnergyModal.exml",
+		"resource/modal/getSuccess.exml",
 		"resource/modal/grayBg.exml",
 		"resource/modal/houseScene.exml",
 		"resource/modal/moreItem.exml",
+		"resource/modal/myBalls.exml",
 		"resource/modal/rankItem.exml",
 		"resource/modal/throughModal.exml",
 		"resource/modal/travelItem.exml",

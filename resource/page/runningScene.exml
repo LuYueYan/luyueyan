@@ -3,12 +3,13 @@
 	<w:Config id="16905082286" ></w:Config>
 	<e:Rect id="bg_rect" width="750" height="1334" left="0" top="0" fillColor="0x41276e"/>
 	<e:Label id="scoreText" text="0" x="48" y="61" size="80"/>
-	<e:Button id="startBtn" label="" x="225" y="895">
+	<e:Group id="flowerGroup" width="750" height="1334" touchThrough="true"/>
+	<e:Button id="startBtn" label="" y="1060" anchorOffsetX="150" anchorOffsetY="150" horizontalCenter="0">
 		<e:skinName>
-			<e:Skin states="up,down,disabled">
+		<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="btn_jump_png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
+		</e:Skin>
 		</e:skinName>
 	</e:Button>
 </e:Skin>

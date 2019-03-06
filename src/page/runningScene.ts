@@ -11,7 +11,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public flowerArr = [];
 	public ceilArr = [];
 	public removeArr = [];
-	public flowerGroup: eui.Group = new eui.Group();
+	public flowerGroup: eui.Group;
 	public score = 0;//分数
 	public currentTheme = 1;
 	public moveSpeed = 1;
@@ -50,7 +50,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public init() {
 		let that = this;
 		this.adaptation=(this.stage.stageHeight-1334)/this.factor;
-		this.addChild(this.flowerGroup);
+	
 		//创建world
 		this.world = new p2.World();
 		this.world.sleepMode = p2.World.BODY_SLEEPING;//睡眠策略，提高性能
@@ -76,14 +76,15 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		planeBody.displays = [];//与每个形状对应的显示对象
 		this.world.addBody(planeBody);
 		this.ceilArr.push(planeBody);
-		this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this)
+		egret.Tween.get(that.startBtn,{loop:true}).to({scaleX:0.8,scaleY:0.8},1000).to({scaleX:1,scaleY:1},1000)
+		this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-		this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 	}
 	public startFun() {
 		this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this)
 		this.removeChild(this.startBtn);
 		this.bee.gravityScale = 1;
+		this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 	}
 	private onEnterFrame() {
 		let that = this;

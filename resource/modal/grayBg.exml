@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="grayBgSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="16928c36186" ></w:Config>
-	<e:Rect id="bg" width="750" height="1334" fillColor="0x000000" fillAlpha="0.8" left="0" top="0"/>
+	<e:Rect id="bg" width="750" height="1334" fillColor="0x000000" fillAlpha="0.7" left="0" top="0"/>
 </e:Skin>

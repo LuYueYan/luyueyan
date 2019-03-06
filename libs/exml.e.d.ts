@@ -58,11 +58,15 @@ declare class friendHelpSkin extends eui.Skin{
 }
 declare class getEnergyModalSkin extends eui.Skin{
 }
+declare class getSuccessSkin extends eui.Skin{
+}
 declare class grayBgSkin extends eui.Skin{
 }
 declare class houseSceneSkin extends eui.Skin{
 }
 declare class moreItemSkin extends eui.Skin{
+}
+declare class myBallsSkin extends eui.Skin{
 }
 declare class rankItemSkin extends eui.Skin{
 }

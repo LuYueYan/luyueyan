@@ -1,9 +1,9 @@
 class reborn extends eui.Component implements eui.UIComponent {
+	public bgImg: eui.Image;
 	public scoreText: eui.Label;
 	public timing: eui.Image;
 	public rebornBtn: eui.Image;
 	public ignoreBtn: eui.Label;
-
 
 	public score = 0;
 	public terval = null;
@@ -24,11 +24,12 @@ class reborn extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
+		this.bgImg.height=this.stage.stageHeight;
 		this.scoreText.text = this.score + "";
 		this.terval = setInterval(() => {
-			that.current_time>1&&that.current_time--;
+			that.current_time > 1 && that.current_time--;
 			that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
-			if (that.current_time <=1) {
+			if (that.current_time <= 1) {
 				clearInterval(that.terval);
 			}
 		}, 1000)

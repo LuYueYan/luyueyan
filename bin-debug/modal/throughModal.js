@@ -26,6 +26,8 @@ var throughModal = (function (_super) {
     };
     throughModal.prototype.init = function () {
         var that = this;
+        var blurFliter = new egret.BlurFilter(4, 4);
+        that.process.filters = [blurFliter];
         // for (let i = 0; i < 3; i++) {
         // 	let ran = Math.random() > 0.5 ? 2 : 1;
         // 	that.list.push(ran);

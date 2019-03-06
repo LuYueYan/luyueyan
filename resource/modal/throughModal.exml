@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="throughModalSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="1693309cbb2" ></w:Config>
-	<ns1:grayBg left="0" top="0"/>
-	<e:Rect id="processMask" width="400" height="20" y="110" ellipseHeight="20" ellipseWidth="20" anchorOffsetY="0" x="175"/>
-	<e:Rect id="process" width="400" height="20" y="110" ellipseHeight="20" ellipseWidth="20" fillColor="0xe81414" x="175"/>
-	<e:Label text="倒计时内，依次点亮" y="404" horizontalCenter="0"/>
-	<e:Image id="tap_1" source="img_spirit_01_png" x="133" y="784.5" touchEnabled="true"/>
-	<e:Image id="tap_2" x="523" y="791" touchEnabled="true" source="img_spirit_02_png"/>
-	<e:Image id="item_0" source="img_spirit_01_png" x="103" y="208"/>
-	<e:Image source="img_spirit_01_png" x="303" y="218" id="item_1"/>
-	<e:Image source="img_spirit_01_png" x="510" y="218" id="item_2"/>
+	<e:Rect id="processMask" width="400" height="10" y="274" ellipseHeight="20" ellipseWidth="20" anchorOffsetY="0" horizontalCenter="0"/>
+	<e:Rect width="400" height="10" y="274" ellipseHeight="20" ellipseWidth="20" horizontalCenter="0" fillColor="0xFFFFFF" fillAlpha="0.2"/>
+	<e:Rect id="process" width="400" height="10" y="274" ellipseHeight="20" ellipseWidth="20" horizontalCenter="0" fillColor="0xffffff" fillAlpha="1"/>
+	<e:Label text="倒计时内，依次点亮" y="217" horizontalCenter="0" fontFamily="Microsoft YaHei" size="28"/>
+	<e:Image source="img_bg_click_png" y="314" horizontalCenter="0"/>
+	<e:Image id="tap_1" x="100" y="1034" touchEnabled="true" source="btn_click_01_png"/>
+	<e:Image id="tap_2" x="500" y="1034" touchEnabled="true" source="btn_click_02_png"/>
+	<e:Image id="item_0" x="208" y="337.5" source="img_click_01_png"/>
+	<e:Image y="337.5" id="item_1" source="img_click_01_png" horizontalCenter="0"/>
+	<e:Image x="468" y="337.5" id="item_2" source="img_click_02_png"/>
 </e:Skin>
