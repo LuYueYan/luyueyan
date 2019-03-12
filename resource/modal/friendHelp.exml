@@ -2,7 +2,7 @@
 <e:Skin class="friendHelpSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16928f0aff8" ></w:Config>
 	<ns1:grayBg left="0" top="0"/>
-	<e:Group y="191" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0">
+	<e:Group id="body" y="612" anchorOffsetY="421" anchorOffsetX="320" horizontalCenter="0" scaleX="1" scaleY="1">
 		<e:Image source="img_bullet_frame_png" horizontalCenter="0" top="0"/>
 		<e:Image source="img_tittle_01_png" y="45" horizontalCenter="0"/>
 		<e:Image source="img_base_01_png" y="200" horizontalCenter="1"/>
@@ -13,7 +13,7 @@
 			<e:Image source="img_head_png" y="2" touchEnabled="true" x="2" id="friend_0" width="76" height="76"/>
 			<e:Image id="icon_0" source="img_fruit_small_png" x="10" y="87" visible="false"/>
 			<e:Label text="待邀请" y="92" textColor="0xAB9DFF" size="20" fontFamily="Microsoft YaHei" width="60" textAlign="right" id="text_0" horizontalCenter="0"/>
-				<e:Button id="get_0" label="" y="120" horizontalCenter="0">
+				<e:Button id="get_0" label="" y="120" horizontalCenter="0" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -28,7 +28,7 @@
 			<e:Image id="friend_1" source="img_head_png" y="2" touchEnabled="true" x="2" width="76" height="76"/>
 			<e:Image id="icon_1" source="img_fruit_small_png" x="10" y="87" visible="false"/>
 			<e:Label id="text_1" text="待邀请" y="92" textColor="0xab9dff" size="20" fontFamily="Microsoft YaHei" textAlign="right" anchorOffsetX="0" width="60" horizontalCenter="0"/>
-				<e:Button label="" y="120" horizontalCenter="0" id="get_1">
+				<e:Button label="" y="120" horizontalCenter="0" id="get_1" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -43,7 +43,7 @@
 				<e:Image id="friend_2" source="img_head_png" y="2" touchEnabled="true" x="2" width="76" height="76"/>
 				<e:Image source="img_fruit_small_png" x="10" y="87" id="icon_2" visible="false"/>
 				<e:Label id="text_2" text="待邀请" y="92" textColor="0xAB9DFF" size="20" fontFamily="Microsoft YaHei" textAlign="right" anchorOffsetX="0" horizontalCenter="0" width="60"/>
-				<e:Button label="" y="120" horizontalCenter="0" id="get_2">
+				<e:Button label="" y="120" horizontalCenter="0" id="get_2" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -58,7 +58,7 @@
 				<e:Image id="friend_3" source="img_head_png" y="2" touchEnabled="true" x="2" width="76" height="76"/>
 				<e:Image source="img_fruit_small_png" x="10" y="87" id="icon_3" visible="false"/>
 				<e:Label id="text_3" text="待邀请" y="92" textColor="0xAB9DFF" size="20" fontFamily="Microsoft YaHei" textAlign="right" anchorOffsetX="0" horizontalCenter="0" width="60"/>
-				<e:Button label="" y="120" horizontalCenter="0" id="get_3">
+				<e:Button label="" y="120" horizontalCenter="0" id="get_3" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -73,7 +73,7 @@
 				<e:Image id="friend_4" source="img_head_png" y="2" touchEnabled="true" x="2" width="76" height="76"/>
 				<e:Image source="img_fruit_small_png" x="10" y="87" id="icon_4" visible="false"/>
 				<e:Label id="text_4" text="待邀请" y="92" textColor="0xAB9DFF" size="20" fontFamily="Microsoft YaHei" textAlign="right" anchorOffsetX="0" horizontalCenter="0" width="60"/>
-				<e:Button label="" y="120" horizontalCenter="0" id="get_4">
+				<e:Button label="" y="120" horizontalCenter="0" id="get_4" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -88,7 +88,7 @@
 				<e:Image id="friend_5" source="img_head_png" y="2" touchEnabled="true" x="2" width="76" height="76"/>
 				<e:Image source="img_fruit_small_png" x="10" y="87" id="icon_5" visible="false"/>
 				<e:Label id="text_5" text="待邀请" y="92" textColor="0xAB9DFF" size="20" fontFamily="Microsoft YaHei" textAlign="right" anchorOffsetX="0" horizontalCenter="0" width="60"/>
-				<e:Button label="" y="120" horizontalCenter="0" id="get_5">
+				<e:Button label="" y="120" horizontalCenter="0" id="get_5" visible="false">
 					<e:skinName>
 						<e:Skin states="up,down,disabled">
 						<e:Image width="100%" height="100%" source="btn_receive_12_png"/>
@@ -98,7 +98,7 @@
 				</e:Button>
 			</e:Group>
 		</e:Group>
-		<e:Image id="ball" source="img_spirit_01_png" y="350.5" horizontalCenter="0"/>
+		<e:Image id="ball" y="297.17" horizontalCenter="0" source="img_elf_41_png"/>
 		<e:Button id="closeBtn" label="" x="579" y="53">
 			<e:skinName>
 			<e:Skin states="up,down,disabled">

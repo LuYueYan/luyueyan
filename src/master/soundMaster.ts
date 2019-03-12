@@ -1,13 +1,16 @@
 class soundMaster {
     public static bg_sound: egret.Sound;//背景音乐
     public static songArr = [
-        { path: '', sound: null },
-        { path: '', sound: null },
-        { path: '', sound: null },
-        { path: '', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_2.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_3.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_4.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_5.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_6.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_7.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_8.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_9.mp3', sound: null }
     ];//歌曲列表
-    // public static drag_sound: egret.Sound;
-    // public static match_sound: egret.Sound;
 
     //  音轨
     public static soundChannel: egret.SoundChannel;
@@ -17,10 +20,10 @@ class soundMaster {
     }
     public static init() {
         // soundMaster.bg_sound = RES.getRes("bg_mp3");
-        // soundMaster.drag_sound = RES.getRes("drag_mp3");
-        // soundMaster.match_sound = RES.getRes("match_mp3");
         for (let i = 0, len = soundMaster.songArr.length; i < len; i++) {
-            soundMaster.songArr[i].sound = RES.getRes(soundMaster.songArr[i].path);
+              RES.getResByUrl(soundMaster.songArr[i].path,(res)=>{
+                soundMaster.songArr[i].sound=res;
+            });
         }
     }
     public static playSongMusic(index = 0) {
@@ -51,6 +54,4 @@ class soundMaster {
     public static get isMusic() {
         return soundMaster.music;
     }
-
-
 }

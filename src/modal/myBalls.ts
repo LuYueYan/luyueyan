@@ -23,10 +23,18 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public nameImg: eui.Image;
 	public natureText: eui.Label;
 	public musicText: eui.Label;
+	public travelImg_0: eui.Image;
+	public travelImg_1: eui.Image;
+	public travelImg_2: eui.Image;
+	public popularGroup: eui.Group;
 	public fruitText: eui.Label;
+	public processBar: eui.Rect;
 	public progressGroup: eui.Group;
 	public progressText: eui.Label;
 	public raiseBtn: eui.Image;
+	public fireGroup: eui.Group;
+	public fireText: eui.Label;
+	public fireBtn: eui.Image;
 
 	public positionArr = [
 		{ index: 0, x: 375, y: 303, scaleX: 1, scaleY: 1 },
@@ -42,6 +50,14 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public canMove = true;
 	public position = { x: 0, y: 0, time: 0 };
 	public currentBall = 0;//当前的球是哪个
+	public fireList = [
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	];//火火球邀请情况
 	public constructor() {
 		super();
 	}
@@ -56,9 +72,45 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		this.init()
 	}
 	public init() {
+		this.changeInfo(0);
+		let cats = userDataMaster.cats;
+		for (let i = 0, len = this.positionArr.length; i < len; i++) {
+			if (cats[i].state) {
+				//已获得
+				this['img_' + i].texture = RES.getRes('img_elf_'+i+'1_png');
+			} else {
+               this['img_' + i].texture = RES.getRes('img_elf_'+0+'1_png');
+			}
+		}
+		var blurFliter = new egret.BlurFilter(4, 4);
+		this.processBar.filters = [blurFliter];
+
+
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.beginFun, this);
 		this.addEventListener(egret.TouchEvent.TOUCH_END, this.endFun, this);
-		this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this)
+		this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
+		this.raiseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.raiseFun, this);
+		this.fireBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireFun, this);
+	}
+	public fireFun() {
+		let that = this;
+		let i = 4;
+		if (userDataMaster.cats[i].state && userDataMaster.runCat == i) {
+			//旅行中
+		} else if (!userDataMaster.cats[i].state && that.fireList.length >= 6) {
+			//可解锁
+			let cat = userDataMaster.cats[i];
+			cat.state = true;
+			userDataMaster.setCat(i, cat);
+			that.fireBtn.texture = RES.getRes('btn_receive_10_png');
+			that.addChild(new getSuccess(2, '火火球'))
+		} else if (userDataMaster.cats[i].state && that.fireList.length >= 6) {
+			//带他出发
+			that.fireBtn.texture = RES.getRes('btn_receive_09_png');
+			userDataMaster.myRunCat = i;
+		} else {
+			CallbackMaster.openShare(null, false);
+		}
 	}
 	public homeFun() {
 		let parent = this.parent;
@@ -71,15 +123,15 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		let t = egret.getTimer() - this.position.time;
 
 		let num = 1;
-		if (t < 150) {
-			num = 4;
-		} else if (t < 200) {
-			num = 3;
-		} else if (t < 300) {
-			num = 2;
-		} else {
-			num = 1;
-		}
+		// if (t < 150) {
+		// 	num = 4;
+		// } else if (t < 200) {
+		// 	num = 3;
+		// } else if (t < 300) {
+		// 	num = 2;
+		// } else {
+		// 	num = 1;
+		// }
 		if (this.position.x - e.stageX > 50) {
 			this.moveFun('right', num)
 		} else if (e.stageX - this.position.x > 50) {
@@ -93,7 +145,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		if (!this.canMove) {
 			return;
 		}
-		let that=this;
+		let that = this;
 		this.canMove = false;
 		for (let i = 0, len = this.positionArr.length; i < len; i++) {
 			let current = 0;
@@ -112,7 +164,9 @@ class myBalls extends eui.Component implements eui.UIComponent {
 					current = i < 8 ? i + 1 : 0;
 				}
 			}
-
+			if (current == 0) {
+				that.changeInfo(i);
+			}
 			this['item_' + i].name = 'current_' + current;
 			for (let n = 0; n < num; n++) {
 				let index = i < 5 ? i : 9 - i;
@@ -129,7 +183,6 @@ class myBalls extends eui.Component implements eui.UIComponent {
 						if (i == 8 && n == num - 1) {
 							this.canMove = true;
 						}
-						
 					})
 			}
 		}
@@ -150,11 +203,81 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		}
 		return index;
 	}
-	public set factor(obj) {
-		//二次方贝塞尔公式 (1 - t)^2 *P0 + 2 *t* (1 - t)* P1 + t^2* P2
-		if (obj && obj.value && obj.target) {
+	public changeInfo(i, feed = false) {
+		let that = this;
+		console.log(i)
 
+		let cat = userDataMaster.cats[i];
+		if (!feed) {
+			that.currentBall = i;
+			that.nameImg.texture = RES.getRes('img_name_0' + (i + 1) + '_png');
 
+			that.natureText.text = "球球属性：" + cat.des;
+			that.musicText.text = "音乐主题：" + cat.music;
+			let travel = cat.belong;
+			let travels = userDataMaster.travels;
+			for (let n = 0; n < 3; n++) {
+				let name = travels[travel[n]].image;
+				that["travelImg_" + n].source = name;
+			}
+		}
+		if (i == 4) {
+			//火火球
+			that.fireGroup.visible = true;
+			that.popularGroup.visible = false;
+			that.fireText.text = '成功邀请6位好友即可解锁火火球哦（' + that.fireList.length + '/6）';
+			if (userDataMaster.cats[i].state && userDataMaster.runCat == i) {
+				//旅行中
+				that.fireBtn.texture = RES.getRes('btn_receive_09_png');
+			} else if (!userDataMaster.cats[i].state && that.fireList.length >= 6) {
+				//可解锁
+				that.fireBtn.texture = RES.getRes('btn_unlocking_2_png');
+			} else if (userDataMaster.cats[i].state && that.fireList.length >= 6) {
+				//已解锁
+				that.fireBtn.texture = RES.getRes('btn_receive_10_png');
+			}
+			return;
+		}
+
+		that.fireGroup.visible = false;
+		that.popularGroup.visible = true;
+		that.fruitText.text = "能量果喂养中（" + cat.process + " / " + cat.target + "）";
+		let pro = cat.process / cat.target;
+		that.processBar.width = 650 * pro;
+		that.progressText.text = parseInt(pro * 100 + '') + "%";
+		that.progressGroup.x = pro * 650;
+
+		if (pro < 1) {
+			that.raiseBtn.texture = RES.getRes('btn_receive_11_png');
+		} else if (userDataMaster.runCat == i) {
+			//正在出行
+			that.raiseBtn.texture = RES.getRes('btn_receive_09_png');
+		} else {
+			//带它出发
+			that.raiseBtn.texture = RES.getRes('btn_receive_10_png');
 		}
 	}
+	public raiseFun() {
+		let cat = userDataMaster.cats[this.currentBall];
+		let pro = cat.process / cat.target;
+		if (!cat.state && cat.process < cat.target) {
+			//喂养
+			if (userDataMaster.myGold >= 100) {
+				userDataMaster.myGold -= 100;
+				cat.process += 100;
+				if (cat.process == cat.target) {
+					//
+					cat.state = true;
+					this['img_' + this.currentBall].texture = RES.getRes('img_elf_'+this.currentBall+'1_png');;
+				}
+				userDataMaster.setCat(this.currentBall, cat);
+				this.changeInfo(this.currentBall, true);
+			}
+		} else if (cat.state && this.currentBall != userDataMaster.runCat) {
+			//带他出发
+			userDataMaster.myRunCat = this.currentBall;
+			this.raiseBtn.texture = RES.getRes('btn_receive_09_png');
+		}
+	}
+
 }

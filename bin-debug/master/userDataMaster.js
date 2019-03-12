@@ -36,13 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var getToday = function () {
-    //获取格式化的当前日期
-    var date = new Date();
-    var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) + '' : '0' + (date.getMonth() + 1);
-    var day = date.getDate() > 9 ? (date.getDate()) + '' : '0' + date.getDate();
-    return date.getFullYear() + month + day;
-};
 var userDataMaster = (function () {
     function userDataMaster() {
     }
@@ -57,7 +50,8 @@ var userDataMaster = (function () {
         var sourceArr = [
             userDataMaster.gold,
             userDataMaster.cats,
-            userDataMaster.travels
+            userDataMaster.travels,
+            userDataMaster.runCat
         ];
         //用 ArrayCollection 包装
         userDataMaster.myCollection = new eui.ArrayCollection(sourceArr);
@@ -85,6 +79,15 @@ var userDataMaster = (function () {
             // 更新宠物列表数据
             userDataMaster.cats = cats;
             userDataMaster.myCollection.replaceItemAt(cats, 1);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(userDataMaster, "myRunCat", {
+        set: function (index) {
+            //更新当前出行球球
+            userDataMaster.runCat = index;
+            userDataMaster.myCollection.replaceItemAt(index, 3);
         },
         enumerable: true,
         configurable: true
@@ -123,7 +126,7 @@ var userDataMaster = (function () {
     Object.defineProperty(userDataMaster, "todayEnergy", {
         get: function () {
             //获取今日可领取能量状态
-            if (userDataMaster.dayEnergy == getToday()) {
+            if (userDataMaster.dayEnergy == userDataMaster.getToday()) {
                 //今日已领取
                 return false;
             }
@@ -134,7 +137,7 @@ var userDataMaster = (function () {
     });
     userDataMaster.updateTodayEnergy = function () {
         //更改今日能量状态
-        userDataMaster.dayEnergy = getToday();
+        userDataMaster.dayEnergy = userDataMaster.getToday();
     };
     userDataMaster.createLoginBtn = function (left, top, width, height) {
         return __awaiter(this, void 0, void 0, function () {
@@ -186,14 +189,14 @@ var userDataMaster = (function () {
                         params = {
                             code: login.code
                         };
-                        if (res != null) {
-                            params.encryptedData = res.encryptedData;
-                            params.iv = res.iv;
-                        }
+                        // if (res != null) {
+                        // 	params.encryptedData = res.encryptedData;
+                        // 	params.iv = res.iv
+                        // }
                         if (userDataMaster.shareUid > 0) {
                             params.pid = userDataMaster.shareUid;
                         }
-                        ServiceMaster.post(ServiceMaster.appLogin, params, function (suc) {
+                        ServiceMaster.post(ServiceMaster.logins, params, function (suc) {
                             if (parseInt(suc.code) === 1 && suc.data) {
                                 //登录成功
                                 userDataMaster.getMyInfo = suc.data;
@@ -211,33 +214,42 @@ var userDataMaster = (function () {
             });
         });
     };
+    userDataMaster.getToday = function () {
+        //获取格式化的当前日期
+        var date = new Date();
+        var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) + '' : '0' + (date.getMonth() + 1);
+        var day = date.getDate() > 9 ? (date.getDate()) + '' : '0' + date.getDate();
+        return date.getFullYear() + month + day;
+    };
     userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: false }; //用户信息
-    userDataMaster.gold = 0; //能量果
+    userDataMaster.gold = 3000; //能量果
     userDataMaster.cats = [
-        { id: 1, name: '肉肉球1', state: true, process: 0 },
-        { id: 2, name: '球球球2', state: false, process: 0 },
-        { id: 3, name: '球球球3', state: false, process: 0 },
-        { id: 4, name: '球球球4', state: false, process: 0 },
-        { id: 5, name: '球球球5', state: false, process: 0 },
-        { id: 6, name: '球球球6', state: false, process: 0 },
-        { id: 7, name: '球球球7', state: false, process: 0 },
-        { id: 8, name: '球球球8', state: false, process: 0 },
-        { id: 9, name: '球球球9', state: false, process: 0 }
+        { id: 1, name: '肉肉球1', state: true, process: 1000, target: 1000, belong: [0, 2, 3], des: '描述1', music: '《1》' },
+        { id: 2, name: '球球球2', state: false, process: 0, target: 2000, belong: [4, 2, 3], des: '描述2', music: '《2》' },
+        { id: 3, name: '球球球3', state: false, process: 0, target: 3000, belong: [5, 1, 3], des: '描述3', music: '《3》' },
+        { id: 4, name: '球球球4', state: false, process: 0, target: 4000, belong: [0, 2, 6], des: '描述4', music: '《4》' },
+        { id: 5, name: '球球球5', state: false, process: 0, target: 5000, belong: [1, 2, 7], des: '描述5', music: '《5》' },
+        { id: 6, name: '球球球6', state: false, process: 0, target: 6000, belong: [1, 8, 3], des: '描述6', music: '《6》' },
+        { id: 7, name: '球球球7', state: false, process: 0, target: 7000, belong: [0, 3, 5], des: '描述7', music: '《7》' },
+        { id: 8, name: '球球球8', state: false, process: 0, target: 8000, belong: [1, 6, 7], des: '描述8', music: '《8》' },
+        { id: 9, name: '火火球', state: false, process: 0, target: 10000, belong: [7, 8, 5], des: '描述9', music: '《9》' }
     ];
     userDataMaster.travels = [
-        { id: 1, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 2, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 3, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 4, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 5, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 6, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 7, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 8, name: '光之旅', image: 'resource/assets/Aimages/bee.png' },
-        { id: 9, name: '光之旅', image: 'resource/assets/Aimages/bee.png' }
+        { id: 1, name: '光之旅1', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 2, name: '光之旅2', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 3, name: '光之旅3', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 4, name: '光之旅4', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 5, name: '光之旅5', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 6, name: '光之旅6', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 7, name: '光之旅7', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 8, name: '光之旅8', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
+        { id: 9, name: '光之旅9', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' }
     ];
     userDataMaster.shareUid = 0; //分享人id
+    userDataMaster.sourceEnergy = { uid: 0, day: '' }; //能量分享的原始id,日期
     userDataMaster.bestScore = 0; //历史最高分
     userDataMaster.haveNickName = false; //是否有用户昵称头像
+    userDataMaster.runCat = 0; //当前旅行的是哪个球
     return userDataMaster;
 }());
 __reflect(userDataMaster.prototype, "userDataMaster");

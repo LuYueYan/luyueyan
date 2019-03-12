@@ -103,24 +103,21 @@ var ServiceMaster = (function () {
         return str.substring(1);
     };
     //域名
-    ServiceMaster.DOMAIN = 'https://newbox.0e3.cn/number_eliminate';
+    ServiceMaster.DOMAIN = 'https://newbox.0e3.cn/gball';
     //请求方式
     ServiceMaster.METHOD_POST = 'POST';
     ServiceMaster.METHOD_GET = 'GET';
     //接口
-    ServiceMaster.appLogin = '/user/appLogin'; //登陆
+    ServiceMaster.logins = '/user/logins'; //登陆
+    ServiceMaster.updateUser = '/user/updateUser'; //更新用户昵称头像
     ServiceMaster.getGameList = '/other/getGameList'; //获取更多游戏列表
-    ServiceMaster.getAdList = '/other/getAdList'; //获取广告列表
-    ServiceMaster.updateUserInfo = '/user/updateUserInfo'; //更新用户道具
-    ServiceMaster.getUserInfo = '/user/getUserInfo'; //获取用户道具
-    ServiceMaster.getEdition = '/other/getEdition'; //获取审核状态
-    ServiceMaster.getBannerAdList = '/other/getBannerAdList'; //自带的banner广告
-    ServiceMaster.getList = '/user/getList'; //世界排行
-    ServiceMaster.addMoney = '/other/addMoney'; //发起提现申请
-    ServiceMaster.getMoney = '/other/getMoney'; //获取提现列表
-    ServiceMaster.incUserFokas = '/user/incUserFokas'; //用户增加福卡
-    ServiceMaster.decUserFokas = '/user/decUserFokas'; //福卡兑换
-    ServiceMaster.recommand = '/other/click'; //推荐位统计
+    ServiceMaster.getConfig = '/other/getConfig'; //获广告id和审核状态
+    ServiceMaster.getScore = '/user/getScore'; //提交分数
+    ServiceMaster.rank_world = '/user/rank_world'; //世界排行
+    ServiceMaster.gameClick = '/other/gameClick'; //推荐位统计
+    ServiceMaster.getAssistanceList = '/other/getAssistanceList'; //获取助力列表
+    ServiceMaster.getEnergy = '/other/getEnergy'; //点击分享链接进入游戏是否可以领取能量果
+    ServiceMaster.getEnergyList = '/other/getEnergyList'; //获取当前能量果可领数量&&领取能能量果
     return ServiceMaster;
 }());
 __reflect(ServiceMaster.prototype, "ServiceMaster");

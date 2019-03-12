@@ -102,7 +102,7 @@ var Main = (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        // DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
+                        DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
                         userDataMaster.init();
                         option = platform.getLaunchOptionsSync();
                         if (option && option.query && option.query.uid) {
@@ -110,6 +110,8 @@ var Main = (function (_super) {
                             userDataMaster.shareUid = option.query.uid;
                             if (option.query.type && option.query.type == 'energy') {
                                 //能量分享
+                                userDataMaster.sourceEnergy.uid = option.query.suid || option.query.uid;
+                                userDataMaster.sourceEnergy.day = option.query.day;
                             }
                         }
                         return [4 /*yield*/, this.loadResource()];
@@ -166,9 +168,9 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        // AdMaster.init();
+        AdMaster.init();
         soundMaster.init();
-        // CallbackMaster.init();
+        CallbackMaster.init();
         this.addChild(new startScene());
         //添加右上角转发
         platform.onShareAppMessage({});

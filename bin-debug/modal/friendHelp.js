@@ -12,7 +12,6 @@ var friendHelp = (function (_super) {
     __extends(friendHelp, _super);
     function friendHelp() {
         var _this = _super.call(this) || this;
-        _this.haveGet = false; //是否已经拥有火火球
         _this.list = [
             { id: 1, avatarUrl: '/resource/assets/Aimages/img_spirit_01.png', state: 0 },
             { id: 2, avatarUrl: '/resource/assets/Aimages/img_spirit_01.png', state: 1 },
@@ -30,6 +29,7 @@ var friendHelp = (function (_super) {
     friendHelp.prototype.init = function () {
         var _this = this;
         var that = this;
+        egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
         var _loop_1 = function (i, len) {
             that['friend_' + i].source = that.list[i].avatarUrl;
             that['friend_' + i].mask = that['mask_' + i];
@@ -46,10 +46,10 @@ var friendHelp = (function (_super) {
         }
         this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
-        if (that.haveGet && that.list.length >= 6) {
+        if (userDataMaster.cats[8].state) {
             //已解锁
         }
-        if (!that.haveGet && that.list.length >= 6) {
+        if (!userDataMaster.cats[8].state && that.list.length >= 6) {
             //可解锁
             that.getBtn.texture = RES.getRes('btn_unlocking_png');
         }
@@ -66,8 +66,11 @@ var friendHelp = (function (_super) {
         var that = this;
         if (that.list.length >= 6) {
             //邀请完成 --解锁
-            if (!that.haveGet) {
+            if (!userDataMaster.cats[8].state) {
                 //未解锁
+                var cat = userDataMaster.cats[8];
+                cat.state = true;
+                userDataMaster.setCat(8, cat);
                 that.addChild(new getSuccess(2, '火火球'));
             }
             else {
@@ -79,7 +82,10 @@ var friendHelp = (function (_super) {
         }
     };
     friendHelp.prototype.closeFun = function () {
-        this.parent.removeChild(this);
+        var that = this;
+        egret.Tween.get(this.body).to({ scaleX: 2, scaleY: 2, alpha: 0 }, 200).call(function () {
+            that.parent.removeChild(that);
+        });
     };
     return friendHelp;
 }(eui.Component));

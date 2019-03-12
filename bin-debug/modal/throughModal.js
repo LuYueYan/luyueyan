@@ -28,11 +28,11 @@ var throughModal = (function (_super) {
         var that = this;
         var blurFliter = new egret.BlurFilter(4, 4);
         that.process.filters = [blurFliter];
-        for (var i = 0; i < 3; i++) {
-            var ran = Math.random() > 0.5 ? 2 : 1;
-            that.list.push(ran);
-            that['item_' + i].texture = RES.getRes('img_click_0' + ran + '_png');
-        }
+        // for (let i = 0; i < 3; i++) {
+        // 	let ran = Math.random() > 0.5 ? 2 : 1;
+        // 	that.list.push(ran);
+        // 	that['item_' + i].texture = RES.getRes('img_click_0' + ran + '_png');
+        // }
         // that.timeFun()
         // that.tap_1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { that.chooseFun(1) }, this);
         // that.tap_2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { that.chooseFun(2) }, this);

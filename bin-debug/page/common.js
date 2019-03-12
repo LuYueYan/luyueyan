@@ -51,7 +51,7 @@ var common = (function (_super) {
     common.prototype.createBuilding = function (type, y) {
         if (type === void 0) { type = 'left'; }
         if (y === void 0) { y = 800; }
-        var building = this.createBitmapByName('img_castle_1_2_png');
+        var building = this.createBitmapByName('img_castle_a2_png');
         building.anchorOffsetX = building.width / 2;
         building.anchorOffsetY = building.height / 2;
         if (type == 'left') {
@@ -62,7 +62,7 @@ var common = (function (_super) {
         }
         else {
             building.x = 375;
-            building.texture = RES.getRes('img_castle_1_1_png');
+            building.texture = RES.getRes('img_castle_a1_png');
         }
         building.y = y + building.anchorOffsetY;
         this.buildingGroup.addChildAt(building, 0);
@@ -125,7 +125,7 @@ var common = (function (_super) {
             var type = this.buildingArr[0].type == 'left' ? 'right' : 'left';
             this.createBuilding(type, 600);
             if (this.buildingArr.length > 0) {
-                this.buildingArr[0].content.texture = RES.getRes('img_castle_1_1_png');
+                this.buildingArr[0].content.texture = RES.getRes('img_castle_a1_png');
                 if (this.bee.x > this.buildingArr[0].content.x + this.buildingArr[0].content.width / 2) {
                     //向左
                     this.beeSpeed.speedX = -this.beeSpeed.oldSpeedX;

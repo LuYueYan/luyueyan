@@ -26,6 +26,14 @@ var myBalls = (function (_super) {
         _this.canMove = true;
         _this.position = { x: 0, y: 0, time: 0 };
         _this.currentBall = 0; //当前的球是哪个
+        _this.fireList = [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+        ]; //火火球邀请情况
         return _this;
     }
     myBalls.prototype.partAdded = function (partName, instance) {
@@ -36,9 +44,46 @@ var myBalls = (function (_super) {
         this.init();
     };
     myBalls.prototype.init = function () {
+        this.changeInfo(0);
+        var cats = userDataMaster.cats;
+        for (var i = 0, len = this.positionArr.length; i < len; i++) {
+            if (cats[i].state) {
+                //已获得
+                this['img_' + i].texture = RES.getRes('img_elf_a2_png');
+            }
+            else {
+            }
+        }
+        var blurFliter = new egret.BlurFilter(4, 4);
+        this.processBar.filters = [blurFliter];
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.beginFun, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.endFun, this);
         this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
+        this.raiseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.raiseFun, this);
+        this.fireBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireFun, this);
+    };
+    myBalls.prototype.fireFun = function () {
+        var that = this;
+        var i = 8;
+        if (userDataMaster.cats[i].state && userDataMaster.runCat == i) {
+            //旅行中
+        }
+        else if (!userDataMaster.cats[i].state && that.fireList.length >= 6) {
+            //可解锁
+            var cat = userDataMaster.cats[i];
+            cat.state = true;
+            userDataMaster.setCat(i, cat);
+            that.fireBtn.texture = RES.getRes('btn_receive_10_png');
+            that.addChild(new getSuccess(2, '火火球'));
+        }
+        else if (userDataMaster.cats[i].state && that.fireList.length >= 6) {
+            //带他出发
+            that.fireBtn.texture = RES.getRes('btn_receive_09_png');
+            userDataMaster.myRunCat = i;
+        }
+        else {
+            CallbackMaster.openShare(null, false);
+        }
     };
     myBalls.prototype.homeFun = function () {
         var parent = this.parent;
@@ -50,18 +95,15 @@ var myBalls = (function (_super) {
     myBalls.prototype.endFun = function (e) {
         var t = egret.getTimer() - this.position.time;
         var num = 1;
-        if (t < 150) {
-            num = 4;
-        }
-        else if (t < 200) {
-            num = 3;
-        }
-        else if (t < 300) {
-            num = 2;
-        }
-        else {
-            num = 1;
-        }
+        // if (t < 150) {
+        // 	num = 4;
+        // } else if (t < 200) {
+        // 	num = 3;
+        // } else if (t < 300) {
+        // 	num = 2;
+        // } else {
+        // 	num = 1;
+        // }
         if (this.position.x - e.stageX > 50) {
             this.moveFun('right', num);
         }
@@ -98,6 +140,9 @@ var myBalls = (function (_super) {
                 else {
                     current = i < 8 ? i + 1 : 0;
                 }
+            }
+            if (current == 0) {
+                that.changeInfo(i);
             }
             this_1['item_' + i].name = 'current_' + current;
             var _loop_2 = function (n) {
@@ -160,15 +205,84 @@ var myBalls = (function (_super) {
         }
         return index;
     };
-    Object.defineProperty(myBalls.prototype, "factor", {
-        set: function (obj) {
-            //二次方贝塞尔公式 (1 - t)^2 *P0 + 2 *t* (1 - t)* P1 + t^2* P2
-            if (obj && obj.value && obj.target) {
+    myBalls.prototype.changeInfo = function (i, feed) {
+        if (feed === void 0) { feed = false; }
+        var that = this;
+        console.log(i);
+        var cat = userDataMaster.cats[i];
+        if (!feed) {
+            that.currentBall = i;
+            that.nameImg.texture = RES.getRes('img_name_0' + (i + 1) + '_png');
+            that.natureText.text = "球球属性：" + cat.des;
+            that.musicText.text = "音乐主题：" + cat.music;
+            var travel = cat.belong;
+            var travels = userDataMaster.travels;
+            for (var n = 0; n < 3; n++) {
+                var name_1 = travels[travel[n]].image;
+                that["travelImg_" + n].source = name_1;
             }
-        },
-        enumerable: true,
-        configurable: true
-    });
+        }
+        if (i == 8) {
+            //火火球
+            that.fireGroup.visible = true;
+            that.popularGroup.visible = false;
+            that.fireText.text = '成功邀请6位好友即可解锁火火球哦（' + that.fireList.length + '/6）';
+            if (userDataMaster.cats[i].state && userDataMaster.runCat == i) {
+                //旅行中
+                that.fireBtn.texture = RES.getRes('btn_receive_09_png');
+            }
+            else if (!userDataMaster.cats[i].state && that.fireList.length >= 6) {
+                //可解锁
+                that.fireBtn.texture = RES.getRes('btn_unlocking_2_png');
+            }
+            else if (userDataMaster.cats[i].state && that.fireList.length >= 6) {
+                //已解锁
+                that.fireBtn.texture = RES.getRes('btn_receive_10_png');
+            }
+            return;
+        }
+        that.fireGroup.visible = false;
+        that.popularGroup.visible = true;
+        that.fruitText.text = "能量果喂养中（" + cat.process + " / " + cat.target + "）";
+        var pro = cat.process / cat.target;
+        that.processBar.width = 650 * pro;
+        that.progressText.text = parseInt(pro * 100 + '') + "%";
+        that.progressGroup.x = 20 + pro * 650;
+        if (pro < 1) {
+            that.raiseBtn.texture = RES.getRes('btn_receive_11_png');
+        }
+        else if (userDataMaster.runCat == i) {
+            //正在出行
+            that.raiseBtn.texture = RES.getRes('btn_receive_09_png');
+        }
+        else {
+            //带它出发
+            that.raiseBtn.texture = RES.getRes('btn_receive_10_png');
+        }
+    };
+    myBalls.prototype.raiseFun = function () {
+        var cat = userDataMaster.cats[this.currentBall];
+        var pro = cat.process / cat.target;
+        if (!cat.state && cat.process < cat.target) {
+            //喂养
+            if (userDataMaster.myGold >= 100) {
+                userDataMaster.myGold -= 100;
+                cat.process += 100;
+                if (cat.process == cat.target) {
+                    //
+                    cat.state = true;
+                    this['img_' + this.currentBall].texture = RES.getRes('img_elf_a2_png');
+                }
+                userDataMaster.setCat(this.currentBall, cat);
+                this.changeInfo(this.currentBall, true);
+            }
+        }
+        else if (cat.state && this.currentBall != userDataMaster.runCat) {
+            //带他出发
+            userDataMaster.myRunCat = this.currentBall;
+            this.raiseBtn.texture = RES.getRes('btn_receive_09_png');
+        }
+    };
     return myBalls;
 }(eui.Component));
 __reflect(myBalls.prototype, "myBalls", ["eui.UIComponent", "egret.DisplayObject"]);

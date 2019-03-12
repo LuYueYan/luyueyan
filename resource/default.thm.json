@@ -32,7 +32,8 @@
 		"throughModal": "resource/modal/throughModal.exml",
 		"getEnergyModal": "resource/modal/getEnergyModal.exml",
 		"getSuccess": "resource/modal/getSuccess.exml",
-		"myBalls": "resource/modal/myBalls.exml"
+		"myBalls": "resource/modal/myBalls.exml",
+		"guideModal": "resource/modal/guideModal.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -55,6 +56,7 @@
 		"resource/modal/getEnergyModal.exml",
 		"resource/modal/getSuccess.exml",
 		"resource/modal/grayBg.exml",
+		"resource/modal/guideModal.exml",
 		"resource/modal/moreItem.exml",
 		"resource/modal/myBalls.exml",
 		"resource/modal/rankItem.exml",

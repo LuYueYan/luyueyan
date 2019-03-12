@@ -38,6 +38,7 @@ var startScene = (function (_super) {
         // 	that.collection.y=80;
         // }
         this.goldText.text = '' + userDataMaster.gold;
+        this.currentBall.texture = RES.getRes('img_elf_a2_png');
         var list = [
             { appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
             { appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
@@ -54,6 +55,10 @@ var startScene = (function (_super) {
         for (var i = 0; i < 3; i++) {
             _loop_1(i);
         }
+        var energy = userDataMaster.sourceEnergy;
+        if (energy.uid && energy.day) {
+            this.addChild(new getEnergyModal(energy.uid, energy.day));
+        }
         egret.Tween.get(that.collection, { loop: true }).to({ x: 230 }, 500).to({ x: 244 }, 300);
         that.houseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
         that.travelBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this);
@@ -66,6 +71,7 @@ var startScene = (function (_super) {
     };
     startScene.prototype.updateData = function (evt) {
         this.goldText.text = '' + userDataMaster.gold;
+        this.currentBall.texture = RES.getRes('img_elf_a2_png');
     };
     startScene.prototype.moreFun = function (item) {
         var type = 1;

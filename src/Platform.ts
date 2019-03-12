@@ -16,9 +16,9 @@ declare interface Platform {
     //创建用户信息按钮
     createUserInfoButton(object: Object): Promise<any>;
     //使手机发生较短时间的振动（15 ms）
-    vibrateShort(): Promise<any>;
+    vibrateShort(object: Object): Promise<any>;
     //使手机发生较长时间的振动（400 ms)
-    vibrateLong(): Promise<any>;
+    vibrateLong(object: Object): Promise<any>;
     //打开同一公众号下关联的另一个小程序（注：必须是同一公众号下，而非同个 open 账号下）。要求在用户发生过至少一次 touch 事件后才能调用
     navigateToMiniProgram(object: Object): Promise<any>;
     //对用户托管数据进行写数据操作，允许同时写多组 KV 数据
@@ -63,8 +63,8 @@ class DebugPlatform implements Platform {
     async onShareAppMessage(object: Object) { }
     async shareAppMessage(object: Object) { }
     async createUserInfoButton(object: Object) { }
-    async vibrateShort() { }
-    async vibrateLong() { }
+    async vibrateShort(object: Object) { }
+    async vibrateLong(object: Object) { }
     async navigateToMiniProgram(object: Object) { }
     async setUserCloudStorage(object: Object) { }
     async getUserCloudStorage(object: Object) { }

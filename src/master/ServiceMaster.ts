@@ -1,23 +1,26 @@
 class ServiceMaster {
 	//域名
-	public static DOMAIN: string = 'https://newbox.0e3.cn/number_eliminate';
+	public static DOMAIN: string = 'https://newbox.0e3.cn/gball';
+	//  public static DOMAIN: string = 'http://114.55.25.63:3000/mock/130';
+	
 	//请求方式
 	public static METHOD_POST: string = 'POST';
 	public static METHOD_GET: string = 'GET';
 	//接口
-	public static appLogin: string = '/user/appLogin';//登陆
+	public static logins: string = '/user/logins';//登陆
+	public static updateUser: string = '/user/updateUser';//更新用户昵称头像
 	public static getGameList: string = '/other/getGameList';//获取更多游戏列表
-	public static getAdList: string = '/other/getAdList';//获取广告列表
-	public static updateUserInfo: string = '/user/updateUserInfo';//更新用户道具
-	public static getUserInfo: string = '/user/getUserInfo';//获取用户道具
-	public static getEdition: string = '/other/getEdition';//获取审核状态
-	public static getBannerAdList: string = '/other/getBannerAdList';//自带的banner广告
-	public static getList: string = '/user/getList';//世界排行
-	public static addMoney: string = '/other/addMoney';//发起提现申请
-	public static getMoney: string = '/other/getMoney';//获取提现列表
-	public static incUserFokas: string = '/user/incUserFokas';//用户增加福卡
-	public static decUserFokas: string = '/user/decUserFokas';//福卡兑换
-	public static recommand: string = '/other/click';//推荐位统计
+	public static getConfig: string = '/other/getConfig';//获广告id和审核状态
+    public static getScore: string = '/user/getScore';//提交分数
+	public static rank_world: string = '/user/rank_world';//世界排行
+	public static gameClick: string = '/other/gameClick';//推荐位统计
+	public static getAssistanceList:string='/other/getAssistanceList';//获取助力列表
+	public static receiveAssistance:string='/other/receiveAssistance';//领取助力奖励
+	public static getEnergy:string='/other/getEnergy';//点击分享链接进入游戏是否可以领取能量果
+	public static getEnergyList:string='/other/getEnergyList';//获取当前能量果可领数量&&领取能能量果
+	public static getGameData:string='/user/getGameData';//获得游戏数据
+	public static setGameData:string='/user/setGameData';//设置游戏数据
+
 	//单例
 	public static instance: ServiceMaster;
 	public static getInstance() {

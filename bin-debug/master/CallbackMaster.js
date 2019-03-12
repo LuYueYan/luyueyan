@@ -5,14 +5,6 @@ var CallbackMaster = (function () {
     function CallbackMaster() {
     }
     CallbackMaster.init = function () {
-        ServiceMaster.post(ServiceMaster.getEdition, {}, function (suc) {
-            if (suc.code == 1 && suc.data) {
-                if (suc.data.edition_1 == 2) {
-                    //审核通过，允许分享
-                    CallbackMaster.hasChecked = true;
-                }
-            }
-        });
         //右上角分享
         var obj = {
             query: 'type=newUser&uid=' + userDataMaster.getMyInfo.uid
@@ -56,7 +48,6 @@ var CallbackMaster = (function () {
         if (CallbackMaster.hasChecked) {
             //如果审核通过了
             var obj = {
-                title: '全新连线2048，你能走出魔鬼的步伐吗？',
                 query: 'uid=' + userDataMaster.getMyInfo.uid + query
             };
             platform.shareAppMessage(obj);
@@ -73,7 +64,7 @@ var CallbackMaster = (function () {
         //推荐位点击统计
         var uid = userDataMaster.getMyInfo.uid;
         // ServiceMaster.post(
-        // 	ServiceMaster.click,
+        // 	ServiceMaster.gameClick,
         // 	{ gid, uid, type },
         // 	function (suc) {
         // 		if (suc.code == 1 && suc.data) {

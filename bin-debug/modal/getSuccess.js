@@ -28,6 +28,7 @@ var getSuccess = (function (_super) {
     };
     getSuccess.prototype.init = function () {
         var that = this;
+        egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
         this.word.text = this.nameOrNum;
         this['type_' + this.type].visible = true;
         if (this.type == 2) {
@@ -40,10 +41,14 @@ var getSuccess = (function (_super) {
         }, 5000);
     };
     getSuccess.prototype.shareFun = function () {
-        CallbackMaster.openShare(null, false);
+        var _this = this;
+        CallbackMaster.openShare(function () { _this.ignoreFun(); }, false);
     };
     getSuccess.prototype.ignoreFun = function () {
-        this.parent.removeChild(this);
+        var that = this;
+        egret.Tween.get(this.body).to({ scaleX: 2, scaleY: 2, alpha: 0 }, 200).call(function () {
+            that.parent.removeChild(that);
+        });
     };
     return getSuccess;
 }(eui.Component));

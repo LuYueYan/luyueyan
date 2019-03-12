@@ -41,7 +41,7 @@ class common extends eui.Component implements eui.UIComponent {
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 	}
 	public createBuilding(type = 'left', y = 800) {
-		let building = this.createBitmapByName('img_castle_1_2_png');
+		let building = this.createBitmapByName('img_castle_a2_png');
 		building.anchorOffsetX = building.width / 2;
 		building.anchorOffsetY = building.height / 2;
 		if (type == 'left') {
@@ -50,7 +50,7 @@ class common extends eui.Component implements eui.UIComponent {
 			building.x = 500;
 		} else {
 			building.x = 375;
-			building.texture = RES.getRes('img_castle_1_1_png');
+			building.texture = RES.getRes('img_castle_a1_png');
 		}
 		building.y = y+building.anchorOffsetY;
 		this.buildingGroup.addChildAt(building, 0);
@@ -116,7 +116,7 @@ class common extends eui.Component implements eui.UIComponent {
 			let type = this.buildingArr[0].type == 'left' ? 'right' : 'left';
 			this.createBuilding(type, 600)
 			if (this.buildingArr.length > 0) {
-				this.buildingArr[0].content.texture = RES.getRes('img_castle_1_1_png');
+				this.buildingArr[0].content.texture = RES.getRes('img_castle_a1_png');
 				if (this.bee.x > this.buildingArr[0].content.x + this.buildingArr[0].content.width / 2) {
 					//向左
 					this.beeSpeed.speedX = -this.beeSpeed.oldSpeedX;

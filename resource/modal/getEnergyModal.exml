@@ -6,7 +6,7 @@
 		<e:Image source="img_bullet_frame_png"/>
 		<e:Image source="img_tittle_03_png" y="46" horizontalCenter="0"/>
 		<e:Image source="img_gift_big_png" y="193.7" horizontalCenter="0"/>
-		<e:Image id="getBtn" y="651" horizontalCenter="0" touchEnabled="true" source="btn_present_02_png"/>
+		<e:Image id="getBtn" y="651" horizontalCenter="0" touchEnabled="true" source="btn_receive_02_png"/>
 		<e:Label id="getText" text="已领取（0/5）" y="753" size="22" textColor="0x9382ff" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 		<e:Button id="closeBtn" label="" x="579" y="54">
 			<e:skinName>

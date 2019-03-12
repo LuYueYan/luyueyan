@@ -73,8 +73,12 @@ var AdMaster = (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, ServiceMaster.post(ServiceMaster.getAdList, {}, function (res) {
+                    case 0: return [4 /*yield*/, ServiceMaster.post(ServiceMaster.getConfig, {}, function (res) {
                             if (parseInt(res.code) === 1 && res.data) {
+                                if (res.data.edition_1 == 1) {
+                                    //审核通过，允许分享
+                                    CallbackMaster.hasChecked = true;
+                                }
                                 if (res.data.banner_id !== undefined && res.data.banner_id != null && res.data.banner_id.length > 0) {
                                     AdMaster.banner = res.data.banner_id;
                                     AdMaster.hasBanner = true;
@@ -137,12 +141,6 @@ var AdMaster = (function () {
                 errBack(err);
             });
             AdMaster.cacheVideoAd.onClose(callback);
-            // AdMaster.closeSuccess = callback;
-            // if (!AdMaster.initClose) {
-            // 	//若没初始化onclose函数
-            // 	AdMaster.cacheVideoAd.onClose(AdMaster.closeSuccess);
-            // 	AdMaster.initClose = true;
-            // }
         }
     };
     //设置Banner广告 (添加广告接口请求判断)

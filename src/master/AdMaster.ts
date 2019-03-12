@@ -48,8 +48,12 @@ class AdMaster {
 	}
 	//获取流量主列表
 	public static async list() {
-		await ServiceMaster.post(ServiceMaster.getAdList, {}, function (res) {
+		await ServiceMaster.post(ServiceMaster.getConfig, {}, function (res) {
 			if (parseInt(res.code) === 1 && res.data) {
+				if (res.data.edition_1 == 1) {
+					//审核通过，允许分享
+					CallbackMaster.hasChecked = true;
+				}
 				if (res.data.banner_id !== undefined && res.data.banner_id != null && res.data.banner_id.length > 0) {
 					AdMaster.banner = res.data.banner_id
 					AdMaster.hasBanner = true
@@ -62,7 +66,7 @@ class AdMaster {
 					//[随机]缓存视频广告
 					AdMaster.randomCacheVideoAd()
 				}
-				AdMaster.INIT_STATUS = 2
+				AdMaster.INIT_STATUS = 2;
 			}
 		}, function (err) {
 			AdMaster.INIT_STATUS = 3
@@ -111,12 +115,7 @@ class AdMaster {
 				})
 
 			AdMaster.cacheVideoAd.onClose(callback);
-			// AdMaster.closeSuccess = callback;
-			// if (!AdMaster.initClose) {
-			// 	//若没初始化onclose函数
-			// 	AdMaster.cacheVideoAd.onClose(AdMaster.closeSuccess);
-			// 	AdMaster.initClose = true;
-			// }
+
 
 		}
 	}

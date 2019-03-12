@@ -3,17 +3,17 @@
 	<w:Config id="1692d89b8d4" ></w:Config>
 	<e:Image source="bg_1_jpg" horizontalCenter="0" top="0"/>
 	<e:Group width="600" height="600" y="600" anchorOffsetX="300" anchorOffsetY="300" horizontalCenter="0">
-		<e:Image source="img_spirit_01_png" x="306" y="287" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_6" scaleX="0.35" scaleY="0.35"/>
-		<e:Image source="img_spirit_01_png" x="190" y="295" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_5" scaleX="0.4" scaleY="0.4"/>
-		<e:Image source="img_spirit_01_png" x="406" y="295" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_7" scaleX="0.4" scaleY="0.4"/>
-		<e:Image source="img_spirit_01_png" x="94" y="313" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_4" scaleX="0.5" scaleY="0.5"/>
-		<e:Image source="img_spirit_01_png" x="506" y="313" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_8" scaleX="0.5" scaleY="0.5"/>
-		<e:Image source="img_spirit_01_png" x="28" y="363" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_3" scaleX="0.6" scaleY="0.6"/>
-		<e:Image id="img_9" source="img_spirit_01_png" x="576" y="363" anchorOffsetX="72" anchorOffsetY="59" rotation="0" scaleX="0.6" scaleY="0.6"/>
-		<e:Image source="img_spirit_01_png" x="44" y="431" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_2" scaleX="0.7" scaleY="0.7"/>
-		<e:Image id="img_10" source="img_spirit_01_png" x="562" y="431" anchorOffsetX="72" anchorOffsetY="59" rotation="0" scaleX="0.7" scaleY="0.7"/>
-		<e:Image source="img_spirit_01_png" x="138" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_1" scaleX="0.8" scaleY="0.8"/>
-		<e:Image source="img_spirit_01_png" x="464" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_11" scaleX="0.8" scaleY="0.8"/>
-		<e:Image source="img_spirit_01_png" x="300" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_0"/>
+		<e:Image x="306" y="287" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_6" scaleX="0.35" scaleY="0.35" source=""/>
+		<e:Image x="190" y="295" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_5" scaleX="0.4" scaleY="0.4" source=""/>
+		<e:Image x="406" y="295" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_7" scaleX="0.4" scaleY="0.4" source=""/>
+		<e:Image x="94" y="313" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_4" scaleX="0.5" scaleY="0.5" source=""/>
+		<e:Image x="506" y="313" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_8" scaleX="0.5" scaleY="0.5" source=""/>
+		<e:Image x="28" y="363" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_3" scaleX="0.6" scaleY="0.6" source=""/>
+		<e:Image id="img_9" x="576" y="363" anchorOffsetX="72" anchorOffsetY="59" rotation="0" scaleX="0.6" scaleY="0.6" source=""/>
+		<e:Image x="44" y="431" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_2" scaleX="0.7" scaleY="0.7" source=""/>
+		<e:Image id="img_10" x="562" y="431" anchorOffsetX="72" anchorOffsetY="59" rotation="0" scaleX="0.7" scaleY="0.7" source=""/>
+		<e:Image x="138" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_1" scaleX="0.8" scaleY="0.8" source=""/>
+		<e:Image x="464" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_11" scaleX="0.8" scaleY="0.8" source=""/>
+		<e:Image x="300" y="471" anchorOffsetX="72" anchorOffsetY="59" rotation="0" id="img_0" source=""/>
 	</e:Group>
 </e:Skin>

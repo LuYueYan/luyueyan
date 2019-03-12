@@ -5,15 +5,15 @@ class getSuccess extends eui.Component implements eui.UIComponent {
 	public type_1: eui.Group;
 	public word: eui.Label;
 	public shareBtn: eui.Image;
-
+	public body: eui.Group;
 
 
 	public type = 1;//类型 1--能量果 2--解锁球
-	public nameOrNum='';//球的名字或者能量果数量 （数量的话类似 'x100'）
-	public constructor(type = 1,nameOrNum) {
+	public nameOrNum = '';//球的名字或者能量果数量 （数量的话类似 'x100'）
+	public constructor(type = 1, nameOrNum) {
 		super();
 		this.type = type;
-		this.nameOrNum=nameOrNum;
+		this.nameOrNum = nameOrNum;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -27,11 +27,11 @@ class getSuccess extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		this.word.text=this.nameOrNum;
-		this['type_'+this.type].visible = true;
+		egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
+		this.word.text = this.nameOrNum;
+		this['type_' + this.type].visible = true;
 		if (this.type == 2) {
 			this.title.texture = RES.getRes('img_tittle_05_png');
-
 		}
 		that.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
 		that.ignoreBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.ignoreFun, this);
@@ -40,10 +40,12 @@ class getSuccess extends eui.Component implements eui.UIComponent {
 		}, 5000);
 	}
 	public shareFun() {
-		CallbackMaster.openShare(null, false);
+		CallbackMaster.openShare(() => { this.ignoreFun() }, false);
 	}
 	public ignoreFun() {
-		this.parent.removeChild(this);
+		let that=this;
+		egret.Tween.get(this.body).to({ scaleX: 2, scaleY: 2 ,alpha:0}, 200).call(() => {
+			that.parent.removeChild(that);
+		});
 	}
-
 }

@@ -58,14 +58,16 @@ class Main extends eui.UILayer {
     }
 
     private async runGame() {
-        // DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
+        DeviceMaster.init(this.stage.stageWidth, this.stage.stageHeight);
         userDataMaster.init();
         let option = platform.getLaunchOptionsSync();
         if (option && option.query && option.query.uid) {
             console.log(option)
             userDataMaster.shareUid = option.query.uid;
-            if (option.query.type&&option.query.type=='energy') {
+            if (option.query.type && option.query.type == 'energy') {
                 //能量分享
+                userDataMaster.sourceEnergy.uid = option.query.suid || option.query.uid;
+                userDataMaster.sourceEnergy.day = option.query.day;
             }
         }
         await this.loadResource()
@@ -104,11 +106,11 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        // AdMaster.init();
+        AdMaster.init();
         soundMaster.init();
-        // CallbackMaster.init();
+        CallbackMaster.init();
         this.addChild(new startScene());
-        
+
         //添加右上角转发
         platform.onShareAppMessage({})
     }

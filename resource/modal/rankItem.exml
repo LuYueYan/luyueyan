@@ -7,6 +7,7 @@
 		<e:Image id="headimg" width="70" height="70" x="112" verticalCenter="0"/>
 		<e:Label id="nickName" text="" x="202" size="24" anchorOffsetX="0" width="175" height="26" fontFamily="Microsoft YaHei" verticalCenter="0" textColor="0xfdddff"/>
 		<e:Label id="score" text="0" x="366" anchorOffsetX="0" width="200" fontFamily="Microsoft YaHei" size="32" height="28" verticalCenter="0" rotation="0.12" textAlign="center" textColor="0xffffff"/>
+		<e:Rect width="600" height="1" y="85" anchorOffsetY="0" horizontalCenter="0" fillColor="0x888888"/>
 		<e:layout>
 			<e:BasicLayout/>
 		</e:layout>

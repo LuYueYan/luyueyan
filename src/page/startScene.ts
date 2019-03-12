@@ -5,10 +5,13 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public moreGroup: eui.Group;
 	public mask_1: eui.Rect;
 	public more_1: eui.Image;
+	public text_1: eui.Label;
 	public mask_2: eui.Rect;
 	public more_2: eui.Image;
+	public text_2: eui.Label;
 	public mask_3: eui.Rect;
 	public more_3: eui.Image;
+	public text_3: eui.Label;
 	public friendBtn: eui.Image;
 	public energyBtn: eui.Image;
 	public currentBall: eui.Image;
@@ -21,6 +24,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public travelTip: eui.Image;
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
+
 
 
 
@@ -43,6 +47,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
+		userDataMaster.createLoginBtn(0, 100, 300, 100);
 		that.bgImg.height = that.stage.stageHeight;
 		setTimeout(function () {
 			if (AdMaster.cacheBannerAd) {
@@ -50,22 +55,30 @@ class startScene extends eui.Component implements eui.UIComponent {
 			}
 		}, 1000);
 
-		// let match=DeviceMaster.model.match(/iPhone ?X/ig);
-		// if(match){
-		// 	that.collection.y=80;
-		// }
+		let match = DeviceMaster.model.match(/iPhone ?X/ig);
+		if (match) {
+			that.collection.y = 80;
+		}
+
 		this.goldText.text = '' + userDataMaster.gold;
-		let list = [
-			{ appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
-			{ appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' },
-			{ appid: '', path: '', image: '/resource/assets/Aimages/img_spirit_01.png', name: '滴滴滴' }
-		];
-		for (let i = 0; i < 3; i++) {
-			// that['more_' + (i + 1)].source = list[i].image;
-			// that['more_' + (i + 1)].mask=that['mask_' + (i + 1)];
-			that['more_' + (i + 1)].addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-				that.moreFun(list[i])
-			}, this);
+		this.currentBall.texture = RES.getRes('img_elf_'+userDataMaster.runCat+'2_png');
+
+		if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
+			let list = userDataMaster.recommand['1'].games;
+			for (let i = 0; i < 3 && i < list.length; i++) {
+				that['more_' + (i + 1)].source = list[i].image;
+				let text=list[i].name.length>4?list[i].name.substr(0,3)+'…':list[i].name;
+				that['text_' + (i + 1)].text = text;
+				that['more_' + (i + 1)].mask = that['mask_' + (i + 1)];
+				that['more_' + (i + 1)].addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+					that.moreFun(list[i])
+				}, this);
+			}
+		}
+
+		let energy = userDataMaster.sourceEnergy;
+		if (energy.uid && energy.day) {
+			this.addChild(new getEnergyModal(energy.uid, energy.day))
 		}
 		egret.Tween.get(that.collection, { loop: true }).to({ x: 230 }, 500).to({ x: 244 }, 300)
 		that.houseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
@@ -79,9 +92,12 @@ class startScene extends eui.Component implements eui.UIComponent {
 	}
 	public updateData(evt: eui.CollectionEvent): void {
 		this.goldText.text = '' + userDataMaster.gold;
+		this.currentBall.texture = RES.getRes('img_elf_'+userDataMaster.runCat+'2_png');
 	}
 	public moreFun(item) {
-		let type = 1;
+
+		CallbackMaster.recommandClick(1, item);
+		let type = 2;
 		platform.navigateToMiniProgram({
 			appId: item.appid,
 			path: item.path,
@@ -89,22 +105,22 @@ class startScene extends eui.Component implements eui.UIComponent {
 			success(suc) {
 
 			}, fail(err) {
-				type = 0;
+				type = 3;
 			},
 			complete() {
-				// CallbackMaster.recommandClick(that.data.id, type)
+				CallbackMaster.recommandClick(type, item)
 			}
 		})
 	}
 	public houseFun() {
 		let that = this;
 		that.addChild(new myBalls());
-		that.houseTip.visible=false;
+		that.houseTip.visible = false;
 	}
 	public travelFun() {
 		let that = this;
 		this.addChild(new travelScene());
-		that.travelTip.visible=false;
+		that.travelTip.visible = false;
 	}
 	public rankFun() {
 		let that = this;
@@ -113,7 +129,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public shareFun() {
 		let that = this;
 		CallbackMaster.openShare(null, false);
-		that.shareTip.visible=false;
+		that.shareTip.visible = false;
 	}
 	public friendFun() {
 		let that = this;
@@ -122,7 +138,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public energyFun() {
 		let that = this;
 		that.addChild(new dayEnergy());
-		that.energyTip.visible=false;
+		that.energyTip.visible = false;
 	}
 	public startFun() {
 		let that = this;

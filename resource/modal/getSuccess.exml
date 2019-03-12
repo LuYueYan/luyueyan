@@ -2,7 +2,7 @@
 <e:Skin class="getSuccessSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="1694667f962" ></w:Config>
 	<ns1:grayBg y="1.52"/>
-	<e:Group width="713" height="890.36" y="160" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0.5">
+	<e:Group id="body" width="714" height="890" y="565" anchorOffsetY="445" horizontalCenter="1" anchorOffsetX="357" scaleX="0" scaleY="0">
 		<e:Image source="img_bg_gift_png" top="0" horizontalCenter="0"/>
 		<e:Label id="ignoreBtn" text="不了&gt;" y="836" fontFamily="Microsoft YaHei" size="28" touchEnabled="true" textColor="0xab9dff" horizontalCenter="0" visible="false"/>
 		<e:Image id="title" horizontalCenter="0.5" top="28" source="img_tittle_04_png"/>

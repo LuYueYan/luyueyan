@@ -32,16 +32,9 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 	public ball: eui.Image;
 	public closeBtn: eui.Button;
 	public getBtn: eui.Image;
+	public body: eui.Group;
 
-
-
-
-	public haveGet = false;//是否已经拥有火火球
-	public list = [
-		{ id: 1, avatarUrl: '/resource/assets/Aimages/img_spirit_01.png', state: 0 },
-		{ id: 2, avatarUrl: '/resource/assets/Aimages/img_spirit_01.png', state: 1 },
-		{ id: 3, avatarUrl: '/resource/assets/Aimages/img_spirit_01.png', state: 0 }
-	];//state状态值0-未领取 1-已领取
+	public list = [];//"status":  状态1未领取2已领取
 	public constructor() {
 		super();
 	}
@@ -57,43 +50,71 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		for (let i = 0, len = that.list.length; i < len; i++) {
-			that['friend_' + i].source = that.list[i].avatarUrl;
-			that['friend_' + i].mask = that['mask_' + i];
-			that['text_' + i].text = "x50";
-			that['icon_' + i].visible = true;
-			if (that.list[i].state == 0) {
-				that['get_' + i].visible = true;
-				that['get_' + i].addEventListener(egret.TouchEvent.TOUCH_TAP, () => { this.getEnergyFun(i) }, this);
-			}
-		}
+		that.getList()
+		egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
+
 		this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
-		if (that.haveGet && that.list.length >= 6) {
+		if (userDataMaster.cats[8].state) {
 			//已解锁
 		}
-		if (!that.haveGet && that.list.length >= 6) {
+		if (!userDataMaster.cats[8].state && that.list.length >= 6) {
 			//可解锁
 			that.getBtn.texture = RES.getRes('btn_unlocking_png');
+
 		}
 	}
+	public getList() {
+		let that = this;
+		let params = {
+			uid: userDataMaster.getMyInfo.uid || 0
+		}
+		ServiceMaster.post(ServiceMaster.getAssistanceList, params, (res) => {
+			if (res.code == 1 && res.data) {
+				that.list = res.data.list;
+				for (let i = 0, len = res.data.total; i < len; i++) {
+					that['friend_' + i].source = that.list[i].avatarUrl;
+					that['friend_' + i].mask = that['mask_' + i];
+					that['text_' + i].text = "x50";
+					that['icon_' + i].visible = true;
+					if (that.list[i].status == 1) {
+						that['get_' + i].visible = true;
+						that['get_' + i].addEventListener(egret.TouchEvent.TOUCH_TAP, () => { this.getEnergyFun(i) }, this);
+					}
+				}
+			}
+		})
+	}
 	public getEnergyFun(i) {
-		let gold = userDataMaster.myGold;
-		gold += 50;
-		userDataMaster.myGold = gold;
-		this['get_' + i].visible = false;
-		this.list[i].state = 1;
-		this.addChild(new getSuccess(1,'x 50'));
+		let that = this;
+		let params = {
+			id: that.list[i].id,
+			uid: userDataMaster.getMyInfo.uid
+		}
+		ServiceMaster.post(ServiceMaster.receiveAssistance, params, (res) => {
+			if (res.code == 1 && res.data) {
+				let gold = userDataMaster.myGold;
+				gold += 50;
+				userDataMaster.myGold = gold;
+				that['get_' + i].visible = false;
+				that.list[i].status = 2;
+				that.addChild(new getSuccess(1, 'x 50'));
+			}
+		})
+
 	}
 	public getFun() {
 		let that = this;
 		if (that.list.length >= 6) {
 			//邀请完成 --解锁
-			if (!that.haveGet) {
+			if (!userDataMaster.cats[8].state) {
 				//未解锁
-				that.addChild(new getSuccess(2,'火火球'));
+				let cat = userDataMaster.cats[8];
+				cat.state = true;
+				userDataMaster.setCat(8, cat);
+				that.addChild(new getSuccess(2, '火火球'));
 			} else {
-              //已解锁
+				//已解锁
 			}
 		} else {
 			CallbackMaster.openShare(null, false);
@@ -101,6 +122,9 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 
 	}
 	public closeFun() {
-		this.parent.removeChild(this);
+		let that = this;
+		egret.Tween.get(this.body).to({ scaleX: 2, scaleY: 2, alpha: 0 }, 200).call(() => {
+			that.parent.removeChild(that);
+		});
 	}
 }

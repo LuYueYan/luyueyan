@@ -25,21 +25,24 @@ var runningScene = (function (_super) {
         _this.moveSpeed = 1;
         _this.hitNum = 0;
         _this.themeArr = [
-            { index: 1, num: 15, width: 340, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
-            { index: 2, num: 15, width: 340, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
-            { index: 3, num: 15, width: 340, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
-            { index: 4, num: 15, width: 200, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
-            { index: 5, num: 15, width: 310, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
-            { index: 6, num: 15, width: 340, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
-            { index: 7, num: 15, width: 200, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
-            { index: 8, num: 15, width: 340, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
-            { index: 9, num: 15, width: 340, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
-            { index: 10, num: 15, width: 330, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
+            { index: 1, num: 15, width: 340, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
+            { index: 2, num: 15, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+            { index: 3, num: 15, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
+            { index: 4, num: 15, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+            { index: 5, num: 15, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+            { index: 6, num: 15, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+            { index: 7, num: 15, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+            { index: 8, num: 15, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
+            { index: 9, num: 15, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+            { index: 10, num: 15, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
         ];
         _this.list = [];
         _this.chooseList = [];
         _this.terval = null;
         _this.adaptation = 0; //适配长度
+        _this.rebornNum = 0; //是否已经复活
+        _this.guideProcess = 0; //引导进度
+        _this.worldSpeed = 1000; //世界运行速度
         _this.currentTheme = theme;
         _this.score = score;
         _this.hitNum = hitNum;
@@ -59,8 +62,11 @@ var runningScene = (function (_super) {
     };
     runningScene.prototype.init = function () {
         var that = this;
+        this.guide = new guideModal();
+        this.addChild(this.guide);
+        this.guide.addChild(this.startBtn);
         this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
-        this.createBg(0x7a3fc3, 0x30368d);
+        this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].begin);
         //创建world
         this.world = new p2.World();
         this.world.sleepMode = p2.World.BODY_SLEEPING; //睡眠策略，提高性能
@@ -103,9 +109,14 @@ var runningScene = (function (_super) {
     };
     runningScene.prototype.startFun = function () {
         this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-        this.removeChild(this.startBtn);
+        // this.removeChild(this.startBtn);
+        if (this.guide) {
+            this.guide.removeChild(this.startBtn);
+            this.removeChild(this.guide);
+            this.guideProcess = 1; //第一步引导完成
+        }
         this.bee.gravityScale = 1;
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+        // this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
     };
     runningScene.prototype.onEnterFrame = function () {
         var that = this;
@@ -116,10 +127,11 @@ var runningScene = (function (_super) {
         if (dt > 1000) {
             return;
         }
-        this.world.step(dt / 1000); //使物理系统向前经过一定时间，也就是使世界运行
+        this.world.step(dt / this.worldSpeed); //使物理系统向前经过一定时间，也就是使世界运行
         this.currentTimer = egret.getTimer();
         var stageHeight = egret.MainContext.instance.stage.stageHeight; //获取舞台高度？？？？
         var l = this.world.bodies.length; //所有body的长度
+        var margin = that.themeArr[that.currentTheme - 1].top;
         for (var i = 0; i < l; i++) {
             var boxBody = this.world.bodies[i];
             var len = boxBody.displays.length;
@@ -130,7 +142,7 @@ var runningScene = (function (_super) {
                     box.y = stageHeight - boxBody.position[1] * this.factor; //坐标系不一样，所以要转换
                     box.rotation = 360 - (boxBody.angle + boxBody.shapes[j].angle) * 180 / Math.PI; //旋转
                     if (j == 1) {
-                        box.y -= boxBody.displays[0].height / 2 - 50;
+                        box.y -= (boxBody.displays[0].height / 2 - margin) * boxBody.displays[0].scaleY;
                         box.rotation = 180;
                     }
                 }
@@ -140,6 +152,24 @@ var runningScene = (function (_super) {
             console.log('gameover');
             this.gameOver();
             return;
+        }
+        if (this.guide && this.guideProcess == 1 && that.flowerArr[0].params.type == "right" && Math.abs(this.bee.position[0] - this.flowerArr[0].body.position[0]) < 1) {
+            //第二次引导
+            this.addChild(this.guide);
+            this.guide.process_1.visible = false;
+            this.guide.process_2.visible = true;
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+            this.worldSpeed = 1000000;
+            this.guideProcess = 2; //第二步引导结束
+        }
+        if (this.guide && this.guideProcess == 2 && that.flowerArr[0].params.type == "left" && Math.abs(this.bee.position[0] - this.flowerArr[0].body.position[0]) < 1) {
+            //第三次引导
+            this.addChild(this.guide);
+            this.guide.process_2.visible = false;
+            this.guide.process_3.visible = true;
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+            this.worldSpeed = 1000000;
+            this.guideProcess = 3; //第三步引导结束
         }
         var hitright = that.ceilArr[0].overlaps(that.bee);
         if (hitright) {
@@ -156,11 +186,6 @@ var runningScene = (function (_super) {
         var hit = that.flowerArr[0].body.overlaps(that.bee);
         var top = (that.bee.position[1] + that.bee.displays[0].height / 2 / that.factor) - (that.flowerArr[0].body.position[1] + that.flowerArr[0].body.displays[0].height / 2 / that.factor);
         if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && top >= 0 && top <= 2) {
-            //    if(that.flowerArr[0].body.position[1]>6){
-            // 	   that.moveSpeed=2;
-            //    }else{
-            // 	   that.moveSpeed=1;
-            //    }
             if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
                 // console.log('center')
                 that.flowerArr[0].body.displays[1].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[1]);
@@ -202,7 +227,6 @@ var runningScene = (function (_super) {
                 that.hitNum = 0;
                 that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
                 this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
-                // that.throughFun()
                 var current = that.themeArr[that.currentTheme - 1].name;
                 for (var i_1 = 0; i_1 < that.flowerArr.length; i_1++) {
                     that.flowerArr[i_1].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
@@ -213,6 +237,7 @@ var runningScene = (function (_super) {
                         that.flowerArr[i_1].body.displays[0].texture = RES.getRes(current + '2_png');
                     }
                 }
+                that.throughFun();
             }
             var cur = that.themeArr[that.currentTheme - 1].name;
             that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png');
@@ -225,7 +250,7 @@ var runningScene = (function (_super) {
         }
         for (var x = 0, len_1 = that.removeArr.length; x < len_1; x++) {
             if (that.removeArr[x] && that.removeArr[x].body) {
-                that.removeArr[x].body.displays[0].scaleX += 0.01;
+                that.removeArr[x].body.displays[0].scaleX += 0.001;
                 if (that.removeArr[x].body.position[1] < -4) {
                     that.world.removeBody(that.removeArr[x].body);
                     that.removeArr[x].body.displays[0] && that.removeArr[x].body.displays[0].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[0]);
@@ -244,9 +269,6 @@ var runningScene = (function (_super) {
                     that.flowerArr[i_2].body.displays[1].scaleX += 0.001 * that.moveSpeed;
                     that.flowerArr[i_2].body.displays[1].scaleY += 0.001 * that.moveSpeed;
                     that.flowerArr[i_2].body.velocity[1] = -2 * that.moveSpeed;
-                    // if (i == 0) {
-                    // 	that.flowerArr[i].body.displays[0].texture = RES.getRes(cur + '1_png')
-                    // }
                 }
             }
         }
@@ -255,8 +277,9 @@ var runningScene = (function (_super) {
         //died
         this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
-        if (1) {
+        if (this.rebornNum == 0) {
             //可复活
+            this.rebornNum++;
             var born = new reborn(this.score);
             this.addChild(born);
             born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this);
@@ -269,23 +292,32 @@ var runningScene = (function (_super) {
     };
     runningScene.prototype.judgeReborn = function () {
         //video or share
-        if (1) {
-            var parent_2 = this.parent;
-            var theme = this.currentTheme;
-            var score = this.score;
-            var hitNum = this.hitNum;
-            parent_2.removeChild(this);
-            parent_2.addChild(new runningScene(theme, score, hitNum));
-        }
+        var that = this;
+        AdMaster.useVideo(function () {
+            suc();
+        }, function () {
+            CallbackMaster.openShare(function () {
+                suc();
+            });
+        });
+        var suc = function () {
+            var parent = that.parent;
+            var theme = that.currentTheme;
+            var score = that.score;
+            var hitNum = that.hitNum;
+            parent.removeChild(that);
+            parent.addChild(new runningScene(theme, score, hitNum));
+        };
     };
     runningScene.prototype.createBee = function () {
-        var boxShape = new p2.Box({ width: 0.5, height: 2.36, material: new p2.Material(1) });
+        var boxShape = new p2.Box({ width: 0.5, height: 3.2, material: new p2.Material(1) });
         this.bee = new p2.Body({ mass: 5000, position: [7.5, 20 + this.adaptation] });
         this.bee.gravityScale = 0;
         this.bee.collisionResponse = false;
         this.bee.addShape(boxShape);
         this.world.addBody(this.bee);
-        var display = this.createBitmapByName("img_spirit_01_png");
+        //当前的球 index  =userDataMaster.runCat
+        var display = this.createBitmapByName("img_elf_a1_png");
         display.width = 144;
         display.height = boxShape.height * this.factor;
         display.anchorOffsetX = display.width / 2;
@@ -318,7 +350,7 @@ var runningScene = (function (_super) {
         else {
             boxBody.position = [12 + ran, y + that.adaptation];
         }
-        var lightningShape = new p2.Box({ width: 1.86, height: 1.36, material: new p2.Material(2) });
+        var lightningShape = new p2.Box({ width: 0.36, height: 4, material: new p2.Material(2) });
         var lightning = that.createBitmapByName('linear_light_png');
         lightning.x = lightning.width / 2;
         lightning.y = -boxShape.height * that.factor / 2;
@@ -340,17 +372,24 @@ var runningScene = (function (_super) {
         this.bee.gravityScale = 1;
         this.bee.angle = 0;
         this.bee.angularVelocity = 0;
+        if (this.guide && this.guide.parent) {
+            this.guide.parent.removeChild(this.guide);
+            this.worldSpeed = 1000;
+            if (this.guideProcess < 3) {
+                this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+            }
+        }
     };
     runningScene.prototype.throughFun = function () {
         var that = this;
-        this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         that.through = new throughModal();
         this.addChild(that.through);
+        that.worldSpeed = 10000;
         for (var i = 0; i < 3; i++) {
             var ran = Math.random() > 0.5 ? 2 : 1;
             that.list.push(ran);
-            that.through['item_' + i].texture = RES.getRes('img_spirit_0' + ran + '_png');
+            that.through['item_' + i].texture = RES.getRes('img_click_0' + ran + '_png');
         }
         that.terval = setInterval(function () {
             if (that.through.processMask.width > 0) {
@@ -361,20 +400,23 @@ var runningScene = (function (_super) {
                 clearInterval(that.terval);
                 that.throughEndFun(false);
             }
-        }, 200);
+        }, 500);
         that.through.tap_1.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { that.chooseFun(1); }, this);
         that.through.tap_2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { that.chooseFun(2); }, this);
     };
     runningScene.prototype.throughEndFun = function (type) {
         var that = this;
-        that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
+        // that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
         if (type) {
-            var parent_3 = this.parent;
-            var theme = this.currentTheme;
-            var score = this.score;
-            var hitNum = this.hitNum;
-            parent_3.removeChild(this);
-            parent_3.addChild(new runningScene(theme, score, hitNum));
+            // let parent = this.parent;
+            // let theme = this.currentTheme;
+            // let score = this.score;
+            // let hitNum = this.hitNum;
+            // parent.removeChild(this);
+            // parent.addChild(new runningScene(theme, score, hitNum));
+            that.removeChild(that.through);
+            this.worldSpeed = 1000;
+            that.addEventListener(egret.TouchEvent.TOUCH_TAP, that.touchFun, that);
         }
         else {
             that.removeChild(that.through);
@@ -384,9 +426,12 @@ var runningScene = (function (_super) {
     runningScene.prototype.chooseFun = function (type) {
         var len = this.chooseList.length;
         if (this.list[len] == type) {
+            this.through['item_' + len].alpha = 1;
             this.chooseList.push(type);
             if (this.chooseList.length == 3) {
                 //通过
+                this.chooseList = [];
+                this.list = [];
                 clearInterval(this.terval);
                 this.throughEndFun(true);
             }

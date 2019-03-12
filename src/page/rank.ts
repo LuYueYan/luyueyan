@@ -11,8 +11,9 @@ class rank extends eui.Component implements eui.UIComponent {
 	public dataGroup: eui.DataGroup = new eui.DataGroup();
 	public sourceArr: eui.ArrayCollection = new eui.ArrayCollection([]);
 	public currentType = 'friend';
-	public worldPage = 1;
-	public endPage = 1;
+	public worldPage = 1;//当前页码
+	public endPage = 1;//总页数
+	public pageSize = 6;//每页数量
 	public constructor() {
 		super();
 	}
@@ -63,20 +64,22 @@ class rank extends eui.Component implements eui.UIComponent {
 	public getWorld() {
 		let that = this;
 		let params = {
-			p: that.worldPage
+			uid: userDataMaster.getMyInfo.uid,
+			page: that.worldPage,
+			size: that.pageSize
 		}
-		// ServiceMaster.post(ServiceMaster.getList, params, (res) => {
-		// 	if (res.code == 1 && res.data) {
-		// 		let data = res.data.data;
-		// 		that.endPage = res.data.last_page;
-		// 		that.sourceArr.removeAll();
-		// this.pageText.text=that.worldPage+' / '+that.endPage;
-		// 		for (let i = 0; i < data.length; i++) {
-		// 			data[i].index = (that.worldPage - 1) * res.data.per_page + i + 1;
-		// 			that.sourceArr.addItem(data[i]);
-		// 		}
-		// 	}
-		// })
+		ServiceMaster.post(ServiceMaster.rank_world, params, (res) => {
+			if (res.code == 1 && res.data) {
+				let data = res.data.rank_world;
+				that.endPage = res.data.page_num;
+				that.sourceArr.removeAll();
+				this.pageText.text = that.worldPage + ' / ' + that.endPage;
+				for (let i = 0; i < data.length; i++) {
+					// data[i].index = (that.worldPage - 1) * that.pageSize + i + 1;
+					that.sourceArr.addItem(data[i]);
+				}
+			}
+		})
 	}
 	public friendFun() {
 		this.pageText.visible = false;

@@ -4,6 +4,7 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public timing: eui.Image;
 	public rebornBtn: eui.Image;
 	public ignoreBtn: eui.Label;
+    public surpassGroup:eui.Group;
 
 	public score = 0;
 	public terval = null;
@@ -26,6 +27,15 @@ class reborn extends eui.Component implements eui.UIComponent {
 		let that = this;
 		this.bgImg.height=this.stage.stageHeight;
 		this.scoreText.text = this.score + "";
+		platform.openDataContext.postMessage({
+			type: "passInit",
+			score:that.score,
+			width: 80,
+			height: 80
+		});
+		let surpass = platform.openDataContext.createDisplayObject();
+		this.surpassGroup.addChild(surpass);
+
 		this.terval = setInterval(() => {
 			that.current_time > 1 && that.current_time--;
 			that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
@@ -41,7 +51,7 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public ignoreFun() {
 		let parent = this.parent.parent;
 		parent.removeChild(this.parent);
-		parent.addChild(new gameOver());
+		parent.addChild(new gameOver(this.score));
 	}
 
 }

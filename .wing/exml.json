@@ -1,110 +1,116 @@
 {
-    "16905082286": {
-        "path": "page\\runningScene.ts",
-        "class": "runningScene",
-        "parentPath": ""
-    },
-    "16913edb994": {
-        "path": "page\\gameOver.ts",
-        "class": "gameOver",
-        "parentPath": ""
-    },
-    "1691450117b": {
-        "path": "page\\common.ts",
-        "class": "common",
-        "parentPath": ""
-    },
-    "169227c070f": {
-        "path": "page\\startScene.ts",
-        "class": "startScene",
-        "parentPath": ""
-    },
-    "16922a42a3b": {
-        "path": "modal\\moreItem.ts",
-        "class": "moreItem",
-        "parentPath": ""
-    },
-    "16922a9a275": {
-        "path": "modal\\ballItem.ts",
-        "class": "ballItem",
-        "parentPath": ""
-    },
-    "16922ab1364": {
-        "path": "modal\\houseScene.ts",
-        "class": "houseScene",
-        "parentPath": ""
-    },
-    "16922cbe2cb": {
-        "path": "modal\\travelItem.ts",
-        "class": "travelItem",
-        "parentPath": ""
-    },
-    "169233e32f7": {
-        "path": "modal\\travelScene.ts",
-        "class": "travelScene",
-        "parentPath": ""
-    },
-    "16928b7ac6a": {
-        "path": "modal\\reborn.ts",
-        "class": "reborn",
-        "parentPath": ""
-    },
-    "16928c36186": {
-        "path": "modal\\grayBg.ts",
-        "class": "grayBg",
-        "parentPath": ""
-    },
-    "16928e7bcdb": {
-        "path": "page\\rank.ts",
-        "class": "rank",
-        "parentPath": ""
-    },
-    "16928edc055": {
-        "path": "modal\\rankItem.ts",
-        "class": "rankItem",
-        "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
-    },
-    "16928f0aff8": {
-        "path": "modal\\friendHelp.ts",
-        "class": "friendHelp",
-        "parentPath": ""
-    },
-    "169294fc720": {
-        "path": "modal\\dayEnergy.ts",
-        "class": "dayEnergy",
-        "parentPath": ""
-    },
-    "global": {
-        "globalRulerEnable": true
-    },
-    "1693309cbb2": {
-        "path": "modal\\throughModal.ts",
-        "class": "throughModal",
-        "parentPath": ""
-    },
-    "169340397b3": {
-        "path": "modal\\getEnergyModal.ts",
-        "class": "getEnergyModal",
-        "parentPath": ""
-    },
-    "169340bab9c": {
-        "path": "modal\\getEnergyModal.ts",
-        "class": "getEnergyModal",
-        "parentPath": ""
-    },
-    "1694667f962": {
-        "path": "modal\\getSuccess.ts",
-        "class": "getSuccess",
-        "parentPath": ""
-    },
-    "1694680da76": {
-        "path": "modal\\myBalls.ts",
-        "class": "myBalls",
-        "parentPath": ""
-    },
-    "1694683479d": {
-        "path": "modal\\myBalls.ts",
-        "class": "myBalls",
-        "parentPath": ""
-    }
+  "16905082286": {
+    "path": "page\\runningScene.ts",
+    "class": "runningScene",
+    "parentPath": ""
+  },
+  "16913edb994": {
+    "path": "page\\gameOver.ts",
+    "class": "gameOver",
+    "parentPath": ""
+  },
+  "1691450117b": {
+    "path": "page\\common.ts",
+    "class": "common",
+    "parentPath": ""
+  },
+  "169227c070f": {
+    "path": "page\\startScene.ts",
+    "class": "startScene",
+    "parentPath": ""
+  },
+  "16922a42a3b": {
+    "path": "modal\\moreItem.ts",
+    "class": "moreItem",
+    "parentPath": ""
+  },
+  "16922a9a275": {
+    "path": "modal\\ballItem.ts",
+    "class": "ballItem",
+    "parentPath": ""
+  },
+  "16922ab1364": {
+    "path": "modal\\houseScene.ts",
+    "class": "houseScene",
+    "parentPath": ""
+  },
+  "16922cbe2cb": {
+    "path": "modal\\travelItem.ts",
+    "class": "travelItem",
+    "parentPath": ""
+  },
+  "169233e32f7": {
+    "path": "modal\\travelScene.ts",
+    "class": "travelScene",
+    "parentPath": ""
+  },
+  "16928b7ac6a": {
+    "path": "modal\\reborn.ts",
+    "class": "reborn",
+    "parentPath": ""
+  },
+  "16928c36186": {
+    "path": "modal\\grayBg.ts",
+    "class": "grayBg",
+    "parentPath": ""
+  },
+  "16928e7bcdb": {
+    "path": "page\\rank.ts",
+    "class": "rank",
+    "parentPath": ""
+  },
+  "16928edc055": {
+    "path": "modal\\rankItem.ts",
+    "class": "rankItem",
+    "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
+  },
+  "16928f0aff8": {
+    "path": "modal\\friendHelp.ts",
+    "class": "friendHelp",
+    "parentPath": ""
+  },
+  "169294fc720": {
+    "path": "modal\\dayEnergy.ts",
+    "class": "dayEnergy",
+    "parentPath": ""
+  },
+  "global": {
+    "globalRulerEnable": true,
+    "globalAutoLayerMarkEnable": false
+  },
+  "1693309cbb2": {
+    "path": "modal\\throughModal.ts",
+    "class": "throughModal",
+    "parentPath": ""
+  },
+  "169340397b3": {
+    "path": "modal\\getEnergyModal.ts",
+    "class": "getEnergyModal",
+    "parentPath": ""
+  },
+  "169340bab9c": {
+    "path": "modal\\getEnergyModal.ts",
+    "class": "getEnergyModal",
+    "parentPath": ""
+  },
+  "1694667f962": {
+    "path": "modal\\getSuccess.ts",
+    "class": "getSuccess",
+    "parentPath": ""
+  },
+  "1694680da76": {
+    "path": "modal\\myBalls.ts",
+    "class": "myBalls",
+    "parentPath": ""
+  },
+  "1694683479d": {
+    "path": "modal\\myBalls.ts",
+    "class": "myBalls",
+    "parentPath": ""
+  },
+  "1695ccaa049": {
+    "path": "modal\\guideModal.ts",
+    "class": "guideModal",
+    "parentPath": ""
+  }
 }

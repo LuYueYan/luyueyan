@@ -29,7 +29,7 @@
 		"bin-debug/modal/getEnergyModal.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/modal/grayBg.js",
-		"bin-debug/modal/houseScene.js",
+		"bin-debug/modal/guideModal.js",
 		"bin-debug/modal/moreItem.js",
 		"bin-debug/modal/myBalls.js",
 		"bin-debug/modal/rankItem.js",

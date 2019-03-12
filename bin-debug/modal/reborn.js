@@ -30,6 +30,14 @@ var reborn = (function (_super) {
         var that = this;
         this.bgImg.height = this.stage.stageHeight;
         this.scoreText.text = this.score + "";
+        platform.openDataContext.postMessage({
+            type: "passInit",
+            score: that.score,
+            width: 80,
+            height: 80
+        });
+        var surpass = platform.openDataContext.createDisplayObject();
+        this.surpassGroup.addChild(surpass);
         this.terval = setInterval(function () {
             that.current_time > 1 && that.current_time--;
             that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');

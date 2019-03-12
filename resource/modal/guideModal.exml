@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="guideModalSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+	<w:Config id="1695ccaa049" ></w:Config>
+	<ns1:grayBg/>
+	<e:Group id="process_1" x="175" y="714" touchThrough="true">
+		<e:Image source="img_text_01_png" x="0" y="0"/>
+		<e:Image source="img_finger_png" x="323.5" y="251"/>
+	</e:Group>
+	<e:Group id="process_2" x="50.15" y="196.09" anchorOffsetX="0" width="675.12" touchThrough="true" visible="false">
+		<e:Image y="36.36" source="img_text_02_png" left="0"/>
+		<e:Image source="img_finger_png" x="531.06" y="166.91"/>
+	</e:Group>
+	<e:Group id="process_3" x="30.55" y="239" anchorOffsetX="0" width="670.33" touchThrough="true" visible="false">
+		<e:Image x="0" y="63.65" source="img_text_03_png"/>
+		<e:Image source="img_finger_png" x="465.93" y="134.34"/>
+	</e:Group>
+	<e:Group id="process_4" x="57.12" y="863.67" anchorOffsetX="0" width="404.55" anchorOffsetY="0" height="303.54" touchThrough="true" visible="false">
+		<e:Image x="0" y="0" source="img_text_04_png"/>
+		<e:Image source="img_finger_png" right="55.55000000000001" top="212"/>
+	</e:Group>
+	<e:Group id="process_5" x="306.21" y="853.67" anchorOffsetX="0" width="404.55" anchorOffsetY="0" height="255.06" touchThrough="true" visible="false">
+		<e:Image x="0" y="0" source="img_text_05_png"/>
+		<e:Image source="img_finger_png" right="2.5500000000000114" top="167"/>
+	</e:Group>
+	<e:Group id="process_0" x="57.12" y="863.67" anchorOffsetX="0" width="404.55" anchorOffsetY="0" height="303.54" touchThrough="true">
+		<e:Image x="0" y="0" source="img_text_04_png"/>
+		<e:Image source="img_finger_png" right="55.55000000000001" top="212"/>
+	</e:Group>
+</e:Skin>

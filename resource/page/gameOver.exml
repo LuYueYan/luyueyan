@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="gameOverSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="16913edb994" ></w:Config>
-	<e:Image anchorOffsetY="0" horizontalCenter="0" top="0" height="1334" source="img_bg_revival_jpg"/>
+	<e:Image id="bgImg" anchorOffsetY="0" horizontalCenter="0" top="0" height="1334" source="img_bg_revival_jpg"/>
 	<e:Image source="img_tittle_06_png" y="72" horizontalCenter="0"/>
 	<e:Label id="scoreText" text="0" y="253" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
 	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="58" touchEnabled="true"/>
