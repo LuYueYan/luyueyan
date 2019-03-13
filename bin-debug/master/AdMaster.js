@@ -184,9 +184,9 @@ var AdMaster = (function () {
     };
     //广告调用
     AdMaster.useVideo = function (success, fail) {
+        //分享/观看视频获取道具
         if (success === void 0) { success = null; }
         if (fail === void 0) { fail = null; }
-        //分享/观看视频获取道具
         if (AdMaster.cacheVideoAd) {
             if (!AdMaster.noVideo) {
                 var v_1 = true;
@@ -234,3 +234,4 @@ var AdMaster = (function () {
 }());
 __reflect(AdMaster.prototype, "AdMaster");
 window['AdMaster'] = AdMaster;
+//# sourceMappingURL=AdMaster.js.map

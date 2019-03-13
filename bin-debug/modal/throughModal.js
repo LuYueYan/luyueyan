@@ -40,3 +40,4 @@ var throughModal = (function (_super) {
     return throughModal;
 }(eui.Component));
 __reflect(throughModal.prototype, "throughModal", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=throughModal.js.map

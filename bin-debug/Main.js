@@ -125,23 +125,24 @@ var Main = (function (_super) {
     };
     Main.prototype.loadResource = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_1;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        loadingView = new LoadingUI();
-                        this.stage.addChild(loadingView);
+                        // const loadingView = new LoadingUI();
+                        // this.stage.addChild(loadingView);
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
                     case 1:
+                        // const loadingView = new LoadingUI();
+                        // this.stage.addChild(loadingView);
                         _a.sent();
                         return [4 /*yield*/, this.loadTheme()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
+                        return [4 /*yield*/, RES.loadGroup("preload")];
                     case 3:
                         _a.sent();
-                        this.stage.removeChild(loadingView);
                         return [3 /*break*/, 5];
                     case 4:
                         e_1 = _a.sent();
@@ -188,3 +189,4 @@ var Main = (function (_super) {
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
+//# sourceMappingURL=Main.js.map

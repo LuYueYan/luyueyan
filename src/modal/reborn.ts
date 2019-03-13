@@ -7,11 +7,17 @@ class reborn extends eui.Component implements eui.UIComponent {
     public surpassGroup:eui.Group;
 
 	public score = 0;
+	public energy=0;//本局能量果
+	public ballId=0;//本局使用的球
 	public terval = null;
 	public current_time = 5;
-	public constructor(score = 0) {
+	public energyAdd=0;//能量加成百分比
+	public constructor(score = 0,ballId=0,energy=0,energyAdd=0) {
 		super();
 		this.score = score;
+		this.energy=energy;
+		this.ballId=ballId;
+		this.energyAdd=energyAdd;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -37,9 +43,9 @@ class reborn extends eui.Component implements eui.UIComponent {
 		this.surpassGroup.addChild(surpass);
 
 		this.terval = setInterval(() => {
-			that.current_time > 1 && that.current_time--;
+			that.current_time > 0 && that.current_time--;
 			that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
-			if (that.current_time <= 1) {
+			if (that.current_time <= 0) {
 				clearInterval(that.terval);
 			}
 		}, 1000)
@@ -51,7 +57,8 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public ignoreFun() {
 		let parent = this.parent.parent;
 		parent.removeChild(this.parent);
-		parent.addChild(new gameOver(this.score));
+		let energy=parseInt(this.energy*(1+this.energyAdd)+'');
+		parent.addChild(new gameOver(this.score,this.ballId,energy));
 	}
 
 }

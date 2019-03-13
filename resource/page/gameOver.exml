@@ -5,7 +5,6 @@
 	<e:Image source="img_tittle_06_png" y="72" horizontalCenter="0"/>
 	<e:Label id="scoreText" text="0" y="253" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
 	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="58" touchEnabled="true"/>
-	<e:Group id="leftMore" width="748.48" height="443.94" y="202" anchorOffsetY="0" anchorOffsetX="0" left="0" visible="false"/>
 	<e:Button id="again" label="" x="78" y="913">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
@@ -31,19 +30,21 @@
 				<e:Label text="能量果" x="180" y="30" fontFamily="Microsoft YaHei" size="28"/>
 				<e:Label text="获取更多的能量果 可以喂养球球小精灵哦 " x="180" y="76" width="218" size="20" fontFamily="Microsoft YaHei" textColor="0xab9dff" lineSpacing="5"/>
 				<e:Label id="energyNum" text="x 50" x="294" y="33" fontFamily="Microsoft YaHei" size="28" textColor="0xffea00"/>
-				<e:Image id="getEnergy" x="434" touchEnabled="true" y="45" source="btn_receive_05_png"/>
+				<e:Image id="getEnergy" x="434" touchEnabled="true" y="45" source="btn_receive_05_png" width="186" height="71"/>
 				</e:Group>
 				<e:Group id="travel_0" width="650" height="160" y="170" anchorOffsetX="0" anchorOffsetY="0" x="0">
 				<e:Image id="travel_img_0" x="30" verticalCenter="0" source="img_imprinting_a1_png"/>
 				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
 				<e:Label id="travel_name_0" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
 				<e:Image id="shareBtn_0" x="434" touchEnabled="true" y="45" source="btn_receive_06_png"/>
+					<e:Image id="travel_new_0" source="img_label_02_png" x="124" y="5.36" visible="false"/>
 				</e:Group>
 				<e:Group id="travel_1" width="650" height="160" y="340" anchorOffsetX="0" anchorOffsetY="0" x="0">
 				<e:Image id="travel_img_1" source="img_imprinting_a1_png" x="30" verticalCenter="0"/>
 				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
 				<e:Label id="travel_name_1" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
 				<e:Image id="shareBtn_1" source="btn_receive_06_png" x="434" touchEnabled="true" y="45"/>
+					<e:Image source="img_label_02_png" x="124" y="5.36" id="travel_new_1" visible="false"/>
 				</e:Group>
 			</e:Group>
 		</e:Group>

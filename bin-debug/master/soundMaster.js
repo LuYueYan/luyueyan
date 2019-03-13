@@ -5,11 +5,14 @@ var soundMaster = (function () {
     function soundMaster() {
     }
     soundMaster.init = function () {
+        var _loop_1 = function (i, len) {
+            RES.getResByUrl(soundMaster.songArr[i].path, function (res) {
+                soundMaster.songArr[i].sound = res;
+            });
+        };
         // soundMaster.bg_sound = RES.getRes("bg_mp3");
-        // soundMaster.drag_sound = RES.getRes("drag_mp3");
-        // soundMaster.match_sound = RES.getRes("match_mp3");
         for (var i = 0, len = soundMaster.songArr.length; i < len; i++) {
-            soundMaster.songArr[i].sound = RES.getRes(soundMaster.songArr[i].path);
+            _loop_1(i, len);
         }
     };
     soundMaster.playSongMusic = function (index) {
@@ -47,12 +50,18 @@ var soundMaster = (function () {
         configurable: true
     });
     soundMaster.songArr = [
-        { path: '', sound: null },
-        { path: '', sound: null },
-        { path: '', sound: null },
-        { path: '', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_2.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_3.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_4.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_5.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_6.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_7.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_8.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_9.mp3', sound: null }
     ]; //歌曲列表
     soundMaster.music = true;
     return soundMaster;
 }());
 __reflect(soundMaster.prototype, "soundMaster");
+//# sourceMappingURL=soundMaster.js.map

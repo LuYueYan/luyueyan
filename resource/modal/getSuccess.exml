@@ -6,7 +6,7 @@
 		<e:Image source="img_bg_gift_png" top="0" horizontalCenter="0"/>
 		<e:Label id="ignoreBtn" text="不了&gt;" y="836" fontFamily="Microsoft YaHei" size="28" touchEnabled="true" textColor="0xab9dff" horizontalCenter="0" visible="false"/>
 		<e:Image id="title" horizontalCenter="0.5" top="28" source="img_tittle_04_png"/>
-		<e:Image id="type_2" source="img_elf_fire_png" y="219.5" horizontalCenter="0.5" visible="false"/>
+		<e:Image id="type_2" y="219.5" horizontalCenter="0.5" source="img_elf_22_png" visible="false"/>
 		<e:Group id="type_1" x="215" y="179.5" visible="false">
 			<e:Image source="img_fruit_big_png" y="47.5" x="66"/>
 			<e:Image source="img_base_01_png" x="0" y="0"/>

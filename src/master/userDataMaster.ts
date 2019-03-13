@@ -1,29 +1,61 @@
 class userDataMaster {
-	public static myInfo: any = { uid: 0, openId: '', is_new_user: false };//用户信息
-	public static gold = 3000;//能量果
+	public static myInfo: any = { uid: 0, openId: '', is_new_user: true };//用户信息
+	public static gold = 10000;//能量果
 	public static cats = [
-		{ id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 2, 3], des: '描述1', music: '《水晶》' },
-		{ id: 2, name: '摇滚球', state: false, process: 0, target: 2000, belong: [4, 2, 3], des: '描述2', music: '《幽默》' },
-		{ id: 3, name: '水灵球', state: false, process: 0, target: 3000, belong: [5, 1, 3], des: '描述3', music: '《沙滩》' },
-		{ id: 4, name: '跑酷球', state: false, process: 0, target: 4000, belong: [0, 2, 6], des: '描述4', music: '《超越》' },
-		{ id: 5, name: '火火球', state: false, process: 0, target: 5000, belong: [1, 2, 7], des: '描述5', music: '《希望》' },
-		{ id: 6, name: '黑洞球', state: false, process: 0, target: 6000, belong: [1, 8, 3], des: '描述6', music: '《迷宫》' },
-		{ id: 7, name: '爆破球', state: false, process: 0, target: 7000, belong: [0, 3, 5], des: '描述7', music: '《时空》' },
-		{ id: 8, name: '旋风球', state: false, process: 0, target: 8000, belong: [1, 6, 7], des: '描述8', music: '《海洋》' },
-		{ id: 9, name: '懒懒球', state: false, process: 0, target: 10000, belong: [7, 8, 5], des: '描述9', music: '《星辰》' }
+		{ id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 1, 2], des: '第一只拥有的精灵，洁白无一物', music: '《水晶》' },
+		{ id: 2, name: '摇滚球', state: false, process: 0, target: 1000, belong: [3, 5, 6], des: '浑身散发魔性，带来的音乐也是酷酷风', music: '《幽默》' },
+		{ id: 3, name: '水灵球', state: false, process: 0, target: 2000, belong: [7, 8, 10], des: '蜻蜓点水般的灵动，似风入海洋', music: '《沙滩》' },
+		{ id: 4, name: '跑酷球', state: false, process: 0, target: 3000, belong: [11, 12, 13], des: '天生顽皮，似乎喂养了很多能量果', music: '《超越》' },
+		{ id: 5, name: '火火球', state: false, process: 0, target:0, belong: [15, 16, 17], des: '别看它小小的身体，却有大大的能量', music: '《希望》' },
+		{ id: 6, name: '黑洞球', state: false, process: 0, target: 5000, belong: [18, 20, 21], des: '想法经常出乎意料，常常让你冒冷', music: '《迷宫》' },
+		{ id: 7, name: '爆破球', state: false, process: 0, target: 10000, belong: [22, 23, 25], des: '拥有一秒燃爆森林的力量', music: '《时空》' },
+		{ id: 8, name: '旋风球', state: false, process: 0, target: 8000, belong: [26, 27, 28], des: '可以带着风飞舞，跑遍世界角落', music: '《海洋》' },
+		{ id: 9, name: '懒懒球', state: false, process: 0, target: 6000, belong: [30, 31, 32], des: '找不出第二只比懒懒球还懒的精灵了', music: '《星辰》' }
 	];
 	public static travels = [
-		{ id: 1, name: '光之旅1', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 2, name: '光之旅2', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 3, name: '光之旅3', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 4, name: '光之旅4', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 5, name: '光之旅5', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 6, name: '光之旅6', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 7, name: '光之旅7', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 8, name: '光之旅8', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' },
-		{ id: 9, name: '光之旅9', image: 'resource/assets/Aimg0301/img_imprinting_a1.png' }
+		{ index: 0, id: 0, name: '月之桥', state: 0 },
+		{ index: 1, id: 1, name: '白玉盘', state: 0 },
+		{ index: 2, id: 2, name: '瑶台镜', state: 0 },
+		{ index: 3, id: 3, name: '青云端',  state: 0 },
+		{ index: 4, id: -1, name: '', state: 0 },
+
+		{ index: 5, id: 4, name: '仙人足',  state: 0 },
+		{ index: 6, id: 5, name: '树团团',  state: 0 },
+		{ index: 7, id: 6, name: '白兔岛',state: 0 },
+		{ index: 8, id: 7, name: '蚀圆影', state: 0 },
+		{ index: 9, id: -1, name: '', state: 0 },
+
+		{ index: 10, id: 8, name: '明夜残',  state: 0 },
+		{ index: 11, id: 9, name: '落九乌',state: 0 },
+		{ index: 12, id: 10, name: '升日月', state: 0 },
+		{ index: 13, id: 11, name: '花落肩',  state: 0 },
+		{ index: 14, id: -1, name: '', state: 0 },
+
+		{ index: 15, id: 12, name: '三生烟', state: 0 },
+		{ index: 16, id: 13, name: '清晨迷',  state: 0 },
+		{ index: 17, id: 14, name: '尘滴落', state: 0 },
+		{ index: 18, id: 15, name: '四木湖', state: 0 },
+		{ index: 19, id: -1, name: '', state: 0 },
+
+		{ index: 20, id: 16, name: '蔷薇轮', state: 0 },
+		{ index: 21, id: 17, name: '嫩绿生', state: 0 },
+		{ index: 22, id: 18, name: '清脆盘',  state: 0 },
+		{ index: 23, id: 19, name: '四季空',  state: 0 },
+		{ index: 24, id: -1, name: '', state: 0 },
+
+		{ index: 25, id: 20, name: '木偶屋', state: 0 },
+		{ index: 26, id: 21, name: '镜之藤', state: 0 },
+		{ index: 27, id: 22, name: '缠上月', state: 0 },
+		{ index: 28, id: 23, name: '莲渔舟', state: 0 },
+		{ index: 29, id: -1, name: '', state: 0 },
+
+		{ index: 30, id: 24, name: '光懒懒',  state: 0 },
+		{ index: 31, id: 25, name: '万颗紫',  state: 0 },
+		{ index: 32, id: 26, name: '七彩云',state: 0 },
+		{ index: 33, id: -1, name: '', state: 0 }
 	];
-	public static dayEnergy;//上次领取每日能量的日期
+	public static travelList = [];//我拥有的印记
+	public static dayEnergy = '';//上次领取每日能量的日期
 	public static myCollection: eui.ArrayCollection;
 	public static shareUid = 0;//分享人id
 	public static sourceEnergy = { uid: 0, day: '' };//能量分享的原始id,日期
@@ -33,6 +65,7 @@ class userDataMaster {
 	public static runCat = 0;//当前旅行的是哪个球
 	public static recommand: any;//推荐位列表
 	public static requestTimes = 0;//请求游戏数据的次数
+	public static dayTry='';//上次试玩的日期
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -54,6 +87,7 @@ class userDataMaster {
 		userDataMaster.myCollection = new eui.ArrayCollection(sourceArr);
 		userDataMaster.login();
 		userDataMaster.getRecommand();
+		userDataMaster.getGameData();
 	}
 	public static getGameData() {
 		let that = this;
@@ -66,19 +100,28 @@ class userDataMaster {
 					if (data.energy > 0) {
 						userDataMaster.myGold = data.energy;
 					}
-					if (data.spirit_data != '') {
+					if (data.spirit_data.length > 0) {
+
 						userDataMaster.MyCats = JSON.parse(data.spirit_data);
 					}
-					if (data.mark_data != '') {
+					if (data.mark_data.length > 0) {
+
 						userDataMaster.myTravels = JSON.parse(data.mark_data);
 					}
-					if (data.info != '') {
+					if (data.info.length > 0) {
+
 						let info = JSON.parse(data.info);
 						if (info.runCat >= 0) {
-                           userDataMaster.runCat=info.runCat;
+							userDataMaster.runCat = info.runCat;
 						}
-						if(info.dayEnergy){
-							userDataMaster.dayEnergy=info.dayEnergy;
+						if (info.dayEnergy) {
+							userDataMaster.dayEnergy = info.dayEnergy;
+						}
+						if (info.dayTry) {
+							userDataMaster.dayTry = info.dayTry;
+						}
+						if (info.travelList) {
+							userDataMaster.travelList = info.travelList;
 						}
 					}
 				}
@@ -90,7 +133,6 @@ class userDataMaster {
 				}, 1000);
 			}
 		}
-
 	}
 	public static getRecommand() {
 		//获取推荐位
@@ -137,6 +179,11 @@ class userDataMaster {
 		userDataMaster.travels = travels;
 		userDataMaster.myCollection.replaceItemAt(travels, 2);
 	}
+	public static setTravel(index, travel) {
+		//更新某项旅行印记数据
+		userDataMaster.travels[index] = travel;
+		userDataMaster.myCollection.replaceItemAt(userDataMaster.travels, 2)
+	}
 	public static set getMyInfo(data) {
 		userDataMaster.myInfo = data;
 	}
@@ -158,6 +205,18 @@ class userDataMaster {
 	public static updateTodayEnergy() {
 		//更改今日能量状态
 		userDataMaster.dayEnergy = userDataMaster.getToday();
+	}
+	public static get todayTry() {
+		//获取今日试玩状态
+		if (userDataMaster.dayTry == userDataMaster.getToday()) {
+			//今日已试玩
+			return false;
+		}
+		return true;
+	}
+	public static updateTodayTry() {
+		//更改今日试玩状态
+		userDataMaster.dayTry= userDataMaster.getToday();
 	}
 
 	public static async createLoginBtn(left, top, width, height) {
@@ -185,7 +244,6 @@ class userDataMaster {
 
 		userDataMaster.userInfoBtn.onTap((res) => {
 			userDataMaster.updateUser(res)
-
 		})
 	}
 	public static async updateUser(res: any = null) {
@@ -196,7 +254,7 @@ class userDataMaster {
 			gender: userInfo.gender,
 			avatarUrl: userInfo.avatarUrl
 		};
-		console.log(res)
+
 		ServiceMaster.post(
 			ServiceMaster.updateUser,
 			params,
@@ -244,7 +302,7 @@ class userDataMaster {
 		let date = new Date();
 		let month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) + '' : '0' + (date.getMonth() + 1);
 		let day = date.getDate() > 9 ? (date.getDate()) + '' : '0' + date.getDate();
-		return date.getFullYear() + month + day;
+		return date.getFullYear() + '-' + month + '-' + day;
 	}
 
 }

@@ -10,13 +10,19 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var reborn = (function (_super) {
     __extends(reborn, _super);
-    function reborn(score) {
+    function reborn(score, ballId, energy) {
         if (score === void 0) { score = 0; }
+        if (ballId === void 0) { ballId = 0; }
+        if (energy === void 0) { energy = 0; }
         var _this = _super.call(this) || this;
         _this.score = 0;
+        _this.energy = 0; //本局能量果
+        _this.ballId = 0; //本局使用的球
         _this.terval = null;
         _this.current_time = 5;
         _this.score = score;
+        _this.energy = energy;
+        _this.ballId = ballId;
         return _this;
     }
     reborn.prototype.partAdded = function (partName, instance) {
@@ -39,9 +45,9 @@ var reborn = (function (_super) {
         var surpass = platform.openDataContext.createDisplayObject();
         this.surpassGroup.addChild(surpass);
         this.terval = setInterval(function () {
-            that.current_time > 1 && that.current_time--;
+            that.current_time > 0 && that.current_time--;
             that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
-            if (that.current_time <= 1) {
+            if (that.current_time <= 0) {
                 clearInterval(that.terval);
             }
         }, 1000);
@@ -53,8 +59,9 @@ var reborn = (function (_super) {
     reborn.prototype.ignoreFun = function () {
         var parent = this.parent.parent;
         parent.removeChild(this.parent);
-        parent.addChild(new gameOver());
+        parent.addChild(new gameOver(this.score, this.ballId, this.energy));
     };
     return reborn;
 }(eui.Component));
 __reflect(reborn.prototype, "reborn", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=reborn.js.map

@@ -10,16 +10,17 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var getEnergyModal = (function (_super) {
     __extends(getEnergyModal, _super);
-    function getEnergyModal(uid, day) {
-        if (uid === void 0) { uid = 0; }
+    function getEnergyModal(suid, day) {
+        if (suid === void 0) { suid = 0; }
         if (day === void 0) { day = ''; }
         var _this = _super.call(this) || this;
-        _this.currentNum = 3; //已领取
-        _this.haveGet = false; //自己已领取
-        _this.uid = userDataMaster.myInfo.uid;
+        _this.currentNum = 0; //已领取
+        _this.status = 1; // //状态 1可领取 2已领取过 3已领取完 4已过期
+        _this.suid = userDataMaster.myInfo.uid;
         _this.day = userDataMaster.getToday();
-        if (uid) {
-            uid = uid;
+        _this.requestTime = 0; //请求次数
+        if (suid) {
+            _this.suid = suid;
         }
         if (day != '') {
             day = day;
@@ -34,39 +35,79 @@ var getEnergyModal = (function (_super) {
         this.init();
     };
     getEnergyModal.prototype.init = function () {
-        this.getText.text = "已领取（" + this.currentNum + "/5）";
-        if (this.haveGet) {
-            this.state.visible = true;
-            this.getBtn.texture = RES.getRes('btn_present_02_png');
-        }
-        if (this.currentNum >= 5) {
-            this.getBtn.texture = RES.getRes('btn_receive_03_png');
-        }
+        var that = this;
+        that.getMyInfo();
         this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
     };
-    getEnergyModal.prototype.getFun = function () {
-        if (this.currentNum >= 5) {
-            //已领完
+    getEnergyModal.prototype.getMyInfo = function () {
+        var that = this;
+        if (!userDataMaster.getMyInfo.uid) {
+            that.requestTime++;
+            if (that.requestTime < 5) {
+                setTimeout(function () {
+                    that.getMyInfo();
+                }, 500);
+            }
             return;
         }
-        if (!this.haveGet) {
-            this.currentNum++;
-            this.getText.text = "已领取（" + this.currentNum + "/5）";
-            this.state.visible = true;
-            this.numText.visible = true;
-            var gold = userDataMaster.myGold + 25;
-            userDataMaster.myGold = gold;
-            this.haveGet = true;
-            if (this.currentNum >= 5) {
-                this.getBtn.texture = RES.getRes('btn_receive_03_png');
+        var params = {
+            uid: userDataMaster.sourceEnergy.uid,
+            be_invitation_uid: userDataMaster.getMyInfo.uid,
+            share_day: userDataMaster.sourceEnergy.day
+        };
+        ServiceMaster.post(ServiceMaster.getEnergy, params, function (res) {
+            if (res.code == 1 && res.data) {
+                console.log('获取的能量信息', res);
+                that.currentNum = res.Received;
+                that.getText.text = "已领取（" + that.currentNum + "/5）";
+                if (that.currentNum >= 5) {
+                    that.getBtn.texture = RES.getRes('btn_receive_03_png');
+                }
+                that.status = res.data.status;
+                if (res.data.status == 1) {
+                    //    可领取
+                }
+                else if (res.data.status == 2) {
+                    //已领取
+                    that.state.visible = true;
+                    that.getBtn.texture = RES.getRes('btn_present_02_png');
+                }
+                else if (res.data.status == 3) {
+                    //已领完
+                    that.getBtn.texture = RES.getRes('btn_receive_03_png');
+                }
+                else {
+                    //已过期
+                    that.getBtn.texture = RES.getRes('btn_receive_out_png');
+                }
             }
-            else {
-                this.getBtn.texture = RES.getRes('btn_receive_04_png');
-            }
+        });
+    };
+    getEnergyModal.prototype.getFun = function () {
+        var that = this;
+        if (this.status == 1) {
+            //可领
+            var params = {
+                uid: userDataMaster.sourceEnergy.uid,
+                be_invitation_uid: userDataMaster.getMyInfo.uid
+            };
+            ServiceMaster.post(ServiceMaster.getEnergyList, params, function (res) {
+                if (res.code == 1 && res.data) {
+                    console.log('领取好友分享的能量', res);
+                    that.currentNum = res.Received;
+                    that.getText.text = "已领取（" + that.currentNum + "/5）";
+                    that.state.visible = true;
+                    that.numText.visible = true;
+                    var gold = userDataMaster.myGold + 25;
+                    userDataMaster.myGold = gold;
+                    that.status = 2;
+                    that.getBtn.texture = RES.getRes('btn_present_02_png');
+                }
+            });
         }
-        else {
-            CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.uid);
+        else if (this.status == 2) {
+            CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid);
         }
     };
     getEnergyModal.prototype.closeFun = function () {
@@ -75,3 +116,4 @@ var getEnergyModal = (function (_super) {
     return getEnergyModal;
 }(eui.Component));
 __reflect(getEnergyModal.prototype, "getEnergyModal", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=getEnergyModal.js.map

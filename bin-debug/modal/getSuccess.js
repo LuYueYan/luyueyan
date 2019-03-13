@@ -11,9 +11,9 @@ r.prototype = e.prototype, t.prototype = new r();
 var getSuccess = (function (_super) {
     __extends(getSuccess, _super);
     function getSuccess(type, nameOrNum) {
-        if (type === void 0) { type = 1; }
+        if (type === void 0) { type = -1; }
         var _this = _super.call(this) || this;
-        _this.type = 1; //类型 1--能量果 2--解锁球
+        _this.type = 1; //类型 -1--能量果 >-1--解锁球的index
         _this.nameOrNum = ''; //球的名字或者能量果数量 （数量的话类似 'x100'）
         _this.type = type;
         _this.nameOrNum = nameOrNum;
@@ -30,15 +30,20 @@ var getSuccess = (function (_super) {
         var that = this;
         egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
         this.word.text = this.nameOrNum;
-        this['type_' + this.type].visible = true;
-        if (this.type == 2) {
+        if (this.type == -1) {
+            this.type_1.visible = true;
+        }
+        else {
+            this.type_2.visible = true;
+            this.type_2.texture = RES.getRes('img_elf_' + this.type + '2_png');
             this.title.texture = RES.getRes('img_tittle_05_png');
         }
         that.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
         that.ignoreBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.ignoreFun, this);
-        setTimeout(function () {
-            that.ignoreBtn.visible = true;
-        }, 5000);
+        that.ignoreBtn.visible = true;
+        // setTimeout(function () {
+        // 	that.ignoreBtn.visible = true;
+        // }, 5000);
     };
     getSuccess.prototype.shareFun = function () {
         var _this = this;
@@ -53,3 +58,4 @@ var getSuccess = (function (_super) {
     return getSuccess;
 }(eui.Component));
 __reflect(getSuccess.prototype, "getSuccess", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=getSuccess.js.map

@@ -104,6 +104,7 @@ var ServiceMaster = (function () {
     };
     //域名
     ServiceMaster.DOMAIN = 'https://newbox.0e3.cn/gball';
+    //  public static DOMAIN: string = 'http://114.55.25.63:3000/mock/130';
     //请求方式
     ServiceMaster.METHOD_POST = 'POST';
     ServiceMaster.METHOD_GET = 'GET';
@@ -116,9 +117,13 @@ var ServiceMaster = (function () {
     ServiceMaster.rank_world = '/user/rank_world'; //世界排行
     ServiceMaster.gameClick = '/other/gameClick'; //推荐位统计
     ServiceMaster.getAssistanceList = '/other/getAssistanceList'; //获取助力列表
+    ServiceMaster.receiveAssistance = '/other/receiveAssistance'; //领取助力奖励
     ServiceMaster.getEnergy = '/other/getEnergy'; //点击分享链接进入游戏是否可以领取能量果
     ServiceMaster.getEnergyList = '/other/getEnergyList'; //获取当前能量果可领数量&&领取能能量果
+    ServiceMaster.getGameData = '/user/getGameData'; //获得游戏数据
+    ServiceMaster.setGameData = '/user/setGameData'; //设置游戏数据
     return ServiceMaster;
 }());
 __reflect(ServiceMaster.prototype, "ServiceMaster");
 window['ServiceMaster'] = ServiceMaster;
+//# sourceMappingURL=ServiceMaster.js.map

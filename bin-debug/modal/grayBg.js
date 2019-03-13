@@ -28,3 +28,4 @@ var grayBg = (function (_super) {
 }(eui.Component));
 __reflect(grayBg.prototype, "grayBg", ["eui.UIComponent", "egret.DisplayObject"]);
 window['grayBg'] = grayBg;
+//# sourceMappingURL=grayBg.js.map

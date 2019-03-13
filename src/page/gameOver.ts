@@ -1,7 +1,7 @@
 class gameOver extends eui.Component implements eui.UIComponent {
+	public bgImg: eui.Image;
 	public scoreText: eui.Label;
 	public homeBtn: eui.Image;
-	public leftMore: eui.Group;
 	public again: eui.Button;
 	public openBall: eui.Button;
 	public energyNum: eui.Label;
@@ -10,39 +10,26 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public travel_img_0: eui.Image;
 	public travel_name_0: eui.Label;
 	public shareBtn_0: eui.Image;
+	public travel_new_0: eui.Image;
 	public travel_1: eui.Group;
 	public travel_img_1: eui.Image;
 	public travel_name_1: eui.Label;
 	public shareBtn_1: eui.Image;
-	public bgImg:eui.Image;
+	public travel_new_1: eui.Image;
 
 
-	public dataGroup: eui.DataGroup;
-	public sourceArr: eui.ArrayCollection;
-	public dataArr = [
-		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 1, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 2, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 3, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-		{ id: 4, name: '光之旅', image: 'resource/assets/Aimages/img_bg_imprinting_2.png', appid: '', path: '' },
-
-	];
 	public score = 0;
-	public ballId = 1;//这局用的球类型
-	public constructor(score = 0, ballId = 1) {
+	public ballId = 0;//这局用的球类型
+	public energy = 0;//本局获得的能量果数量
+	public constructor(score = 0, ballId = 0, energy = 0) {
 		super();
 		this.score = score;
 		this.ballId = ballId;
+		this.energy = energy;
 	}
-
 	protected partAdded(partName: string, instance: any): void {
 		super.partAdded(partName, instance);
 	}
-
-
 	protected childrenCreated(): void {
 		super.childrenCreated();
 		if (this.again) {
@@ -53,19 +40,40 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		soundMaster.stopSongMusic();
-		this.bgImg.height=this.stage.stageHeight;
+		this.bgImg.height = this.stage.stageHeight;
 		this.scoreText.text = this.score + '';
-		this.sourceArr = new eui.ArrayCollection(this.dataArr);
-		this.dataGroup = new eui.DataGroup();
-		this.dataGroup.dataProvider = this.sourceArr;
-		this.dataGroup.useVirtualLayout = true;
-		let layout = new eui.TileLayout();
-		layout.paddingTop = 15;
-		layout.verticalGap = 20;
-		layout.horizontalGap = 480;
-		this.dataGroup.layout = layout;
-		this.dataGroup.itemRenderer = travelItem;
-		this.leftMore.addChild(this.dataGroup);
+		userDataMaster.myGold += this.energy;
+		this.energyNum.text = 'x ' + this.energy;
+		let travel = userDataMaster.MyCats[this.ballId].belong;
+		let ran = Math.floor(Math.random() * travel.length);
+		let newArr=[];
+		for(let i=0;i<travel.length;i++){
+			if(i!=ran){
+              newArr.push(travel[i]);
+			}
+		}
+		let item_0 = userDataMaster.travels[newArr[0]];
+		let item_1 = userDataMaster.travels[newArr[1]];
+		this.travel_img_0.texture = RES.getRes('img_imprinting_a'+(item_0.id+1)+'_png');
+		this.travel_name_0.text = item_0.name;
+		this.travel_img_1.texture = RES.getRes('img_imprinting_a'+(item_1.id+1)+'_png');
+		this.travel_name_1.text = item_1.name;
+		if (item_0.state == 0) {
+			//初次获得
+			item_0.state = 1;
+			this.travel_new_0.visible=true;
+			userDataMaster.setTravel(newArr[0], item_0);
+			userDataMaster.travelList.push(newArr[0]);
+		}
+		if (item_1.state == 0) {
+			//初次获得
+			item_1.state = 1;
+			this.travel_new_1.visible=true;
+			userDataMaster.travelList.push(newArr[1]);
+			userDataMaster.setTravel(newArr[1], item_1);
+		}
+
+
 		this.updateScore();
 		this.again.addEventListener(egret.TouchEvent.TOUCH_TAP, this.againFun, this);
 		this.shareBtn_0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
@@ -95,6 +103,21 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		parent.addChild(new startScene())
 	}
 	public getFun() {
+		let that = this;
+		AdMaster.useVideo(() => {
+			suc();
+		}, () => {
+			CallbackMaster.openShare(() => {
+				suc();
+			})
+		});
+		function suc() {
+			userDataMaster.myGold += that.energy;
+			that.getEnergy.texture=RES.getRes('btn_receive_04_png');
+			that.getEnergy.removeEventListener(egret.TouchEvent.TOUCH_TAP, that.getFun, that);
+			that.addChild(new getSuccess(-1, 'x ' + that.energy));
+			
+		}
 
 	}
 	public shareFun() {

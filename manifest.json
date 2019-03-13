@@ -37,6 +37,7 @@
 		"bin-debug/modal/throughModal.js",
 		"bin-debug/modal/travelItem.js",
 		"bin-debug/modal/travelScene.js",
+		"bin-debug/modal/tryModal.js",
 		"bin-debug/page/circle.js",
 		"bin-debug/page/common.js",
 		"bin-debug/page/gameOver.js",

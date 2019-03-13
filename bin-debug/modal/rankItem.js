@@ -23,10 +23,10 @@ var rankItem = (function (_super) {
     rankItem.prototype.init = function () {
     };
     rankItem.prototype.dataChanged = function () {
-        if (this.data.index.length > 4) {
-            this.data.index = this.data.index.slice(0, 4) + "…";
+        if (this.data.rank.length > 4) {
+            this.data.rank = this.data.rank.slice(0, 4) + "…";
         }
-        this.index.text = this.data.index + '';
+        this.index.text = this.data.rank + '';
         this.headimg.source = this.data.avatarUrl;
         this.score.text = this.data.score;
         if (this.data.nickName.length > 5) {
@@ -34,9 +34,9 @@ var rankItem = (function (_super) {
         }
         this.nickName.text = this.data.nickName;
         this.headimg.mask = this.headimgMask;
-        if (this.data.index < 4) {
+        if (this.data.rank < 4) {
             this.bestHat.visible = true;
-            this.bestHat.texture = RES.getRes('icn_medal_0' + this.data.index + '_png');
+            this.bestHat.texture = RES.getRes('icn_medal_0' + this.data.rank + '_png');
         }
         else {
             this.bestHat.visible = false;
@@ -56,3 +56,4 @@ var rankItem = (function (_super) {
     return rankItem;
 }(eui.ItemRenderer));
 __reflect(rankItem.prototype, "rankItem", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=rankItem.js.map

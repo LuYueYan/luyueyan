@@ -7,10 +7,11 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 	public state: eui.Image;
 
 
-	public currentNum = 3;//已领取
+	public currentNum = 0;//已领取
 	public status = 1;// //状态 1可领取 2已领取过 3已领取完 4已过期
 	public suid = userDataMaster.myInfo.uid;
 	public day = userDataMaster.getToday();
+	public requestTime = 0;//请求次数
 	public constructor(suid = 0, day = '') {
 		super();
 		if (suid) {
@@ -29,19 +30,34 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		that.postFun(1, (res) => {
-			that.currentNum = res.Received;
-			that.getText.text = "已领取（" + that.currentNum + "/5）";
-			if (that.currentNum >= 5) {
-				that.getBtn.texture = RES.getRes('btn_receive_03_png');
+		that.getMyInfo()
+		this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
+		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
+	}
+	public getMyInfo() {
+		let that = this;
+		if (!userDataMaster.getMyInfo.uid) {
+			that.requestTime++;
+			if (that.requestTime < 5) {
+				setTimeout(function () {
+					that.getMyInfo();
+				}, 500);
 			}
-		})
+			return;
+		}
 		let params = {
 			uid: userDataMaster.sourceEnergy.uid,
-			be_invitation_uid: userDataMaster.getMyInfo.uid
+			be_invitation_uid: userDataMaster.getMyInfo.uid,
+			share_day: userDataMaster.sourceEnergy.day
 		}
 		ServiceMaster.post(ServiceMaster.getEnergy, params, (res) => {
 			if (res.code == 1 && res.data) {
+				console.log('获取的能量信息', res)
+				that.currentNum = res.Received;
+				that.getText.text = "已领取（" + that.currentNum + "/5）";
+				if (that.currentNum >= 5) {
+					that.getBtn.texture = RES.getRes('btn_receive_03_png');
+				}
 				that.status = res.data.status;
 				if (res.data.status == 1) {
 					//    可领取
@@ -58,34 +74,30 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 				}
 			}
 		})
-		this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
-		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
 	}
-	public postFun(type, callback: Function = null) {
-		let params = {
-			uid: userDataMaster.getMyInfo.uid,
-			type
-		}
-		ServiceMaster.post(ServiceMaster.getEnergyList, params, (res) => {
-			if (res.code == 1 && res.data) {
-				callback && callback(res.data);
-			}
-		})
-	}
+
 	public getFun() {
 		let that = this;
 		if (this.status == 1) {
 			//可领
-			that.postFun(2, (res) => {
-				that.currentNum = res.Received;
-				that.getText.text = "已领取（" + that.currentNum + "/5）";
-				that.state.visible = true;
-				that.numText.visible = true;
-				let gold = userDataMaster.myGold + 25;
-				userDataMaster.myGold = gold;
-				that.status = 2;
-				that.getBtn.texture = RES.getRes('btn_present_02_png');
+			let params = {
+				uid: userDataMaster.sourceEnergy.uid,
+				be_invitation_uid: userDataMaster.getMyInfo.uid
+			}
+			ServiceMaster.post(ServiceMaster.getEnergyList, params, (res) => {
+				if (res.code == 1 && res.data) {
+					console.log('领取好友分享的能量', res)
+					that.currentNum = res.Received;
+					that.getText.text = "已领取（" + that.currentNum + "/5）";
+					that.state.visible = true;
+					that.numText.visible = true;
+					let gold = userDataMaster.myGold + 30;
+					userDataMaster.myGold = gold;
+					that.status = 2;
+					that.getBtn.texture = RES.getRes('btn_present_02_png');
+				}
 			})
+
 		} else if (this.status == 2) {
 			CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid);
 		}

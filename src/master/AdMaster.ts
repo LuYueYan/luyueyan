@@ -164,7 +164,9 @@ class AdMaster {
 	//广告调用
 	public static useVideo(success: Function = null, fail: Function = null) {
 		//分享/观看视频获取道具
+		
 		if (AdMaster.cacheVideoAd) {
+		
 			if (!AdMaster.noVideo) {
 				let v = true;
 				AdMaster.openVideoAd((res) => {
@@ -183,6 +185,7 @@ class AdMaster {
 				})
 			}
 		} else {
+			
 			fail && fail();
 		}
 	}

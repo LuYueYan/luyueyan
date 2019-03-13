@@ -76,6 +76,8 @@ declare class travelItemSkin extends eui.Skin{
 }
 declare class travelSceneSkin extends eui.Skin{
 }
+declare class tryModalSkin extends eui.Skin{
+}
 declare class circleSkin extends eui.Skin{
 }
 declare class commonSkin extends eui.Skin{

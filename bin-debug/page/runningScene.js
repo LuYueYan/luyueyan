@@ -10,10 +10,13 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var runningScene = (function (_super) {
     __extends(runningScene, _super);
-    function runningScene(theme, score, hitNum) {
+    function runningScene(theme, score, hitNum, currentBall, rebornNum, energy) {
         if (theme === void 0) { theme = 1; }
         if (score === void 0) { score = 0; }
         if (hitNum === void 0) { hitNum = 0; }
+        if (currentBall === void 0) { currentBall = -1; }
+        if (rebornNum === void 0) { rebornNum = 0; }
+        if (energy === void 0) { energy = 0; }
         var _this = _super.call(this) || this;
         _this.factor = 50;
         _this.currentTimer = egret.getTimer();
@@ -26,15 +29,15 @@ var runningScene = (function (_super) {
         _this.hitNum = 0;
         _this.themeArr = [
             { index: 1, num: 15, width: 340, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
-            { index: 2, num: 15, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
-            { index: 3, num: 15, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
-            { index: 4, num: 15, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
-            { index: 5, num: 15, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
-            { index: 6, num: 15, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
-            { index: 7, num: 15, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
-            { index: 8, num: 15, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
-            { index: 9, num: 15, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
-            { index: 10, num: 15, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
+            { index: 2, num: 20, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+            { index: 3, num: 30, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
+            { index: 4, num: 40, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+            { index: 5, num: 40, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+            { index: 6, num: 30, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+            { index: 7, num: 30, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+            { index: 8, num: 25, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
+            { index: 9, num: 20, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+            { index: 10, num: 20, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
         ];
         _this.list = [];
         _this.chooseList = [];
@@ -43,9 +46,21 @@ var runningScene = (function (_super) {
         _this.rebornNum = 0; //是否已经复活
         _this.guideProcess = 0; //引导进度
         _this.worldSpeed = 1000; //世界运行速度
+        _this.currentBall = userDataMaster.runCat; //本局使用的球index
+        _this.energy = 0; //本局获得的能量果数量
+        _this.trying = false; //是否试玩
         _this.currentTheme = theme;
         _this.score = score;
         _this.hitNum = hitNum;
+        if (currentBall != -1) {
+            if (currentBall > 50) {
+                currentBall -= 100;
+                _this.trying = true;
+            }
+            _this.currentBall = currentBall;
+        }
+        _this.rebornNum = rebornNum;
+        _this.energy = energy;
         return _this;
     }
     runningScene.prototype.partAdded = function (partName, instance) {
@@ -62,9 +77,14 @@ var runningScene = (function (_super) {
     };
     runningScene.prototype.init = function () {
         var that = this;
-        this.guide = new guideModal();
-        this.addChild(this.guide);
-        this.guide.addChild(this.startBtn);
+        this.worldSpeed = 1000000;
+        if (userDataMaster.getMyInfo.is_new_user && !this.trying) {
+            this.guide = new guideModal();
+            this.addChild(this.guide);
+            this.guide.addChild(this.startBtn);
+            this.themeArr[0].num = 3;
+        }
+        this.scoreText.text = this.score + '';
         this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
         this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].begin);
         //创建world
@@ -108,15 +128,18 @@ var runningScene = (function (_super) {
         this.bgLinear.graphics.endFill();
     };
     runningScene.prototype.startFun = function () {
+        soundMaster.playSongMusic(this.currentBall);
         this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-        // this.removeChild(this.startBtn);
         if (this.guide) {
             this.guide.removeChild(this.startBtn);
             this.removeChild(this.guide);
             this.guideProcess = 1; //第一步引导完成
         }
-        this.bee.gravityScale = 1;
-        // this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+        else {
+            this.removeChild(this.startBtn);
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+        }
+        this.worldSpeed = 1000;
     };
     runningScene.prototype.onEnterFrame = function () {
         var that = this;
@@ -185,13 +208,17 @@ var runningScene = (function (_super) {
         }
         var hit = that.flowerArr[0].body.overlaps(that.bee);
         var top = (that.bee.position[1] + that.bee.displays[0].height / 2 / that.factor) - (that.flowerArr[0].body.position[1] + that.flowerArr[0].body.displays[0].height / 2 / that.factor);
-        if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && top >= 0 && top <= 2) {
+        if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && Math.abs(top) <= 2) {
             if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
                 // console.log('center')
+                that.score += 10;
                 that.flowerArr[0].body.displays[1].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[1]);
             }
+            else {
+                that.score += 5;
+            }
+            // platform.vibrateShort({})
             that.bee.mass = 5000;
-            this.score += 10;
             this.scoreText.text = this.score + '';
             that.flowerArr[0].params.haveHit = true;
             var r = that.flowerArr.shift();
@@ -224,6 +251,14 @@ var runningScene = (function (_super) {
             that.hitNum++;
             var judgeHitNum = that.hitNum == that.themeArr[that.currentTheme - 1].num;
             if (judgeHitNum) {
+                if (that.trying) {
+                    //是试玩
+                    that.removeEventListener(egret.Event.ENTER_FRAME, that.onEnterFrame, that);
+                    that.addChild(new tryModal(that.currentBall));
+                    that.worldSpeed = 100000;
+                    return;
+                }
+                that.energy += 5;
                 that.hitNum = 0;
                 that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
                 this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
@@ -280,13 +315,13 @@ var runningScene = (function (_super) {
         if (this.rebornNum == 0) {
             //可复活
             this.rebornNum++;
-            var born = new reborn(this.score);
+            var born = new reborn(this.score, this.currentBall, this.energy);
             this.addChild(born);
             born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this);
         }
         else {
             var parent_1 = this.parent;
-            parent_1.addChild(new gameOver(this.score));
+            parent_1.addChild(new gameOver(this.score, this.currentBall, this.energy));
             parent_1.removeChild(this);
         }
     };
@@ -296,6 +331,7 @@ var runningScene = (function (_super) {
         AdMaster.useVideo(function () {
             suc();
         }, function () {
+            console.log('share');
             CallbackMaster.openShare(function () {
                 suc();
             });
@@ -305,21 +341,24 @@ var runningScene = (function (_super) {
             var theme = that.currentTheme;
             var score = that.score;
             var hitNum = that.hitNum;
+            var currentBall = that.currentBall;
+            var rebornNum = that.rebornNum;
+            var energy = that.energy;
+            console.log('rebornNum', rebornNum);
             parent.removeChild(that);
-            parent.addChild(new runningScene(theme, score, hitNum));
+            parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy));
         };
     };
     runningScene.prototype.createBee = function () {
         var boxShape = new p2.Box({ width: 0.5, height: 3.2, material: new p2.Material(1) });
         this.bee = new p2.Body({ mass: 5000, position: [7.5, 20 + this.adaptation] });
-        this.bee.gravityScale = 0;
+        // this.bee.gravityScale = 0;
         this.bee.collisionResponse = false;
         this.bee.addShape(boxShape);
         this.world.addBody(this.bee);
-        //当前的球 index  =userDataMaster.runCat
-        var display = this.createBitmapByName("img_elf_a1_png");
-        display.width = 144;
-        display.height = boxShape.height * this.factor;
+        var display = this.createBitmapByName('img_elf_' + this.currentBall + '2_png');
+        display.width = 160;
+        display.height = 160;
         display.anchorOffsetX = display.width / 2;
         display.anchorOffsetY = display.height / 2;
         this.bee.displays = [display];
@@ -369,7 +408,7 @@ var runningScene = (function (_super) {
     };
     runningScene.prototype.touchFun = function (e) {
         this.bee.velocity = [0, -50];
-        this.bee.gravityScale = 1;
+        // this.bee.gravityScale = 1;
         this.bee.angle = 0;
         this.bee.angularVelocity = 0;
         if (this.guide && this.guide.parent) {
@@ -386,10 +425,23 @@ var runningScene = (function (_super) {
         that.through = new throughModal();
         this.addChild(that.through);
         that.worldSpeed = 10000;
+        var t = 500;
+        if (this.guide && this.guideProcess == 3) {
+            //引导
+            that.through.addChild(this.guide);
+            this.guide.addChild(that.through.tap_1);
+            this.guide.addChild(that.through.tap_2);
+            this.guide.process_3.visible = false;
+            this.guide.process_4.visible = true;
+            that.list = [1, 2, 1];
+            t = 1000;
+        }
         for (var i = 0; i < 3; i++) {
-            var ran = Math.random() > 0.5 ? 2 : 1;
-            that.list.push(ran);
-            that.through['item_' + i].texture = RES.getRes('img_click_0' + ran + '_png');
+            if (that.list.length == i) {
+                var ran = Math.random() > 0.5 ? 2 : 1;
+                that.list.push(ran);
+            }
+            that.through['item_' + i].texture = RES.getRes('img_click_0' + that.list[i] + '_png');
         }
         that.terval = setInterval(function () {
             if (that.through.processMask.width > 0) {
@@ -400,23 +452,35 @@ var runningScene = (function (_super) {
                 clearInterval(that.terval);
                 that.throughEndFun(false);
             }
-        }, 500);
+        }, t);
         that.through.tap_1.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { that.chooseFun(1); }, this);
         that.through.tap_2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { that.chooseFun(2); }, this);
     };
     runningScene.prototype.throughEndFun = function (type) {
         var that = this;
-        // that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
         if (type) {
-            // let parent = this.parent;
-            // let theme = this.currentTheme;
-            // let score = this.score;
-            // let hitNum = this.hitNum;
-            // parent.removeChild(this);
-            // parent.addChild(new runningScene(theme, score, hitNum));
             that.removeChild(that.through);
-            this.worldSpeed = 1000;
-            that.addEventListener(egret.TouchEvent.TOUCH_TAP, that.touchFun, that);
+            if (this.guide && this.guide.parent && this.guideProcess == 6) {
+                this.addChild(this.guide);
+                this.guide.process_6.visible = false;
+                this.guide.removeChild(this.through.tap_1);
+                this.guide.removeChild(this.through.tap_2);
+                this.guide.process_7.visible = true;
+                this.guide.knowBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                    userDataMaster.myGold += 200;
+                    userDataMaster.myInfo.is_new_user = false;
+                    var parent = that.parent;
+                    parent.removeChild(that);
+                    parent.addChild(new startScene());
+                    // that.worldSpeed = 1000;
+                    // that.addEventListener(egret.TouchEvent.TOUCH_TAP, that.touchFun, that);
+                }, that);
+            }
+            else {
+                var speed = Math.random() > 0.7 ? 800 : 1000;
+                this.worldSpeed = speed;
+                that.addEventListener(egret.TouchEvent.TOUCH_TAP, that.touchFun, that);
+            }
         }
         else {
             that.removeChild(that.through);
@@ -428,6 +492,11 @@ var runningScene = (function (_super) {
         if (this.list[len] == type) {
             this.through['item_' + len].alpha = 1;
             this.chooseList.push(type);
+            if (this.guide && this.guide.parent && this.guideProcess >= 3 && this.guideProcess < 6) {
+                this.guideProcess++;
+                this.guide['process_' + this.guideProcess].visible = false;
+                this.guide['process_' + (this.guideProcess + 1)].visible = true;
+            }
             if (this.chooseList.length == 3) {
                 //通过
                 this.chooseList = [];
@@ -435,6 +504,9 @@ var runningScene = (function (_super) {
                 clearInterval(this.terval);
                 this.throughEndFun(true);
             }
+        }
+        else if (this.guide && this.guide.parent) {
+            return;
         }
         else {
             clearInterval(this.terval);
@@ -450,3 +522,4 @@ var runningScene = (function (_super) {
     return runningScene;
 }(eui.Component));
 __reflect(runningScene.prototype, "runningScene", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=runningScene.js.map

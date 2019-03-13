@@ -33,7 +33,8 @@
 		"getEnergyModal": "resource/modal/getEnergyModal.exml",
 		"getSuccess": "resource/modal/getSuccess.exml",
 		"myBalls": "resource/modal/myBalls.exml",
-		"guideModal": "resource/modal/guideModal.exml"
+		"guideModal": "resource/modal/guideModal.exml",
+		"tryModal": "resource/modal/tryModal.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -63,6 +64,7 @@
 		"resource/modal/throughModal.exml",
 		"resource/modal/travelItem.exml",
 		"resource/modal/travelScene.exml",
+		"resource/modal/tryModal.exml",
 		"resource/page/circle.exml",
 		"resource/page/common.exml",
 		"resource/page/gameOver.exml",

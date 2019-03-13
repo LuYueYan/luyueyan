@@ -37,6 +37,26 @@ var CallbackMaster = (function () {
             soundMaster.soundChannel && soundMaster.soundChannel.stop();
             //存储数据
             CallbackMaster.onHideFun && CallbackMaster.onHideFun();
+            //存储游戏数据
+            var spirit_data = JSON.stringify(userDataMaster.MyCats);
+            var mark_data = JSON.stringify(userDataMaster.myTravels);
+            var info = {
+                runCat: userDataMaster.runCat,
+                dayEnergy: userDataMaster.dayEnergy,
+                dayTry: userDataMaster.dayTry,
+                travelList: userDataMaster.travelList
+            };
+            var params = {
+                uid: userDataMaster.getMyInfo.uid,
+                energy: userDataMaster.myGold,
+                spirit_data: spirit_data,
+                mark_data: mark_data,
+                info: JSON.stringify(info)
+            };
+            ServiceMaster.post(ServiceMaster.setGameData, params, function (res) {
+                if (res.code == 1 && res.data) {
+                }
+            });
         });
     };
     CallbackMaster.openShare = function (Callback, judge, query) {
@@ -59,17 +79,22 @@ var CallbackMaster = (function () {
         if (Callback === void 0) { Callback = null; }
         CallbackMaster.onHideFun = Callback;
     };
-    CallbackMaster.recommandClick = function (gid, type) {
+    CallbackMaster.recommandClick = function (type, item) {
         if (type === void 0) { type = 1; }
         //推荐位点击统计
         var uid = userDataMaster.getMyInfo.uid;
-        // ServiceMaster.post(
-        // 	ServiceMaster.gameClick,
-        // 	{ gid, uid, type },
-        // 	function (suc) {
-        // 		if (suc.code == 1 && suc.data) {
-        // 		}
-        // 	})
+        var params = {
+            id: item.id,
+            uid: uid,
+            appid: item.appid,
+            type: type,
+            module_id: item.module_id,
+            module_ext_id: item.module_ext_id
+        };
+        ServiceMaster.post(ServiceMaster.gameClick, params, function (suc) {
+            if (suc.code == 1 && suc.data) {
+            }
+        });
     };
     CallbackMaster.shareSuc = null; //分享成功回调
     CallbackMaster.shareTime = 0; //分享的时间
@@ -80,3 +105,4 @@ var CallbackMaster = (function () {
     return CallbackMaster;
 }());
 __reflect(CallbackMaster.prototype, "CallbackMaster");
+//# sourceMappingURL=CallbackMaster.js.map

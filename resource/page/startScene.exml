@@ -2,7 +2,7 @@
 <e:Skin class="startSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="169227c070f" ></w:Config>
 	<e:Image id="bgImg" anchorOffsetY="0" left="0" top="0" source="img_bg_home_01_png"/>
-	<e:Image source="img_bg_fruit_number_png" x="38.38" y="45"/>
+	<e:Image id="addGold" source="img_bg_fruit_number_png" x="38.38" y="45" touchEnabled="true"/>
 	<e:Label id="goldText" text="40" x="90.69" y="66.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
 	<e:Image id="collection" source="img_collect_png" x="244" y="24"/>
 	<e:Image source="img_game_tittle_png" y="147" horizontalCenter="0"/>
@@ -22,10 +22,15 @@
 		<e:Image id="more_3" width="100" height="100" x="20" y="330" touchEnabled="true" source="icn_home_01_png"/>
 		<e:Label id="text_3" text="" y="437" horizontalCenter="0" fontFamily="Microsoft YaHei" size="20"/>
 	</e:Group>
-	<e:Image id="friendBtn" x="616" y="437" touchEnabled="true" source="icn_home_05_png"/>
+	<e:Group id="tryBtn" x="604" y="302.5" touchEnabled="true" visible="false">
+		<e:Image y="6" source="img_bg_play_try_png"/>
+		<e:Image id="tryImg" source="img_elf_22_png" width="100" height="100" horizontalCenter="0.5"/>
+	</e:Group>
+	<e:Image id="friendBtn" x="616" y="459" touchEnabled="true" source="icn_home_05_png"/>
 	<e:Image id="energyBtn" x="616" y="617" touchEnabled="true" source="icn_home_06_png"/>
-	<e:Image id="currentBall" y="321" source="img_elf_a2_png" x="260"/>
-	<e:Image id="startBtn" y="755" touchEnabled="true" source="btn_start_png" horizontalCenter="0"/>
+	<e:Image id="currentBall" y="321" blendMode="normal" source="img_elf_02_png" horizontalCenter="0"/>
+	<e:Image id="tryTip" source="tryTip_png" x="463" y="321" visible="false"/>
+	<e:Image id="startBtn" y="805.5" touchEnabled="true" source="btn_start_png" anchorOffsetX="147.5" anchorOffsetY="50.5" horizontalCenter="0"/>
 	<e:Group y="893" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
 		<e:Image id="houseBtn" x="22" y="36" touchEnabled="true" source="icn_home_01_png"/>
 		<e:Image id="travelBtn" x="202" y="32" touchEnabled="true" source="icn_home_02_png"/>

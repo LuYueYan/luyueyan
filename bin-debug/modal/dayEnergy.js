@@ -32,11 +32,11 @@ var dayEnergy = (function (_super) {
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
     };
     dayEnergy.prototype.getFun = function () {
-        if (!userDataMaster.todayEnergy) {
+        if (userDataMaster.todayEnergy) {
             userDataMaster.updateTodayEnergy();
             this.getBtn.texture = RES.getRes('btn_receive_04_png');
             userDataMaster.myGold += 100;
-            this.addChild(new getSuccess(1, 'x 100'));
+            this.addChild(new getSuccess(-1, 'x 100'));
             this.getBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         }
     };
@@ -52,3 +52,4 @@ var dayEnergy = (function (_super) {
     return dayEnergy;
 }(eui.Component));
 __reflect(dayEnergy.prototype, "dayEnergy", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=dayEnergy.js.map

@@ -46,7 +46,9 @@ class CallbackMaster {
 			let mark_data = JSON.stringify(userDataMaster.myTravels);
 			let info = {
 				runCat: userDataMaster.runCat,
-				dayEnergy: userDataMaster.dayEnergy
+				dayEnergy: userDataMaster.dayEnergy,
+				dayTry:userDataMaster.dayTry,
+				travelList:userDataMaster.travelList
 			};
 			let params = {
 				uid: userDataMaster.getMyInfo.uid,

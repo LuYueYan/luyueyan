@@ -75,7 +75,7 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 				for (let i = 0, len = res.data.total; i < len; i++) {
 					that['friend_' + i].source = that.list[i].avatarUrl;
 					that['friend_' + i].mask = that['mask_' + i];
-					that['text_' + i].text = "x50";
+					that['text_' + i].text = "     x150";
 					that['icon_' + i].visible = true;
 					if (that.list[i].status == 1) {
 						that['get_' + i].visible = true;
@@ -94,11 +94,11 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 		ServiceMaster.post(ServiceMaster.receiveAssistance, params, (res) => {
 			if (res.code == 1 && res.data) {
 				let gold = userDataMaster.myGold;
-				gold += 50;
+				gold += 150;
 				userDataMaster.myGold = gold;
 				that['get_' + i].visible = false;
 				that.list[i].status = 2;
-				that.addChild(new getSuccess(1, 'x 50'));
+				that.addChild(new getSuccess(-1, 'x 150'));
 			}
 		})
 
@@ -112,7 +112,7 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 				let cat = userDataMaster.cats[8];
 				cat.state = true;
 				userDataMaster.setCat(8, cat);
-				that.addChild(new getSuccess(2, '火火球'));
+				that.addChild(new getSuccess(4, '火火球'));
 			} else {
 				//已解锁
 			}

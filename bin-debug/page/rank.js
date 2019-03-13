@@ -15,8 +15,9 @@ var rank = (function (_super) {
         _this.dataGroup = new eui.DataGroup();
         _this.sourceArr = new eui.ArrayCollection([]);
         _this.currentType = 'friend';
-        _this.worldPage = 1;
-        _this.endPage = 1;
+        _this.worldPage = 1; //当前页码
+        _this.endPage = 1; //总页数
+        _this.pageSize = 6; //每页数量
         return _this;
     }
     rank.prototype.partAdded = function (partName, instance) {
@@ -67,22 +68,25 @@ var rank = (function (_super) {
         }
     };
     rank.prototype.getWorld = function () {
+        var _this = this;
         var that = this;
         var params = {
-            p: that.worldPage
+            uid: userDataMaster.getMyInfo.uid,
+            page: that.worldPage,
+            size: that.pageSize
         };
-        // ServiceMaster.post(ServiceMaster.getList, params, (res) => {
-        // 	if (res.code == 1 && res.data) {
-        // 		let data = res.data.data;
-        // 		that.endPage = res.data.last_page;
-        // 		that.sourceArr.removeAll();
-        // this.pageText.text=that.worldPage+' / '+that.endPage;
-        // 		for (let i = 0; i < data.length; i++) {
-        // 			data[i].index = (that.worldPage - 1) * res.data.per_page + i + 1;
-        // 			that.sourceArr.addItem(data[i]);
-        // 		}
-        // 	}
-        // })
+        ServiceMaster.post(ServiceMaster.rank_world, params, function (res) {
+            if (res.code == 1 && res.data) {
+                var data = res.data.rank_world;
+                that.endPage = res.data.page_num;
+                that.sourceArr.removeAll();
+                _this.pageText.text = that.worldPage + ' / ' + that.endPage;
+                for (var i = 0; i < data.length; i++) {
+                    // data[i].index = (that.worldPage - 1) * that.pageSize + i + 1;
+                    that.sourceArr.addItem(data[i]);
+                }
+            }
+        });
     };
     rank.prototype.friendFun = function () {
         this.pageText.visible = false;
@@ -117,3 +121,4 @@ var rank = (function (_super) {
     return rank;
 }(eui.Component));
 __reflect(rank.prototype, "rank", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=rank.js.map

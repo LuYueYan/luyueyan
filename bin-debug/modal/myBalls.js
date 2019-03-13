@@ -26,14 +26,7 @@ var myBalls = (function (_super) {
         _this.canMove = true;
         _this.position = { x: 0, y: 0, time: 0 };
         _this.currentBall = 0; //当前的球是哪个
-        _this.fireList = [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
-        ]; //火火球邀请情况
+        _this.fireList = []; //火火球邀请情况
         return _this;
     }
     myBalls.prototype.partAdded = function (partName, instance) {
@@ -47,24 +40,54 @@ var myBalls = (function (_super) {
         this.changeInfo(0);
         var cats = userDataMaster.cats;
         for (var i = 0, len = this.positionArr.length; i < len; i++) {
+            this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
             if (cats[i].state) {
                 //已获得
-                this['img_' + i].texture = RES.getRes('img_elf_a2_png');
             }
             else {
+                this.filterFun(this['img_' + i]);
             }
         }
         var blurFliter = new egret.BlurFilter(4, 4);
         this.processBar.filters = [blurFliter];
+        this.getFireList();
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.beginFun, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.endFun, this);
         this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
         this.raiseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.raiseFun, this);
         this.fireBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireFun, this);
     };
+    myBalls.prototype.getFireList = function () {
+        var that = this;
+        var params = {
+            uid: userDataMaster.getMyInfo.uid || 0
+        };
+        ServiceMaster.post(ServiceMaster.getAssistanceList, params, function (res) {
+            if (res.code == 1 && res.data) {
+                that.fireList = res.data.list;
+            }
+        });
+    };
+    myBalls.prototype.filterFun = function (obj, type) {
+        if (type === void 0) { type = 0; }
+        // type ==0 添加滤镜，type==1去除滤镜
+        if (type == 0) {
+            var colorMatrix = [
+                0.3, 0.6, 0, 0, -300,
+                0.3, 0.6, 0, 0, -300,
+                0.3, 0.6, 0, 0, -300,
+                0, 0, 0, 1, 0
+            ];
+            var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+            obj.filters = [colorFlilter];
+        }
+        else {
+            obj.filters = [];
+        }
+    };
     myBalls.prototype.fireFun = function () {
         var that = this;
-        var i = 8;
+        var i = 4;
         if (userDataMaster.cats[i].state && userDataMaster.runCat == i) {
             //旅行中
         }
@@ -73,8 +96,9 @@ var myBalls = (function (_super) {
             var cat = userDataMaster.cats[i];
             cat.state = true;
             userDataMaster.setCat(i, cat);
+            that.filterFun(that['img_' + i], 1);
             that.fireBtn.texture = RES.getRes('btn_receive_10_png');
-            that.addChild(new getSuccess(2, '火火球'));
+            that.addChild(new getSuccess(4, '火火球'));
         }
         else if (userDataMaster.cats[i].state && that.fireList.length >= 6) {
             //带他出发
@@ -208,7 +232,6 @@ var myBalls = (function (_super) {
     myBalls.prototype.changeInfo = function (i, feed) {
         if (feed === void 0) { feed = false; }
         var that = this;
-        console.log(i);
         var cat = userDataMaster.cats[i];
         if (!feed) {
             that.currentBall = i;
@@ -222,7 +245,7 @@ var myBalls = (function (_super) {
                 that["travelImg_" + n].source = name_1;
             }
         }
-        if (i == 8) {
+        if (i == 4) {
             //火火球
             that.fireGroup.visible = true;
             that.popularGroup.visible = false;
@@ -247,7 +270,7 @@ var myBalls = (function (_super) {
         var pro = cat.process / cat.target;
         that.processBar.width = 650 * pro;
         that.progressText.text = parseInt(pro * 100 + '') + "%";
-        that.progressGroup.x = 20 + pro * 650;
+        that.progressGroup.x = pro * 650;
         if (pro < 1) {
             that.raiseBtn.texture = RES.getRes('btn_receive_11_png');
         }
@@ -271,7 +294,8 @@ var myBalls = (function (_super) {
                 if (cat.process == cat.target) {
                     //
                     cat.state = true;
-                    this['img_' + this.currentBall].texture = RES.getRes('img_elf_a2_png');
+                    this.filterFun(this['img_' + this.currentBall], 1);
+                    this.addChild(new getSuccess(this.currentBall, cat.name));
                 }
                 userDataMaster.setCat(this.currentBall, cat);
                 this.changeInfo(this.currentBall, true);
@@ -286,3 +310,4 @@ var myBalls = (function (_super) {
     return myBalls;
 }(eui.Component));
 __reflect(myBalls.prototype, "myBalls", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=myBalls.js.map

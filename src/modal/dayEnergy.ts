@@ -28,11 +28,11 @@ class dayEnergy extends eui.Component implements eui.UIComponent {
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
 	}
 	public getFun() {
-		if (!userDataMaster.todayEnergy) {
+		if (userDataMaster.todayEnergy) {
 			userDataMaster.updateTodayEnergy();
 			this.getBtn.texture = RES.getRes('btn_receive_04_png');
 			userDataMaster.myGold += 100;
-			this.addChild(new getSuccess(1, 'x 100'));
+			this.addChild(new getSuccess(-1, 'x 100'));
 			this.getBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
 		}
 	}

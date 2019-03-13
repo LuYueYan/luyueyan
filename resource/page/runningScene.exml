@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="runningSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="16905082286" ></w:Config>
-	<e:Rect id="bg_rect" width="750" height="1334" left="0" top="0" fillColor="0x41276e" visible="false"/>
-	<e:Label id="scoreText" text="0" x="48" y="61" size="80"/>
-	<e:Group id="flowerGroup" width="750" height="1334" touchThrough="true"/>
+	<e:Label id="scoreText" text="" y="61" size="80" horizontalCenter="0"/>
+	<e:Group id="flowerGroup" width="750" height="1334" touchThrough="true">
+	</e:Group>
 	<e:Button id="startBtn" label="" y="1060" anchorOffsetX="150" anchorOffsetY="150" horizontalCenter="0">
 		<e:skinName>
 		<e:Skin states="up,down,disabled">
@@ -12,4 +12,6 @@
 		</e:Skin>
 		</e:skinName>
 	</e:Button>
+	<e:Image id="startImg" source="img_bg_base_01_png" y="171.56" horizontalCenter="0"/>
+	<e:Label id="ballText" text="白白球" y="203" textColor="0x9382ff" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 </e:Skin>

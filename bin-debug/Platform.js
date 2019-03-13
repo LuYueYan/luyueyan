@@ -72,12 +72,12 @@ var DebugPlatform = (function () {
             return [2 /*return*/];
         }); });
     };
-    DebugPlatform.prototype.vibrateShort = function () {
+    DebugPlatform.prototype.vibrateShort = function (object) {
         return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
             return [2 /*return*/];
         }); });
     };
-    DebugPlatform.prototype.vibrateLong = function () {
+    DebugPlatform.prototype.vibrateLong = function (object) {
         return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
             return [2 /*return*/];
         }); });
@@ -198,3 +198,4 @@ __reflect(DebugPlatform.prototype, "DebugPlatform", ["Platform"]);
 if (!window.platform) {
     window.platform = new DebugPlatform();
 }
+//# sourceMappingURL=Platform.js.map

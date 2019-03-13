@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="tryModalSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+	<w:Config id="1697530abae" ></w:Config>
+	<ns1:grayBg/>
+	<e:Image source="img_text_11_png" y="238" horizontalCenter="0"/>
+	<e:Image id="ballImg" source="img_elf_02_png" x="256" y="476"/>
+	<e:Image id="sureBtn" source="btn_feed_png" y="756" horizontalCenter="0" touchEnabled="true"/>
+	<e:Label id="ignoreBtn" text="不了&gt;" y="892" horizontalCenter="0" textColor="0x9382ff" touchEnabled="true"/>
+</e:Skin>
