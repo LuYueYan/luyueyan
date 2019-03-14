@@ -1,4 +1,5 @@
 class friendHelp extends eui.Component implements eui.UIComponent {
+	public body: eui.Group;
 	public mask_0: eui.Rect;
 	public friend_0: eui.Image;
 	public icon_0: eui.Image;
@@ -32,7 +33,7 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 	public ball: eui.Image;
 	public closeBtn: eui.Button;
 	public getBtn: eui.Image;
-	public body: eui.Group;
+
 
 	public list = [];//"status":  状态1未领取2已领取
 	public constructor() {
@@ -75,11 +76,12 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 				for (let i = 0, len = res.data.total; i < len; i++) {
 					that['friend_' + i].source = that.list[i].avatarUrl;
 					that['friend_' + i].mask = that['mask_' + i];
-					that['text_' + i].text = "     x150";
-					that['icon_' + i].visible = true;
 					if (that.list[i].status == 1) {
 						that['get_' + i].visible = true;
 						that['get_' + i].addEventListener(egret.TouchEvent.TOUCH_TAP, () => { this.getEnergyFun(i) }, this);
+					} else {
+						that['icon_' + i].visible = false;
+						that['text_' + i].visible = false;
 					}
 				}
 			}

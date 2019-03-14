@@ -117,5 +117,10 @@
         "path": "modal\\tryModal.ts",
         "class": "tryModal",
         "parentPath": ""
+    },
+    "1697b4310ff": {
+        "path": "modal\\moreItem.ts",
+        "class": "moreItem",
+        "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
     }
 }

@@ -8,7 +8,7 @@ class getSuccess extends eui.Component implements eui.UIComponent {
 	public body: eui.Group;
 
 
-	public type = 1;//类型 -1--能量果 >-1--解锁球的index
+	public type = -1;//类型 -1--能量果 >-1--解锁球的index
 	public nameOrNum = '';//球的名字或者能量果数量 （数量的话类似 'x100'）
 	public constructor(type = -1, nameOrNum) {
 		super();

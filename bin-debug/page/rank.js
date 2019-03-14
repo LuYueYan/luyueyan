@@ -121,4 +121,3 @@ var rank = (function (_super) {
     return rank;
 }(eui.Component));
 __reflect(rank.prototype, "rank", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=rank.js.map

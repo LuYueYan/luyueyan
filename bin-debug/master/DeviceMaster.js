@@ -51,4 +51,3 @@ var DeviceMaster = (function () {
 }());
 __reflect(DeviceMaster.prototype, "DeviceMaster");
 window['DeviceMaster'] = DeviceMaster;
-//# sourceMappingURL=DeviceMaster.js.map

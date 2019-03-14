@@ -1,20 +1,17 @@
 class startScene extends eui.Component implements eui.UIComponent {
 	public bgImg: eui.Image;
+	public addGold: eui.Group;
 	public goldText: eui.Label;
 	public collection: eui.Image;
+	public moreScroller: eui.Scroller;
 	public moreGroup: eui.Group;
-	public mask_1: eui.Rect;
-	public more_1: eui.Image;
-	public text_1: eui.Label;
-	public mask_2: eui.Rect;
-	public more_2: eui.Image;
-	public text_2: eui.Label;
-	public mask_3: eui.Rect;
-	public more_3: eui.Image;
-	public text_3: eui.Label;
+	public tryBtn: eui.Group;
+	public tryImg: eui.Image;
 	public friendBtn: eui.Image;
 	public energyBtn: eui.Image;
 	public currentBall: eui.Image;
+	public tryTip: eui.Image;
+	public energyAddGroup: eui.Group;
 	public startBtn: eui.Image;
 	public houseBtn: eui.Image;
 	public travelBtn: eui.Image;
@@ -24,13 +21,11 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public travelTip: eui.Image;
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
-	public tryBtn: eui.Group;
-	public tryImg: eui.Image;
-	public tryTip: eui.Image;
-	public addGold: eui.Image;
 
 
 
+	public dataGroup: eui.DataGroup;
+	public sourceArr: eui.ArrayCollection;
 	public tryIndex = -1;//今日试玩index
 	public trying = false;//是否是试玩结束返回
 	public energyAdd = 0;//能量加成百分比
@@ -63,41 +58,45 @@ class startScene extends eui.Component implements eui.UIComponent {
 		if (match) {
 			that.collection.y = 80;
 		}
-		if (userDataMaster.todayTry) {
-			//今天还没试玩
-			this.tryBtn.visible = true;
-			let tryList = [];
-			let cats = userDataMaster.cats;
-			for (let i = 0, len = cats.length; i < len; i++) {
-				if (!cats[i].state) {
-					tryList.push(i);
+		setTimeout(function () {
+			if (userDataMaster.todayTry) {
+				//今天还没试玩
+				that.tryBtn.visible = true;
+				let tryList = [];
+				let cats = userDataMaster.cats;
+				for (let i = 0, len = cats.length; i < len; i++) {
+					if (!cats[i].state) {
+						tryList.push(i);
+					}
 				}
+				that.tryIndex = Math.floor(Math.random() * tryList.length);
+				that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
 			}
-			this.tryIndex = Math.floor(Math.random() * tryList.length);
-			this.tryImg.texture = RES.getRes('img_elf_' + this.tryIndex + '2_png');
-		}
-		if (userDataMaster.getMyInfo.uid) {
-			// userDataMaster.createLoginBtn()
-		}
-		this.goldText.text = '' + userDataMaster.gold;
-		this.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
+			that.goldText.text = '' + userDataMaster.gold;
+			that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
+			let energy = userDataMaster.sourceEnergy;
+			if (energy.uid && energy.day) {
+				that.addChild(new getEnergyModal(energy.uid, energy.day))
+			}
+		}, 500);
+
+
 		if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
 			let list = userDataMaster.recommand['1'].games;
-			for (let i = 0; i < 3 && i < list.length; i++) {
-				that['more_' + (i + 1)].source = list[i].image;
-				let text = list[i].name.length > 4 ? list[i].name.substr(0, 3) + '…' : list[i].name;
-				that['text_' + (i + 1)].text = text;
-				that['more_' + (i + 1)].mask = that['mask_' + (i + 1)];
-				that['more_' + (i + 1)].addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-					that.moreFun(list[i])
-				}, this);
-			}
+			this.sourceArr = new eui.ArrayCollection(list);
+			this.dataGroup = new eui.DataGroup();
+			this.dataGroup.dataProvider = this.sourceArr;
+			this.dataGroup.useVirtualLayout = true;
+			let layout = new eui.VerticalLayout();
+			layout.gap = 20;
+			this.dataGroup.layout = layout;
+			this.dataGroup.itemRenderer = moreItem;
+			this.moreGroup.height = list.length * 150 - 20;
+			this.moreGroup.addChild(this.dataGroup);
+
 		}
 
-		let energy = userDataMaster.sourceEnergy;
-		if (energy.uid && energy.day) {
-			this.addChild(new getEnergyModal(energy.uid, energy.day))
-		}
+
 		// if (this.trying) {
 		// 	this.addChild(new myBalls());
 		// }
@@ -115,21 +114,42 @@ class startScene extends eui.Component implements eui.UIComponent {
 		userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this)
 	}
 	public addGoldFun() {
-		AdMaster.useVideo(() => {
-			suc();
-		}, () => {
-			console.log('share')
-			CallbackMaster.openShare(() => {
-				suc();
-			})
-		});
-		function suc() {
-			userDataMaster.myGold += 20;
+		let that = this;
+		switch (userDataMaster.todayVideoEnergy) {
+			case 0:
+				//今天还没分享还没看视频
+				CallbackMaster.openShare(() => {
+					suc(50);
+				})
+				break;
+			case 1:
+				// 今天已经分享，还没看视频
+				AdMaster.useVideo(() => {
+					suc(100);
+				}, () => {
+					CallbackMaster.openShare(() => {
+						suc(100);
+					})
+				});
+				break;
+			case 2:
+				// 今天已经分享已经看视频
+				platform.showModal({
+					title: '温馨提示',
+					content: '今日次数已用完，明日再来'
+				})
+				break;
+			default: break;
+		}
+		function suc(num) {
+			userDataMaster.dayVideoEnergy.num++;
+			userDataMaster.myGold += num;
+			that.addChild(new getSuccess(-1, 'x ' + num));
 		}
 	}
 	public tryFun() {
 		//今日试玩
-       let that=this;
+		let that = this;
 		if (userDataMaster.todayTry) {
 			AdMaster.useVideo(() => {
 				suc();
@@ -155,26 +175,14 @@ class startScene extends eui.Component implements eui.UIComponent {
 	}
 	public updateData(evt: eui.CollectionEvent): void {
 		this.goldText.text = '' + userDataMaster.gold;
-		this.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
-	}
-	public moreFun(item) {
+		if (this.tryTip.visible) {
+			this.currentBall.texture = RES.getRes('img_elf_' + this.tryIndex + '2_png');
+		} else {
+			this.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
+		}
 
-		CallbackMaster.recommandClick(1, item);
-		let type = 2;
-		platform.navigateToMiniProgram({
-			appId: item.appid,
-			path: item.path,
-			extraData: {},
-			success(suc) {
-
-			}, fail(err) {
-				type = 3;
-			},
-			complete() {
-				CallbackMaster.recommandClick(type, item)
-			}
-		})
 	}
+
 	public houseFun() {
 		let that = this;
 		that.addChild(new myBalls());
@@ -192,7 +200,8 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public shareFun() {
 		let that = this;
 		CallbackMaster.openShare(() => {
-			that.energyAdd = 0.1
+			that.energyAdd = 0.1;
+			that.energyAddGroup.visible = true;
 		});
 		that.shareTip.visible = false;
 	}
@@ -213,7 +222,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 		if (this.tryTip.visible) {
 			currentBall = this.tryIndex;
 		}
-		parent.addChild(new runningScene(1, 0, 0, currentBall, 0, 0, 0.1));
+		parent.addChild(new runningScene(1, 0, 0, currentBall, 0, 0, that.energyAdd));
 	}
 
 }

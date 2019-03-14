@@ -46,34 +46,34 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		this.energyNum.text = 'x ' + this.energy;
 		let travel = userDataMaster.MyCats[this.ballId].belong;
 		let ran = Math.floor(Math.random() * travel.length);
-		let newArr=[];
-		for(let i=0;i<travel.length;i++){
-			if(i!=ran){
-              newArr.push(travel[i]);
+		let newArr = [];
+		for (let i = 0; i < travel.length; i++) {
+			if (i != ran) {
+				newArr.push(travel[i]);
 			}
 		}
 		let item_0 = userDataMaster.travels[newArr[0]];
 		let item_1 = userDataMaster.travels[newArr[1]];
-		this.travel_img_0.texture = RES.getRes('img_imprinting_a'+(item_0.id+1)+'_png');
+		this.travel_img_0.texture = RES.getRes('img_imprinting_a' + (item_0.id + 1) + '_png');
 		this.travel_name_0.text = item_0.name;
-		this.travel_img_1.texture = RES.getRes('img_imprinting_a'+(item_1.id+1)+'_png');
+		this.travel_img_1.texture = RES.getRes('img_imprinting_a' + (item_1.id + 1) + '_png');
 		this.travel_name_1.text = item_1.name;
 		if (item_0.state == 0) {
 			//初次获得
 			item_0.state = 1;
-			this.travel_new_0.visible=true;
+			this.travel_new_0.visible = true;
 			userDataMaster.setTravel(newArr[0], item_0);
 			userDataMaster.travelList.push(newArr[0]);
 		}
 		if (item_1.state == 0) {
 			//初次获得
 			item_1.state = 1;
-			this.travel_new_1.visible=true;
+			this.travel_new_1.visible = true;
 			userDataMaster.travelList.push(newArr[1]);
 			userDataMaster.setTravel(newArr[1], item_1);
 		}
 
-
+		egret.Tween.get(this.getEnergy,{loop:true}).to({ scaleX: 1.1, scaleY: 1.1 }, 800).to({ scaleX: 1, scaleY: 1 }, 1000);
 		this.updateScore();
 		this.again.addEventListener(egret.TouchEvent.TOUCH_TAP, this.againFun, this);
 		this.shareBtn_0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
@@ -113,12 +113,11 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		});
 		function suc() {
 			userDataMaster.myGold += that.energy;
-			that.getEnergy.texture=RES.getRes('btn_receive_04_png');
+			that.getEnergy.texture = RES.getRes('btn_receive_04_png');
+			egret.Tween.removeTweens(that.getEnergy);
 			that.getEnergy.removeEventListener(egret.TouchEvent.TOUCH_TAP, that.getFun, that);
 			that.addChild(new getSuccess(-1, 'x ' + that.energy));
-			
 		}
-
 	}
 	public shareFun() {
 		CallbackMaster.openShare(null, false);
@@ -129,7 +128,6 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		parent.addChild(new runningScene());
 	}
 	public ballFun() {
-		this.addChild(new myBalls())
+		this.addChild(new myBalls(true))
 	}
-
 }

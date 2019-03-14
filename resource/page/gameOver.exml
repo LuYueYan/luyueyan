@@ -5,7 +5,7 @@
 	<e:Image source="img_tittle_06_png" y="72" horizontalCenter="0"/>
 	<e:Label id="scoreText" text="0" y="253" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
 	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="58" touchEnabled="true"/>
-	<e:Button id="again" label="" x="78" y="913">
+	<e:Button id="again" label="" x="78" y="961.48">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="btn_receive_07_png"/>
@@ -13,7 +13,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="openBall" label="" x="386" y="913" touchEnabled="true">
+	<e:Button id="openBall" label="" x="386" y="961.48" touchEnabled="true">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="btn_receive_08_png"/>
@@ -21,7 +21,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Scroller width="650" height="442" y="428" anchorOffsetY="0" horizontalCenter="0">
+	<e:Scroller width="650" height="505.64" y="428" anchorOffsetY="0" horizontalCenter="0">
 		<e:Group>
 			<e:Group x="0" y="0" scaleX="1" scaleY="1">
 				<e:Group y="0" width="650" height="160" x="0">
@@ -30,7 +30,7 @@
 				<e:Label text="能量果" x="180" y="30" fontFamily="Microsoft YaHei" size="28"/>
 				<e:Label text="获取更多的能量果 可以喂养球球小精灵哦 " x="180" y="76" width="218" size="20" fontFamily="Microsoft YaHei" textColor="0xab9dff" lineSpacing="5"/>
 				<e:Label id="energyNum" text="x 50" x="294" y="33" fontFamily="Microsoft YaHei" size="28" textColor="0xffea00"/>
-				<e:Image id="getEnergy" x="434" touchEnabled="true" y="45" source="btn_receive_05_png" width="186" height="71"/>
+				<e:Image id="getEnergy" x="527" touchEnabled="true" y="80.5" source="btn_receive_05_png" width="186" height="71" anchorOffsetX="93" anchorOffsetY="35.5"/>
 				</e:Group>
 				<e:Group id="travel_0" width="650" height="160" y="170" anchorOffsetX="0" anchorOffsetY="0" x="0">
 				<e:Image id="travel_img_0" x="30" verticalCenter="0" source="img_imprinting_a1_png"/>

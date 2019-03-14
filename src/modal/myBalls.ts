@@ -20,6 +20,8 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public item_0: eui.Group;
 	public img_0: eui.Image;
 	public homeBtn: eui.Image;
+	public addGold: eui.Group;
+	public goldText: eui.Label;
 	public nameImg: eui.Image;
 	public natureText: eui.Label;
 	public musicText: eui.Label;
@@ -35,8 +37,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public fireGroup: eui.Group;
 	public fireText: eui.Label;
 	public fireBtn: eui.Image;
-	public goldText:eui.Label;
-   public addGold:eui.Image;
+
 
 	public positionArr = [
 		{ index: 0, x: 375, y: 303, scaleX: 1, scaleY: 1 },
@@ -53,8 +54,11 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public position = { x: 0, y: 0, time: 0 };
 	public currentBall = 0;//当前的球是哪个
 	public fireList = [];//火火球邀请情况
-	public constructor() {
+
+	public guideFeed = false;//是否从结束页进来的
+	public constructor(guideFeed = false) {
 		super();
+		this.guideFeed = guideFeed;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -67,19 +71,34 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		this.init()
 	}
 	public init() {
-		this.changeInfo(0);
 		let cats = userDataMaster.cats;
 		for (let i = 0, len = this.positionArr.length; i < len; i++) {
 			this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
 			if (cats[i].state) {
 				//已获得
 			} else {
+				if (this.guideFeed&&this.currentBall == 0) {
+					this.currentBall = i;
+				}
 				this.filterFun(this['img_' + i]);
 			}
 		}
+		if (this.currentBall != 0) {
+			let dx = this.currentBall;
+			for (let i = 0, len = this.positionArr.length; i < len; i++) {
+				let current = i - dx >= 0 ? i - dx : i - dx + 9;
+				this['item_' + i].name = 'current_' + current;
+				this.bodyGroup.setChildIndex(this['item_' + i], this.getIndex(current));
+				this['item_' + i].x = this.positionArr[current].x;
+				this['item_' + i].y = this.positionArr[current].y;
+				this['item_' + i].scaleX = this.positionArr[current].scaleX;
+				this['item_' + i].scaleY = this.positionArr[current].scaleY;
+			}
+		}
+		this.changeInfo(this.currentBall);
 		var blurFliter = new egret.BlurFilter(4, 4);
 		this.processBar.filters = [blurFliter];
-       this.goldText.text=userDataMaster.myGold+'';
+		this.goldText.text = userDataMaster.myGold + '';
 		this.getFireList();
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.beginFun, this);
 		this.addEventListener(egret.TouchEvent.TOUCH_END, this.endFun, this);
@@ -92,7 +111,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public updateData(evt: eui.CollectionEvent): void {
 		this.goldText.text = '' + userDataMaster.gold;
 	}
-	public addGoldFun(){
+	public addGoldFun() {
 		AdMaster.useVideo(() => {
 			suc();
 		}, () => {
@@ -101,8 +120,8 @@ class myBalls extends eui.Component implements eui.UIComponent {
 				suc();
 			})
 		});
-		function suc(){
-			userDataMaster.myGold+=20;
+		function suc() {
+			userDataMaster.myGold += 20;
 		}
 	}
 	public getFireList() {
@@ -213,13 +232,13 @@ class myBalls extends eui.Component implements eui.UIComponent {
 				let index = i < 5 ? i : 9 - i;
 				this.bodyGroup.setChildIndex(this['item_' + i], this.getIndex(current));
 				egret.Tween.get(this['item_' + i])
-					.wait(1000 / num * n)
+					.wait(500 / num * n)
 					.to({
 						x: this.positionArr[current].x,
 						y: this.positionArr[current].y,
 						scaleX: this.positionArr[current].scaleX,
 						scaleY: this.positionArr[current].scaleY
-					}, 1000 / num)
+					}, 500 / num)
 					.call(() => {
 						if (i == 8 && n == num - 1) {
 							this.canMove = true;
@@ -256,7 +275,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 			let travel = cat.belong;
 			let travels = userDataMaster.travels;
 			for (let n = 0; n < 3; n++) {
-				let name = 'img_imprinting_a'+(travels[travel[n]].id+1)+'_png';
+				let name = 'img_imprinting_a' + (travels[travel[n]].id + 1) + '_png';
 				that["travelImg_" + n].texture = RES.getRes(name);
 			}
 		}

@@ -13,15 +13,15 @@ var travelScene = (function (_super) {
     function travelScene() {
         var _this = _super.call(this) || this;
         _this.dataArr = [
-            { index: 0, x: 102, y: 399, state: 1, type: 0 },
-            { index: 1, x: 244, y: 371, state: 1, type: 0 },
-            { index: 2, x: 384, y: 371, state: 1, type: 0 },
-            { index: 3, x: 524, y: 401, state: 1, type: 0 },
+            { index: 0, x: 102, y: 399, state: 0, type: 0 },
+            { index: 1, x: 244, y: 371, state: 0, type: 0 },
+            { index: 2, x: 384, y: 371, state: 0, type: 0 },
+            { index: 3, x: 524, y: 401, state: 0, type: 0 },
             { index: -1, x: 540, y: 562, state: 0, type: 1 },
             { index: 4, x: 384, y: 551, state: 0, type: 0 },
             { index: 5, x: 234, y: 571, state: 0, type: 0 },
             { index: 6, x: 104, y: 621, state: 0, type: 0 },
-            { index: 7, x: 104, y: 771, state: 1, type: 0 },
+            { index: 7, x: 104, y: 771, state: 0, type: 0 },
             { index: -1, x: 238, y: 798, state: 0, type: 1 },
             { index: 8, x: 384, y: 793, state: 0, type: 0 },
             { index: 9, x: 524, y: 836, state: 0, type: 0 },
@@ -67,7 +67,7 @@ var travelScene = (function (_super) {
         var data = that.dataArr;
         var travels = userDataMaster.travels;
         var _loop_1 = function (i) {
-            var name_1 = void 0, travel = void 0;
+            var name_1 = void 0, travel = void 0, text = void 0;
             if (data[i].type == 1 && i > 0 && travels[i].state == 1) {
                 //已领取的礼包
                 name_1 = 'img_gift_a3_png';
@@ -87,19 +87,26 @@ var travelScene = (function (_super) {
             if (data[i].type == 0 && data[i].index < userDataMaster.travelList.length) {
                 //已解锁
                 name_1 = 'img_bg_imprinting_1_png';
-                travel = that.createBitmapByName('img_imprinting_b1_png', data[i].x + 20, data[i].y + 20);
+                travel = that.createBitmapByName('img_imprinting_b' + (data[i].index + 1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
+                var txt = userDataMaster.travels[userDataMaster.travelList[data[i].index]].name;
+                text = new eui.Label(txt);
+                text.size = 20;
+                text.textColor = 0x473678;
+                text.x = data[i].x - 15 + (156 - text.width) / 2;
+                text.y = data[i].y + 130;
             }
             var img = that.createBitmapByName(name_1, data[i].x - 15, data[i].y - 15);
             this_1.content.addChild(img);
             if (name_1 == 'img_gift_a2_png') {
                 var tip_1 = that.createBitmapByName('img_label_05_png', data[i].x + 30, data[i].y - 20);
                 this_1.content.addChild(tip_1);
-                if (travel) {
-                    this_1.content.addChild(travel);
-                }
                 img.touchEnabled = true;
                 img.name = 'img_' + i;
                 img.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { that.getFun(img, tip_1, i); }, this_1);
+            }
+            if (travel) {
+                this_1.content.addChild(travel);
+                this_1.content.addChild(text);
             }
         };
         var this_1 = this;
@@ -122,17 +129,25 @@ var travelScene = (function (_super) {
         var parent = this.parent;
         parent.removeChild(this);
     };
-    travelScene.prototype.createBitmapByName = function (name, x, y) {
+    travelScene.prototype.createBitmapByName = function (name, x, y, center, vertical) {
         if (x === void 0) { x = 0; }
         if (y === void 0) { y = 0; }
+        if (center === void 0) { center = 0; }
+        if (vertical === void 0) { vertical = 0; }
+        //center 是否水平居中  vertical 垂直居中
         var result = new egret.Bitmap();
         var texture = RES.getRes(name);
         result.texture = texture;
         result.x = x;
         result.y = y;
+        if (center > 0) {
+            result.x = x + (center - result.width) / 2;
+        }
+        if (vertical > 0) {
+            result.y = y + (vertical - result.height) / 2;
+        }
         return result;
     };
     return travelScene;
 }(eui.Component));
 __reflect(travelScene.prototype, "travelScene", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=travelScene.js.map

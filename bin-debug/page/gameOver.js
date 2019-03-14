@@ -51,9 +51,9 @@ var gameOver = (function (_super) {
         }
         var item_0 = userDataMaster.travels[newArr[0]];
         var item_1 = userDataMaster.travels[newArr[1]];
-        this.travel_img_0.source = item_0.image;
+        this.travel_img_0.texture = RES.getRes('img_imprinting_a' + (item_0.id + 1) + '_png');
         this.travel_name_0.text = item_0.name;
-        this.travel_img_1.source = item_1.image;
+        this.travel_img_1.texture = RES.getRes('img_imprinting_a' + (item_1.id + 1) + '_png');
         this.travel_name_1.text = item_1.name;
         if (item_0.state == 0) {
             //初次获得
@@ -69,6 +69,7 @@ var gameOver = (function (_super) {
             userDataMaster.travelList.push(newArr[1]);
             userDataMaster.setTravel(newArr[1], item_1);
         }
+        egret.Tween.get(this.getEnergy, { loop: true }).to({ scaleX: 1.1, scaleY: 1.1 }, 800).to({ scaleX: 1, scaleY: 1 }, 1000);
         this.updateScore();
         this.again.addEventListener(egret.TouchEvent.TOUCH_TAP, this.againFun, this);
         this.shareBtn_0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
@@ -105,6 +106,7 @@ var gameOver = (function (_super) {
         function suc() {
             userDataMaster.myGold += that.energy;
             that.getEnergy.texture = RES.getRes('btn_receive_04_png');
+            egret.Tween.removeTweens(that.getEnergy);
             that.getEnergy.removeEventListener(egret.TouchEvent.TOUCH_TAP, that.getFun, that);
             that.addChild(new getSuccess(-1, 'x ' + that.energy));
         }
@@ -118,9 +120,8 @@ var gameOver = (function (_super) {
         parent.addChild(new runningScene());
     };
     gameOver.prototype.ballFun = function () {
-        this.addChild(new myBalls());
+        this.addChild(new myBalls(true));
     };
     return gameOver;
 }(eui.Component));
 __reflect(gameOver.prototype, "gameOver", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=gameOver.js.map

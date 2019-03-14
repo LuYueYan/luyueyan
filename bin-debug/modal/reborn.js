@@ -10,19 +10,22 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var reborn = (function (_super) {
     __extends(reborn, _super);
-    function reborn(score, ballId, energy) {
+    function reborn(score, ballId, energy, energyAdd) {
         if (score === void 0) { score = 0; }
         if (ballId === void 0) { ballId = 0; }
         if (energy === void 0) { energy = 0; }
+        if (energyAdd === void 0) { energyAdd = 0; }
         var _this = _super.call(this) || this;
         _this.score = 0;
         _this.energy = 0; //本局能量果
         _this.ballId = 0; //本局使用的球
         _this.terval = null;
         _this.current_time = 5;
+        _this.energyAdd = 0; //能量加成百分比
         _this.score = score;
         _this.energy = energy;
         _this.ballId = ballId;
+        _this.energyAdd = energyAdd;
         return _this;
     }
     reborn.prototype.partAdded = function (partName, instance) {
@@ -59,9 +62,9 @@ var reborn = (function (_super) {
     reborn.prototype.ignoreFun = function () {
         var parent = this.parent.parent;
         parent.removeChild(this.parent);
-        parent.addChild(new gameOver(this.score, this.ballId, this.energy));
+        var energy = parseInt(this.energy * (1 + this.energyAdd) + '');
+        parent.addChild(new gameOver(this.score, this.ballId, energy));
     };
     return reborn;
 }(eui.Component));
 __reflect(reborn.prototype, "reborn", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=reborn.js.map

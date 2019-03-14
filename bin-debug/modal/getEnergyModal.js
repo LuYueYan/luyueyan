@@ -99,7 +99,7 @@ var getEnergyModal = (function (_super) {
                     that.getText.text = "已领取（" + that.currentNum + "/5）";
                     that.state.visible = true;
                     that.numText.visible = true;
-                    var gold = userDataMaster.myGold + 25;
+                    var gold = userDataMaster.myGold + 30;
                     userDataMaster.myGold = gold;
                     that.status = 2;
                     that.getBtn.texture = RES.getRes('btn_present_02_png');
@@ -116,4 +116,3 @@ var getEnergyModal = (function (_super) {
     return getEnergyModal;
 }(eui.Component));
 __reflect(getEnergyModal.prototype, "getEnergyModal", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=getEnergyModal.js.map

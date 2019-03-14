@@ -48,11 +48,13 @@ var friendHelp = (function (_super) {
                 var _loop_1 = function (i, len) {
                     that['friend_' + i].source = that.list[i].avatarUrl;
                     that['friend_' + i].mask = that['mask_' + i];
-                    that['text_' + i].text = "     x50";
-                    that['icon_' + i].visible = true;
                     if (that.list[i].status == 1) {
                         that['get_' + i].visible = true;
                         that['get_' + i].addEventListener(egret.TouchEvent.TOUCH_TAP, function () { _this.getEnergyFun(i); }, _this);
+                    }
+                    else {
+                        that['icon_' + i].visible = false;
+                        that['text_' + i].visible = false;
                     }
                 };
                 for (var i = 0, len = res.data.total; i < len; i++) {
@@ -70,11 +72,11 @@ var friendHelp = (function (_super) {
         ServiceMaster.post(ServiceMaster.receiveAssistance, params, function (res) {
             if (res.code == 1 && res.data) {
                 var gold = userDataMaster.myGold;
-                gold += 50;
+                gold += 150;
                 userDataMaster.myGold = gold;
                 that['get_' + i].visible = false;
                 that.list[i].status = 2;
-                that.addChild(new getSuccess(-1, 'x 50'));
+                that.addChild(new getSuccess(-1, 'x 150'));
             }
         });
     };
@@ -106,4 +108,3 @@ var friendHelp = (function (_super) {
     return friendHelp;
 }(eui.Component));
 __reflect(friendHelp.prototype, "friendHelp", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=friendHelp.js.map

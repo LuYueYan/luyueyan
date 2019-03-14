@@ -47,8 +47,9 @@ class CallbackMaster {
 			let info = {
 				runCat: userDataMaster.runCat,
 				dayEnergy: userDataMaster.dayEnergy,
-				dayTry:userDataMaster.dayTry,
-				travelList:userDataMaster.travelList
+				dayTry: userDataMaster.dayTry,
+				travelList: userDataMaster.travelList,
+				dayVideoEnergy: userDataMaster.dayVideoEnergy
 			};
 			let params = {
 				uid: userDataMaster.getMyInfo.uid,

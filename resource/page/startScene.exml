@@ -2,26 +2,19 @@
 <e:Skin class="startSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="169227c070f" ></w:Config>
 	<e:Image id="bgImg" anchorOffsetY="0" left="0" top="0" source="img_bg_home_01_png"/>
-	<e:Image id="addGold" source="img_bg_fruit_number_png" x="38.38" y="45" touchEnabled="true"/>
-	<e:Label id="goldText" text="40" x="90.69" y="66.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
+	<e:Group id="addGold" x="38.38" y="45" touchEnabled="true">
+		<e:Image source="img_bg_fruit_number_png" x="0" y="0" touchEnabled="true"/>
+		<e:Label id="goldText" text="40" x="52.31" y="21.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
+	</e:Group>
 	<e:Image id="collection" source="img_collect_png" x="244" y="24"/>
 	<e:Image source="img_game_tittle_png" y="147" horizontalCenter="0"/>
 	<e:Image source="img_bg_home_02_png" y="383.97" horizontalCenter="0.5"/>
-	<e:Group id="moreGroup" y="284" anchorOffsetY="0" anchorOffsetX="0">
-		<e:Image source="img_bg_game_png"/>
-		<e:Rect width="102" height="102" x="19" y="30" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xFFFFFF" fillAlpha="1" fillColor="0xffffff"/>
-		<e:Rect id="mask_1" width="100" height="100" x="20" y="31" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xffffff" fillAlpha="1"/>
-		<e:Image id="more_1" width="100" height="100" x="20" y="31" touchEnabled="true" source="icn_home_04_png"/>
-		<e:Label id="text_1" text="" y="138" fontFamily="Microsoft YaHei" size="20" horizontalCenter="0"/>
-		<e:Rect width="102" height="102" x="19" y="178" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xFFFFFF" fillAlpha="1"/>
-		<e:Rect width="100" height="100" x="20" y="179" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xFFFFFF" id="mask_2" fillAlpha="1" fillColor="0x000000"/>
-		<e:Image id="more_2" width="100" height="100" x="20" y="179" touchEnabled="true" source="icn_home_02_png"/>
-		<e:Label text="" y="287" id="text_2" horizontalCenter="0" fontFamily="Microsoft YaHei" size="20"/>
-		<e:Rect width="102" height="102" x="19" y="329" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xFFFFFF" fillAlpha="1" fillColor="0xffffff"/>
-		<e:Rect id="mask_3" width="100" height="100" x="20" y="330" ellipseWidth="30" ellipseHeight="30" strokeWeight="1" strokeColor="0xFFFFFF" fillAlpha="1" fillColor="0x000000"/>
-		<e:Image id="more_3" width="100" height="100" x="20" y="330" touchEnabled="true" source="icn_home_01_png"/>
-		<e:Label id="text_3" text="" y="437" horizontalCenter="0" fontFamily="Microsoft YaHei" size="20"/>
-	</e:Group>
+	<e:Image source="img_bg_game_png" y="284"/>
+	<e:Scroller id="moreScroller" width="140" height="448" y="306" anchorOffsetY="0" x="0">
+		<e:Group>
+			<e:Group id="moreGroup" width="100%" scaleX="1" scaleY="1" height="448"/>
+		</e:Group>
+	</e:Scroller>
 	<e:Group id="tryBtn" x="604" y="302.5" touchEnabled="true" visible="false">
 		<e:Image y="6" source="img_bg_play_try_png"/>
 		<e:Image id="tryImg" source="img_elf_22_png" width="100" height="100" horizontalCenter="0.5"/>
@@ -29,7 +22,11 @@
 	<e:Image id="friendBtn" x="616" y="459" touchEnabled="true" source="icn_home_05_png"/>
 	<e:Image id="energyBtn" x="616" y="617" touchEnabled="true" source="icn_home_06_png"/>
 	<e:Image id="currentBall" y="321" blendMode="normal" source="img_elf_02_png" horizontalCenter="0"/>
-	<e:Image id="tryTip" source="tryTip_png" x="463" y="321" visible="false"/>
+	<e:Image id="tryTip" source="tryTip_png" y="589" horizontalCenter="0" visible="false"/>
+	<e:Group id="energyAddGroup" y="622" horizontalCenter="0" visible="false">
+		<e:Image source="text_list_json.img_fruit_small_png" x="0" verticalCenter="0"/>
+		<e:Label text="能量加成：10%" x="28" size="20" fontFamily="Microsoft YaHei" textColor="0xfffc01" verticalCenter="0"/>
+	</e:Group>
 	<e:Image id="startBtn" y="805.5" touchEnabled="true" source="btn_start_png" anchorOffsetX="147.5" anchorOffsetY="50.5" horizontalCenter="0"/>
 	<e:Group y="893" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
 		<e:Image id="houseBtn" x="22" y="36" touchEnabled="true" source="icn_home_01_png"/>

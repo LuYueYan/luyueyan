@@ -22,4 +22,3 @@ var guideModal = (function (_super) {
     return guideModal;
 }(eui.Component));
 __reflect(guideModal.prototype, "guideModal", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=guideModal.js.map

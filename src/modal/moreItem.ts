@@ -20,7 +20,8 @@ class moreItem extends eui.ItemRenderer implements eui.UIComponent {
 		let that = this;
 		this.image.mask = this.imgMask;
 		this.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-			let type = 1;
+			CallbackMaster.recommandClick(1, that.data);
+			let type = 2;
 			platform.navigateToMiniProgram({
 				appId: that.data.appid,
 				path: that.data.path,
@@ -28,19 +29,20 @@ class moreItem extends eui.ItemRenderer implements eui.UIComponent {
 				success(suc) {
 
 				}, fail(err) {
-					type = 0;
+					type = 3;
 				},
 				complete() {
-					// CallbackMaster.recommandClick(that.data.id, type)
+					CallbackMaster.recommandClick(type, that.data)
 				}
 			})
+
 		}, this)
 	}
 	protected dataChanged(): void {
 		this.title.text = this.data.name;
-		this.image.source = this.data.image;
+		this.image.source = this.data.image || '';
 		this.image.mask = this.imgMask;
-		this.title.textColor = this.data.color || 0xFBF6E3;
+		// this.title.textColor = this.data.color || 0xFBF6E3;
 	}
 
 }

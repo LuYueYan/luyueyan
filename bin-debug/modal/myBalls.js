@@ -10,7 +10,8 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var myBalls = (function (_super) {
     __extends(myBalls, _super);
-    function myBalls() {
+    function myBalls(guideFeed) {
+        if (guideFeed === void 0) { guideFeed = false; }
         var _this = _super.call(this) || this;
         _this.positionArr = [
             { index: 0, x: 375, y: 303, scaleX: 1, scaleY: 1 },
@@ -27,6 +28,8 @@ var myBalls = (function (_super) {
         _this.position = { x: 0, y: 0, time: 0 };
         _this.currentBall = 0; //当前的球是哪个
         _this.fireList = []; //火火球邀请情况
+        _this.guideFeed = false; //是否从结束页进来的
+        _this.guideFeed = guideFeed;
         return _this;
     }
     myBalls.prototype.partAdded = function (partName, instance) {
@@ -37,7 +40,6 @@ var myBalls = (function (_super) {
         this.init();
     };
     myBalls.prototype.init = function () {
-        this.changeInfo(0);
         var cats = userDataMaster.cats;
         for (var i = 0, len = this.positionArr.length; i < len; i++) {
             this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
@@ -45,17 +47,52 @@ var myBalls = (function (_super) {
                 //已获得
             }
             else {
+                if (this.guideFeed && this.currentBall == 0) {
+                    this.currentBall = i;
+                }
                 this.filterFun(this['img_' + i]);
             }
         }
+        if (this.currentBall != 0) {
+            var dx = this.currentBall;
+            for (var i = 0, len = this.positionArr.length; i < len; i++) {
+                var current = i - dx >= 0 ? i - dx : i - dx + 9;
+                this['item_' + i].name = 'current_' + current;
+                this.bodyGroup.setChildIndex(this['item_' + i], this.getIndex(current));
+                this['item_' + i].x = this.positionArr[current].x;
+                this['item_' + i].y = this.positionArr[current].y;
+                this['item_' + i].scaleX = this.positionArr[current].scaleX;
+                this['item_' + i].scaleY = this.positionArr[current].scaleY;
+            }
+        }
+        this.changeInfo(this.currentBall);
         var blurFliter = new egret.BlurFilter(4, 4);
         this.processBar.filters = [blurFliter];
+        this.goldText.text = userDataMaster.myGold + '';
         this.getFireList();
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.beginFun, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.endFun, this);
         this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
         this.raiseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.raiseFun, this);
         this.fireBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireFun, this);
+        this.addGold.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+        userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
+    };
+    myBalls.prototype.updateData = function (evt) {
+        this.goldText.text = '' + userDataMaster.gold;
+    };
+    myBalls.prototype.addGoldFun = function () {
+        AdMaster.useVideo(function () {
+            suc();
+        }, function () {
+            console.log('share');
+            CallbackMaster.openShare(function () {
+                suc();
+            });
+        });
+        function suc() {
+            userDataMaster.myGold += 20;
+        }
     };
     myBalls.prototype.getFireList = function () {
         var that = this;
@@ -173,13 +210,13 @@ var myBalls = (function (_super) {
                 var index = i < 5 ? i : 9 - i;
                 this_1.bodyGroup.setChildIndex(this_1['item_' + i], this_1.getIndex(current));
                 egret.Tween.get(this_1['item_' + i])
-                    .wait(1000 / num * n)
+                    .wait(500 / num * n)
                     .to({
                     x: this_1.positionArr[current].x,
                     y: this_1.positionArr[current].y,
                     scaleX: this_1.positionArr[current].scaleX,
                     scaleY: this_1.positionArr[current].scaleY
-                }, 1000 / num)
+                }, 500 / num)
                     .call(function () {
                     if (i == 8 && n == num - 1) {
                         _this.canMove = true;
@@ -241,8 +278,8 @@ var myBalls = (function (_super) {
             var travel = cat.belong;
             var travels = userDataMaster.travels;
             for (var n = 0; n < 3; n++) {
-                var name_1 = travels[travel[n]].image;
-                that["travelImg_" + n].source = name_1;
+                var name_1 = 'img_imprinting_a' + (travels[travel[n]].id + 1) + '_png';
+                that["travelImg_" + n].texture = RES.getRes(name_1);
             }
         }
         if (i == 4) {
@@ -310,4 +347,3 @@ var myBalls = (function (_super) {
     return myBalls;
 }(eui.Component));
 __reflect(myBalls.prototype, "myBalls", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=myBalls.js.map

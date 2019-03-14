@@ -6,7 +6,7 @@ class userDataMaster {
 		{ id: 2, name: '摇滚球', state: false, process: 0, target: 1000, belong: [3, 5, 6], des: '浑身散发魔性，带来的音乐也是酷酷风', music: '《幽默》' },
 		{ id: 3, name: '水灵球', state: false, process: 0, target: 2000, belong: [7, 8, 10], des: '蜻蜓点水般的灵动，似风入海洋', music: '《沙滩》' },
 		{ id: 4, name: '跑酷球', state: false, process: 0, target: 3000, belong: [11, 12, 13], des: '天生顽皮，似乎喂养了很多能量果', music: '《超越》' },
-		{ id: 5, name: '火火球', state: false, process: 0, target:0, belong: [15, 16, 17], des: '别看它小小的身体，却有大大的能量', music: '《希望》' },
+		{ id: 5, name: '火火球', state: false, process: 0, target: 0, belong: [15, 16, 17], des: '别看它小小的身体，却有大大的能量', music: '《希望》' },
 		{ id: 6, name: '黑洞球', state: false, process: 0, target: 5000, belong: [18, 20, 21], des: '想法经常出乎意料，常常让你冒冷', music: '《迷宫》' },
 		{ id: 7, name: '爆破球', state: false, process: 0, target: 10000, belong: [22, 23, 25], des: '拥有一秒燃爆森林的力量', music: '《时空》' },
 		{ id: 8, name: '旋风球', state: false, process: 0, target: 8000, belong: [26, 27, 28], des: '可以带着风飞舞，跑遍世界角落', music: '《海洋》' },
@@ -16,31 +16,31 @@ class userDataMaster {
 		{ index: 0, id: 0, name: '月之桥', state: 0 },
 		{ index: 1, id: 1, name: '白玉盘', state: 0 },
 		{ index: 2, id: 2, name: '瑶台镜', state: 0 },
-		{ index: 3, id: 3, name: '青云端',  state: 0 },
+		{ index: 3, id: 3, name: '青云端', state: 0 },
 		{ index: 4, id: -1, name: '', state: 0 },
 
-		{ index: 5, id: 4, name: '仙人足',  state: 0 },
-		{ index: 6, id: 5, name: '树团团',  state: 0 },
-		{ index: 7, id: 6, name: '白兔岛',state: 0 },
+		{ index: 5, id: 4, name: '仙人足', state: 0 },
+		{ index: 6, id: 5, name: '树团团', state: 0 },
+		{ index: 7, id: 6, name: '白兔岛', state: 0 },
 		{ index: 8, id: 7, name: '蚀圆影', state: 0 },
 		{ index: 9, id: -1, name: '', state: 0 },
 
-		{ index: 10, id: 8, name: '明夜残',  state: 0 },
-		{ index: 11, id: 9, name: '落九乌',state: 0 },
+		{ index: 10, id: 8, name: '明夜残', state: 0 },
+		{ index: 11, id: 9, name: '落九乌', state: 0 },
 		{ index: 12, id: 10, name: '升日月', state: 0 },
-		{ index: 13, id: 11, name: '花落肩',  state: 0 },
+		{ index: 13, id: 11, name: '花落肩', state: 0 },
 		{ index: 14, id: -1, name: '', state: 0 },
 
 		{ index: 15, id: 12, name: '三生烟', state: 0 },
-		{ index: 16, id: 13, name: '清晨迷',  state: 0 },
+		{ index: 16, id: 13, name: '清晨迷', state: 0 },
 		{ index: 17, id: 14, name: '尘滴落', state: 0 },
 		{ index: 18, id: 15, name: '四木湖', state: 0 },
 		{ index: 19, id: -1, name: '', state: 0 },
 
 		{ index: 20, id: 16, name: '蔷薇轮', state: 0 },
 		{ index: 21, id: 17, name: '嫩绿生', state: 0 },
-		{ index: 22, id: 18, name: '清脆盘',  state: 0 },
-		{ index: 23, id: 19, name: '四季空',  state: 0 },
+		{ index: 22, id: 18, name: '清脆盘', state: 0 },
+		{ index: 23, id: 19, name: '四季空', state: 0 },
 		{ index: 24, id: -1, name: '', state: 0 },
 
 		{ index: 25, id: 20, name: '木偶屋', state: 0 },
@@ -49,13 +49,13 @@ class userDataMaster {
 		{ index: 28, id: 23, name: '莲渔舟', state: 0 },
 		{ index: 29, id: -1, name: '', state: 0 },
 
-		{ index: 30, id: 24, name: '光懒懒',  state: 0 },
-		{ index: 31, id: 25, name: '万颗紫',  state: 0 },
-		{ index: 32, id: 26, name: '七彩云',state: 0 },
+		{ index: 30, id: 24, name: '光懒懒', state: 0 },
+		{ index: 31, id: 25, name: '万颗紫', state: 0 },
+		{ index: 32, id: 26, name: '七彩云', state: 0 },
 		{ index: 33, id: -1, name: '', state: 0 }
 	];
 	public static travelList = [];//我拥有的印记
-	public static dayEnergy = '';//上次领取每日能量的日期
+	public static dayEnergy = { day: '', num: 0 };//上次领取每日能量的日期
 	public static myCollection: eui.ArrayCollection;
 	public static shareUid = 0;//分享人id
 	public static sourceEnergy = { uid: 0, day: '' };//能量分享的原始id,日期
@@ -65,7 +65,8 @@ class userDataMaster {
 	public static runCat = 0;//当前旅行的是哪个球
 	public static recommand: any;//推荐位列表
 	public static requestTimes = 0;//请求游戏数据的次数
-	public static dayTry='';//上次试玩的日期
+	public static dayTry = '';//上次试玩的日期
+	public static dayVideoEnergy = { day: '', num: 0 };//每日通过看视频/分享获得能量
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -122,6 +123,9 @@ class userDataMaster {
 						}
 						if (info.travelList) {
 							userDataMaster.travelList = info.travelList;
+						}
+						if (info.dayVideoEnergy) {
+							userDataMaster.dayVideoEnergy = info.dayVideoEnergy;
 						}
 					}
 				}
@@ -196,15 +200,11 @@ class userDataMaster {
 	}
 	public static get todayEnergy() {
 		//获取今日可领取能量状态
-		if (userDataMaster.dayEnergy == userDataMaster.getToday()) {
-			//今日已领取
-			return false;
+		if (userDataMaster.dayEnergy.day == userDataMaster.getToday()) {
+			return userDataMaster.dayEnergy.num;
 		}
-		return true;
-	}
-	public static updateTodayEnergy() {
-		//更改今日能量状态
-		userDataMaster.dayEnergy = userDataMaster.getToday();
+		userDataMaster.dayEnergy={day:userDataMaster.getToday(),num:0}
+		return 0;
 	}
 	public static get todayTry() {
 		//获取今日试玩状态
@@ -216,9 +216,16 @@ class userDataMaster {
 	}
 	public static updateTodayTry() {
 		//更改今日试玩状态
-		userDataMaster.dayTry= userDataMaster.getToday();
+		userDataMaster.dayTry = userDataMaster.getToday();
 	}
-
+	public static get todayVideoEnergy() {
+		//    获取今天看视频或者分享获得能量状态
+		if (userDataMaster.dayVideoEnergy.day == userDataMaster.getToday()) {
+			return userDataMaster.dayVideoEnergy.num;
+		}
+		userDataMaster.dayVideoEnergy = { day: userDataMaster.getToday(), num: 0 };
+		return 0;
+	}
 	public static async createLoginBtn(left, top, width, height) {
 		let that = this;
 		let scale = DeviceMaster.screenWidth / 750;

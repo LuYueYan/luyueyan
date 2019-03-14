@@ -5,45 +5,47 @@
 	<e:Image top="0" horizontalCenter="0" source="img_light_png"/>
 	<e:Group id="bodyGroup" height="410" horizontalCenter="0" width="750" anchorOffsetY="0" y="230">
 		<e:Group x="448" y="180" id="item_5" scaleX="0.3" scaleY="0.3" anchorOffsetX="141" anchorOffsetY="103" height="206">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_5" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="305" y="180" id="item_4" scaleX="0.3" scaleY="0.3" height="206" anchorOffsetX="141" anchorOffsetY="103">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_4" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="192" y="198" id="item_3" scaleX="0.4" scaleY="0.4" height="206" anchorOffsetX="141" anchorOffsetY="103">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_3" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="557" y="198" id="item_6" scaleX="0.4" scaleY="0.4" height="206" anchorOffsetX="141" anchorOffsetY="103">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_6" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="90" id="item_2" scaleX="0.5" scaleY="0.5" height="206" anchorOffsetX="141" anchorOffsetY="103" y="235">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_2" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="670" y="235" id="item_7" scaleX="0.5" scaleY="0.5" height="206" anchorOffsetX="141" anchorOffsetY="103">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_7" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="142" y="288" id="item_1" scaleX="0.6" scaleY="0.6" height="206" anchorOffsetX="141" anchorOffsetY="103">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_1" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group x="612" y="288" id="item_8" scaleX="0.6" scaleY="0.6" height="206" anchorOffsetY="103" anchorOffsetX="141">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_8" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 		<e:Group id="item_0" x="375" y="303" anchorOffsetY="103" height="206" anchorOffsetX="141">
-			<e:Image source="img_base_02_png" y="135" horizontalCenter="0"/>
+			<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 			<e:Image rotation="0" id="img_0" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
 	</e:Group>
 	<e:Image id="homeBtn" source="bnt_home_png" x="28" y="58" touchEnabled="true"/>
-	<e:Image id="addGold" source="img_bg_fruit_number_png" x="148.38" y="66" touchEnabled="true"/>
-	<e:Label id="goldText" text="40" x="200.69" y="87.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
+	<e:Group id="addGold" x="148.38" y="66" touchEnabled="true">
+		<e:Image source="img_bg_fruit_number_png" x="0" y="0" touchEnabled="true"/>
+		<e:Label id="goldText" text="40" x="52.31" y="21.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
+	</e:Group>
 	<e:Image source="img_bg_text_png" y="639" horizontalCenter="0"/>
 	<e:Image id="nameImg" y="639" source="img_name_01_png" horizontalCenter="0"/>
 	<e:Label id="natureText" text="球球属性：第一只拥有的精灵，洁白无一物" x="86" y="771" fontFamily="Microsoft YaHei" size="26"/>

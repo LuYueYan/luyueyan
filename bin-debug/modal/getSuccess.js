@@ -13,7 +13,7 @@ var getSuccess = (function (_super) {
     function getSuccess(type, nameOrNum) {
         if (type === void 0) { type = -1; }
         var _this = _super.call(this) || this;
-        _this.type = 1; //类型 -1--能量果 >-1--解锁球的index
+        _this.type = -1; //类型 -1--能量果 >-1--解锁球的index
         _this.nameOrNum = ''; //球的名字或者能量果数量 （数量的话类似 'x100'）
         _this.type = type;
         _this.nameOrNum = nameOrNum;
@@ -58,4 +58,3 @@ var getSuccess = (function (_super) {
     return getSuccess;
 }(eui.Component));
 __reflect(getSuccess.prototype, "getSuccess", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=getSuccess.js.map

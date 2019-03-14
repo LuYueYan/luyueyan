@@ -10,13 +10,14 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var runningScene = (function (_super) {
     __extends(runningScene, _super);
-    function runningScene(theme, score, hitNum, currentBall, rebornNum, energy) {
+    function runningScene(theme, score, hitNum, currentBall, rebornNum, energy, energyAdd) {
         if (theme === void 0) { theme = 1; }
         if (score === void 0) { score = 0; }
         if (hitNum === void 0) { hitNum = 0; }
         if (currentBall === void 0) { currentBall = -1; }
         if (rebornNum === void 0) { rebornNum = 0; }
         if (energy === void 0) { energy = 0; }
+        if (energyAdd === void 0) { energyAdd = 0; }
         var _this = _super.call(this) || this;
         _this.factor = 50;
         _this.currentTimer = egret.getTimer();
@@ -28,16 +29,16 @@ var runningScene = (function (_super) {
         _this.moveSpeed = 1;
         _this.hitNum = 0;
         _this.themeArr = [
-            { index: 1, num: 15, width: 340, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
-            { index: 2, num: 20, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
-            { index: 3, num: 30, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
-            { index: 4, num: 40, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
-            { index: 5, num: 40, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
-            { index: 6, num: 30, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
-            { index: 7, num: 30, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
-            { index: 8, num: 25, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
-            { index: 9, num: 20, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
-            { index: 10, num: 20, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
+            { index: 1, num: 15, score: 52, energy: 3, width: 340, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
+            { index: 2, num: 20, score: 64, energy: 4, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+            { index: 3, num: 30, score: 76, energy: 5, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
+            { index: 4, num: 40, score: 88, energy: 6, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+            { index: 5, num: 40, score: 101, energy: 8, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+            { index: 6, num: 30, score: 101, energy: 8, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+            { index: 7, num: 30, score: 101, energy: 8, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+            { index: 8, num: 25, score: 101, energy: 8, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
+            { index: 9, num: 20, score: 101, energy: 8, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+            { index: 10, num: 20, score: 101, energy: 8, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
         ];
         _this.list = [];
         _this.chooseList = [];
@@ -49,6 +50,7 @@ var runningScene = (function (_super) {
         _this.currentBall = userDataMaster.runCat; //本局使用的球index
         _this.energy = 0; //本局获得的能量果数量
         _this.trying = false; //是否试玩
+        _this.energyAdd = 0; //本局能量加成百分比
         _this.currentTheme = theme;
         _this.score = score;
         _this.hitNum = hitNum;
@@ -59,6 +61,7 @@ var runningScene = (function (_super) {
             }
             _this.currentBall = currentBall;
         }
+        _this.energyAdd = energyAdd;
         _this.rebornNum = rebornNum;
         _this.energy = energy;
         return _this;
@@ -87,6 +90,8 @@ var runningScene = (function (_super) {
         this.scoreText.text = this.score + '';
         this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
         this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].begin);
+        var ball = userDataMaster.cats[this.currentBall];
+        this.ballText.text = ball.name;
         //创建world
         this.world = new p2.World();
         this.world.sleepMode = p2.World.BODY_SLEEPING; //睡眠策略，提高性能
@@ -130,6 +135,8 @@ var runningScene = (function (_super) {
     runningScene.prototype.startFun = function () {
         soundMaster.playSongMusic(this.currentBall);
         this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
+        this.removeChild(this.startImg);
+        this.removeChild(this.ballText);
         if (this.guide) {
             this.guide.removeChild(this.startBtn);
             this.removeChild(this.guide);
@@ -211,32 +218,31 @@ var runningScene = (function (_super) {
         if (hit && !that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && Math.abs(top) <= 2) {
             if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
                 // console.log('center')
-                that.score += 10;
+                // that.score += 10;
                 that.flowerArr[0].body.displays[1].parent && that.flowerGroup.removeChild(that.flowerArr[0].body.displays[1]);
             }
-            else {
-                that.score += 5;
-            }
-            // platform.vibrateShort({})
+            that.score += that.themeArr[that.currentTheme - 1].score;
+            that.energy += that.themeArr[that.currentTheme - 1].energy;
+            platform.vibrateShort({ success: function (res) { console.log(666, res); } });
             that.bee.mass = 5000;
             this.scoreText.text = this.score + '';
             that.flowerArr[0].params.haveHit = true;
             var r = that.flowerArr.shift();
             r.body.velocity = [0, -10];
             that.removeArr.push(r);
-            var sx = 10;
+            var sx = 15;
             if (r.params.type == 'left') {
-                sx = 15;
+                sx = 20;
                 sx += Math.random() * 3;
                 that.bee.angle = -0.2;
             }
             else if (r.params.type == 'right') {
-                sx = -15;
+                sx = -20;
                 sx -= Math.random() * 3;
                 that.bee.angle = 0.2;
             }
-            that.bee.velocity = [sx, 30 + Math.random() * 2];
-            that.bee.damping = 0.6;
+            that.bee.velocity = [sx, 40 + Math.random() * 2];
+            that.bee.damping = 0.8;
             if (that.bee.velocity[0] > 0) {
                 that.bee.angle = 0.2;
                 that.bee.angularVelocity = 0;
@@ -251,14 +257,13 @@ var runningScene = (function (_super) {
             that.hitNum++;
             var judgeHitNum = that.hitNum == that.themeArr[that.currentTheme - 1].num;
             if (judgeHitNum) {
-                if (that.trying) {
-                    //是试玩
-                    that.removeEventListener(egret.Event.ENTER_FRAME, that.onEnterFrame, that);
-                    that.addChild(new tryModal(that.currentBall));
-                    that.worldSpeed = 100000;
-                    return;
-                }
-                that.energy += 5;
+                // if(that.trying){
+                // 	//是试玩
+                // 	that.removeEventListener(egret.Event.ENTER_FRAME, that.onEnterFrame, that);
+                // 	that.addChild(new tryModal(that.currentBall));
+                // 	that.worldSpeed=100000;
+                // 	return;
+                // }
                 that.hitNum = 0;
                 that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
                 this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
@@ -272,7 +277,7 @@ var runningScene = (function (_super) {
                         that.flowerArr[i_1].body.displays[0].texture = RES.getRes(current + '2_png');
                     }
                 }
-                that.throughFun();
+                // that.throughFun();
             }
             var cur = that.themeArr[that.currentTheme - 1].name;
             that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png');
@@ -315,13 +320,14 @@ var runningScene = (function (_super) {
         if (this.rebornNum == 0) {
             //可复活
             this.rebornNum++;
-            var born = new reborn(this.score, this.currentBall, this.energy);
+            var born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd);
             this.addChild(born);
             born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this);
         }
         else {
             var parent_1 = this.parent;
-            parent_1.addChild(new gameOver(this.score, this.currentBall, this.energy));
+            var energy = parseInt(this.energy * (1 + this.energyAdd) + '');
+            parent_1.addChild(new gameOver(this.score, this.currentBall, energy));
             parent_1.removeChild(this);
         }
     };
@@ -344,9 +350,9 @@ var runningScene = (function (_super) {
             var currentBall = that.currentBall;
             var rebornNum = that.rebornNum;
             var energy = that.energy;
-            console.log('rebornNum', rebornNum);
+            var energyAdd = that.energyAdd;
             parent.removeChild(that);
-            parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy));
+            parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy, energyAdd));
         };
     };
     runningScene.prototype.createBee = function () {
@@ -407,7 +413,7 @@ var runningScene = (function (_super) {
         that.flowerArr.push({ body: boxBody, params: { type: type, haveHit: false } });
     };
     runningScene.prototype.touchFun = function (e) {
-        this.bee.velocity = [0, -50];
+        this.bee.velocity = [0, -100];
         // this.bee.gravityScale = 1;
         this.bee.angle = 0;
         this.bee.angularVelocity = 0;
@@ -466,6 +472,7 @@ var runningScene = (function (_super) {
                 this.guide.removeChild(this.through.tap_1);
                 this.guide.removeChild(this.through.tap_2);
                 this.guide.process_7.visible = true;
+                userDataMaster.createLoginBtn(250, 808, 440, 204);
                 this.guide.knowBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
                     userDataMaster.myGold += 200;
                     userDataMaster.myInfo.is_new_user = false;
@@ -522,4 +529,3 @@ var runningScene = (function (_super) {
     return runningScene;
 }(eui.Component));
 __reflect(runningScene.prototype, "runningScene", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=runningScene.js.map

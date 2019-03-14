@@ -21,23 +21,43 @@ var dayEnergy = (function (_super) {
         this.init();
     };
     dayEnergy.prototype.init = function () {
+        var that = this;
         egret.Tween.get(this.body).to({ scaleX: 1, scaleY: 1 }, 300, egret.Ease.backOut);
-        if (!userDataMaster.todayEnergy) {
-            this.getBtn.texture = RES.getRes('btn_receive_04_png');
+        switch (userDataMaster.todayEnergy) {
+            case 0:
+                break;
+            case 1:
+                that.getBtn.texture = RES.getRes('btn_receive_video_png');
+                break;
+            case 2:
+                that.getBtn.texture = RES.getRes('btn_receive_04_png');
+                break;
+            default: break;
         }
-        else {
-            this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
-        }
+        that.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         this.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
     };
     dayEnergy.prototype.getFun = function () {
-        if (userDataMaster.todayEnergy) {
-            userDataMaster.updateTodayEnergy();
-            this.getBtn.texture = RES.getRes('btn_receive_04_png');
+        var that = this;
+        var state = userDataMaster.todayEnergy;
+        if (state == 0) {
+            suc('video');
+        }
+        else if (state == 1) {
+            AdMaster.useVideo(function () {
+                suc('04');
+            }, function () {
+                CallbackMaster.openShare(function () {
+                    suc('04');
+                });
+            });
+        }
+        function suc(str) {
+            userDataMaster.dayEnergy.num++;
             userDataMaster.myGold += 100;
-            this.addChild(new getSuccess(-1, 'x 100'));
-            this.getBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
+            that.addChild(new getSuccess(-1, 'x 100'));
+            that.getBtn.texture = RES.getRes('btn_receive_' + str + '_png');
         }
     };
     dayEnergy.prototype.shareFun = function () {
@@ -52,4 +72,3 @@ var dayEnergy = (function (_super) {
     return dayEnergy;
 }(eui.Component));
 __reflect(dayEnergy.prototype, "dayEnergy", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=dayEnergy.js.map

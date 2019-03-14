@@ -85,7 +85,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		}
 		this.scoreText.text = this.score + '';
 		this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
-		this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].begin);
+		this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
 		let ball = userDataMaster.cats[this.currentBall];
 		this.ballText.text = ball.name;
 		//创建world
@@ -120,8 +120,10 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		if (!this.bgLinear) {
 			this.bgLinear = new egret.Sprite();
 			this.addChildAt(this.bgLinear, 0);
+		} else {
+			this.bgLinear.graphics.clear();
 		}
-		this.bgLinear.graphics.clear();
+
 		let matix: egret.Matrix = this.bgLinear.matrix;
 		matix.createGradientBox(750 / 2, this.stage.stageHeight / 2, Math.PI / 2, 750 / 4, this.stage.stageHeight / 4);
 		this.bgLinear.graphics.beginGradientFill(egret.GradientType.LINEAR, [begin, end], [1, 1], [0, 255], matix);
@@ -223,25 +225,25 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			}
 			that.score += that.themeArr[that.currentTheme - 1].score;
 			that.energy += that.themeArr[that.currentTheme - 1].energy;
-			// platform.vibrateShort({})
+			platform.vibrateShort({ success(res) { } })
 			that.bee.mass = 5000;
 			this.scoreText.text = this.score + '';
 			that.flowerArr[0].params.haveHit = true;
 			let r = that.flowerArr.shift();
 			r.body.velocity = [0, -10];
 			that.removeArr.push(r);
-			let sx = 10;
+			let sx = 15;
 			if (r.params.type == 'left') {
-				sx = 15;
+				sx = 20;
 				sx += Math.random() * 3;
 				that.bee.angle = -0.2;
 			} else if (r.params.type == 'right') {
-				sx = -15;
+				sx = -20;
 				sx -= Math.random() * 3;
 				that.bee.angle = 0.2;
 			}
-			that.bee.velocity = [sx, 30 + Math.random() * 2];
-			that.bee.damping = 0.6;
+			that.bee.velocity = [sx, 40 + Math.random() * 2];
+			that.bee.damping = 0.8;
 			if (that.bee.velocity[0] > 0) {
 				that.bee.angle = 0.2;
 				that.bee.angularVelocity = 0
@@ -274,7 +276,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 						that.flowerArr[i].body.displays[0].texture = RES.getRes(current + '2_png');
 					}
 				}
-				that.throughFun();
+				// that.throughFun();
 			}
 			let cur = that.themeArr[that.currentTheme - 1].name;
 			that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png')
@@ -318,12 +320,12 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		if (this.rebornNum == 0) {
 			//可复活
 			this.rebornNum++;
-			let born = new reborn(this.score, this.currentBall, this.energy,this.energyAdd);
+			let born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd);
 			this.addChild(born);
 			born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this)
 		} else {
 			let parent = this.parent;
-			let energy=parseInt(this.energy*(1+this.energyAdd)+'');
+			let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
 			parent.addChild(new gameOver(this.score, this.currentBall, energy));
 			parent.removeChild(this);
 		}
@@ -347,9 +349,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			let currentBall = that.currentBall;
 			let rebornNum = that.rebornNum;
 			let energy = that.energy;
-			let energyAdd=that.energyAdd;
+			let energyAdd = that.energyAdd;
 			parent.removeChild(that);
-			parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy,energyAdd));
+			parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy, energyAdd));
 		}
 	}
 	public createBee() {
@@ -410,7 +412,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		that.flowerArr.push({ body: boxBody, params: { type, haveHit: false } });
 	}
 	public touchFun(e: egret.TouchEvent) {
-		this.bee.velocity = [0, -50];
+		this.bee.velocity = [0, -100];
 		// this.bee.gravityScale = 1;
 		this.bee.angle = 0;
 		this.bee.angularVelocity = 0;

@@ -24,29 +24,29 @@ var moreItem = (function (_super) {
         var that = this;
         this.image.mask = this.imgMask;
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            var type = 1;
+            CallbackMaster.recommandClick(1, that.data);
+            var type = 2;
             platform.navigateToMiniProgram({
                 appId: that.data.appid,
                 path: that.data.path,
                 extraData: {},
                 success: function (suc) {
                 }, fail: function (err) {
-                    type = 0;
+                    type = 3;
                 },
                 complete: function () {
-                    // CallbackMaster.recommandClick(that.data.id, type)
+                    CallbackMaster.recommandClick(type, that.data);
                 }
             });
         }, this);
     };
     moreItem.prototype.dataChanged = function () {
         this.title.text = this.data.name;
-        this.image.source = this.data.image;
+        this.image.source = this.data.image || '';
         this.image.mask = this.imgMask;
-        this.title.textColor = this.data.color || 0xFBF6E3;
+        // this.title.textColor = this.data.color || 0xFBF6E3;
     };
     return moreItem;
 }(eui.ItemRenderer));
 __reflect(moreItem.prototype, "moreItem", ["eui.UIComponent", "egret.DisplayObject"]);
 window['moreItem'] = moreItem;
-//# sourceMappingURL=moreItem.js.map

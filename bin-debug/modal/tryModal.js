@@ -41,4 +41,3 @@ var tryModal = (function (_super) {
     return tryModal;
 }(eui.Component));
 __reflect(tryModal.prototype, "tryModal", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=tryModal.js.map
