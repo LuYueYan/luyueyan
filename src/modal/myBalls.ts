@@ -96,6 +96,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 			}
 		}
 		this.changeInfo(this.currentBall);
+		this.bgImg.height=this.stage.stageHeight;
 		var blurFliter = new egret.BlurFilter(4, 4);
 		this.processBar.filters = [blurFliter];
 		this.goldText.text = userDataMaster.myGold + '';
@@ -112,16 +113,37 @@ class myBalls extends eui.Component implements eui.UIComponent {
 		this.goldText.text = '' + userDataMaster.gold;
 	}
 	public addGoldFun() {
-		AdMaster.useVideo(() => {
-			suc();
-		}, () => {
-			console.log('share')
-			CallbackMaster.openShare(() => {
-				suc();
-			})
-		});
-		function suc() {
-			userDataMaster.myGold += 20;
+		let that = this;
+		switch (userDataMaster.todayVideoEnergy) {
+			case 0:
+				//今天还没分享还没看视频
+				CallbackMaster.openShare(() => {
+					suc(50);
+				})
+				break;
+			case 1:
+				// 今天已经分享，还没看视频
+				AdMaster.useVideo(() => {
+					suc(100);
+				}, () => {
+					CallbackMaster.openShare(() => {
+						suc(100);
+					})
+				});
+				break;
+			case 2:
+				// 今天已经分享已经看视频
+				platform.showModal({
+					title: '温馨提示',
+					content: '今日次数已用完，明日再来'
+				})
+				break;
+			default: break;
+		}
+		function suc(num) {
+			userDataMaster.dayVideoEnergy.num++;
+			userDataMaster.myGold += num;
+			that.addChild(new getSuccess(-1, 'x ' + num));
 		}
 	}
 	public getFireList() {

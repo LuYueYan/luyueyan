@@ -99,7 +99,7 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 			})
 
 		} else if (this.status == 2) {
-			CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid);
+			CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid,1);
 		}
 	}
 	public closeFun() {

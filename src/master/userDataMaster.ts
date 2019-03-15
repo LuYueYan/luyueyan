@@ -113,7 +113,7 @@ class userDataMaster {
 
 						let info = JSON.parse(data.info);
 						if (info.runCat >= 0) {
-							userDataMaster.runCat = info.runCat;
+							userDataMaster.myRunCat = info.runCat;
 						}
 						if (info.dayEnergy) {
 							userDataMaster.dayEnergy = info.dayEnergy;
@@ -231,10 +231,10 @@ class userDataMaster {
 		let scale = DeviceMaster.screenWidth / 750;
 		left *= scale, top *= scale, width *= scale, height *= scale;
 		userDataMaster.userInfoBtn = await platform.createUserInfoButton({
-			// type: 'image',
-			type: 'text',
-			text: '获取用户信息',
-			// image: '../../resource/assets/imgData/img_yxbj.png',
+			type: 'image',
+			// type: 'text',
+			// text: '获取用户信息',
+			image: '../../resource/assets/imgData/img_yxbj.png',
 			style: {
 				left,
 				top,
@@ -293,6 +293,9 @@ class userDataMaster {
 				if (parseInt(suc.code) === 1 && suc.data) {
 					//登录成功
 					userDataMaster.getMyInfo = suc.data;
+
+					//测试测试………………
+					userDataMaster.myInfo.is_new_user=true;
 					// userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
 					//初始化用户openid
 					platform.openDataContext.postMessage({

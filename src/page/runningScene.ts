@@ -1,10 +1,10 @@
+
 class runningScene extends eui.Component implements eui.UIComponent {
 	public scoreText: eui.Label;
 	public flowerGroup: eui.Group;
 	public startBtn: eui.Button;
 	public startImg: eui.Image;
 	public ballText: eui.Label;
-
 
 	public world: p2.World;
 	public factor: number = 50;
@@ -22,13 +22,13 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		{ index: 1, num: 15, score: 52, energy: 3, width: 340, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
 		{ index: 2, num: 20, score: 64, energy: 4, width: 340, top: 45, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
 		{ index: 3, num: 30, score: 76, energy: 5, width: 340, top: 34, name: 'img_castle_c', begin: 0x00b2c2, end: 0x174899 },
-		{ index: 4, num: 40, score: 88, energy: 6, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
-		{ index: 5, num: 40, score: 101, energy: 8, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
-		{ index: 6, num: 30, score: 101, energy: 8, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+		{ index: 4, num: 25, score: 88, energy: 6, width: 200, top: 30, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+		{ index: 5, num: 30, score: 101, energy: 8, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+		{ index: 6, num: 25, score: 101, energy: 8, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
 		{ index: 7, num: 30, score: 101, energy: 8, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
 		{ index: 8, num: 25, score: 101, energy: 8, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
 		{ index: 9, num: 20, score: 101, energy: 8, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
-		{ index: 10, num: 20, score: 101, energy: 8, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
+		{ index: 10, num: 15, score: 101, energy: 8, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
 	];
 
 	//throughModal
@@ -77,15 +77,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public init() {
 		let that = this;
 		this.worldSpeed = 1000000;
-		if (userDataMaster.getMyInfo.is_new_user && !this.trying) {
-			this.guide = new guideModal();
-			this.addChild(this.guide);
-			this.guide.addChild(this.startBtn);
-			this.themeArr[0].num = 3;
-		}
+		that.randomTheme();
 		this.scoreText.text = this.score + '';
 		this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
-		this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
 		let ball = userDataMaster.cats[this.currentBall];
 		this.ballText.text = ball.name;
 		//创建world
@@ -112,9 +106,29 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		planeBody.displays = [];//与每个形状对应的显示对象
 		this.world.addBody(planeBody);
 		this.ceilArr.push(planeBody);
+
+		if (userDataMaster.getMyInfo.is_new_user && !this.trying) {
+			this.guide = new guideModal();
+			this.addChild(this.guide);
+			this.guide.addChild(this.startBtn);
+			// this.themeArr[0].num = 3;
+		}
+
 		egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 0.8, scaleY: 0.8 }, 1000).to({ scaleX: 1, scaleY: 1 }, 1000)
 		this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
 		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+	}
+	public randomTheme() {
+		let that = this;
+		let arr = [];
+		let sourceArr = this.themeArr;
+		for (let i = 0, len = sourceArr.length; i < len; i++) {
+			let ran = Math.floor(Math.random() * sourceArr.length);
+			arr.push(sourceArr[ran]);
+			sourceArr.splice(ran, 1);
+		}
+		this.themeArr = arr;
+		this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
 	}
 	public createBg(begin: number, end: number) {
 		if (!this.bgLinear) {
@@ -136,6 +150,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.removeChild(this.startImg);
 		this.removeChild(this.ballText);
 		if (this.guide) {
+			this.guide.process_1.visible = false;
 			this.guide.removeChild(this.startBtn)
 			this.removeChild(this.guide);
 			this.guideProcess = 1;//第一步引导完成
@@ -188,7 +203,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		if (this.guide && this.guideProcess == 1 && that.flowerArr[0].params.type == "right" && Math.abs(this.bee.position[0] - this.flowerArr[0].body.position[0]) < 1) {
 			//第二次引导
 			this.addChild(this.guide);
-			this.guide.process_1.visible = false;
 			this.guide.process_2.visible = true;
 			this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 			this.worldSpeed = 1000000;
@@ -197,22 +211,37 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		if (this.guide && this.guideProcess == 2 && that.flowerArr[0].params.type == "left" && Math.abs(this.bee.position[0] - this.flowerArr[0].body.position[0]) < 1) {
 			//第三次引导
 			this.addChild(this.guide);
-			this.guide.process_2.visible = false;
 			this.guide.process_3.visible = true;
 			this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 			this.worldSpeed = 1000000;
 			this.guideProcess = 3;//第三步引导结束
 		}
+		if (this.guide && this.guideProcess == 3&&that.hitNum==10) {
+			//引导结束
+			this.addChild(this.guide);
+			this.guide.process_7.visible = true;
+			this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+				this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+			userDataMaster.createLoginBtn(250, 808, 250, 90);
+			this.guide.knowBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+				userDataMaster.myGold += 200;
+				userDataMaster.myInfo.is_new_user = false;
+				let parent = that.parent;
+				parent.removeChild(that);
+				parent.addChild(new startScene());
+			}, that);
+
+		}
 		let hitright = that.ceilArr[0].overlaps(that.bee);
 		if (hitright) {
 			that.bee.velocity = [-25, -8];
-			that.bee.angle = -0.2;
+			// that.bee.angle = -0.2;
 			that.bee.mass = 8000;
 		}
 		let hitleft = that.ceilArr[1].overlaps(that.bee);
 		if (hitleft) {
 			that.bee.velocity = [25, -8];
-			that.bee.angle = 0.2;
+			// that.bee.angle = 0.2;
 			that.bee.mass = 8000;
 		}
 		let hit = that.flowerArr[0].body.overlaps(that.bee);
@@ -236,19 +265,19 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			if (r.params.type == 'left') {
 				sx = 20;
 				sx += Math.random() * 3;
-				that.bee.angle = -0.2;
+				// that.bee.angle = -0.2;
 			} else if (r.params.type == 'right') {
 				sx = -20;
 				sx -= Math.random() * 3;
-				that.bee.angle = 0.2;
+				// that.bee.angle = 0.2;
 			}
-			that.bee.velocity = [sx, 40 + Math.random() * 2];
-			that.bee.damping = 0.8;
+			that.bee.velocity = [sx, 38];
+			that.bee.damping = 0.85;
 			if (that.bee.velocity[0] > 0) {
-				that.bee.angle = 0.2;
+				// that.bee.angle = 0.2;
 				that.bee.angularVelocity = 0
 			} else if (that.bee.velocity[0] < 0) {
-				that.bee.angle = -0.2;
+				// that.bee.angle = -0.2;
 				that.bee.angularVelocity = 0;
 			} else {
 				that.bee.angularVelocity = 0.01;
@@ -288,8 +317,8 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			that.bee.damping = 0;
 		}
 		for (let x = 0, len = that.removeArr.length; x < len; x++) {
-			if (that.removeArr[x] && that.removeArr[x].body) {
-				that.removeArr[x].body.displays[0].scaleX += 0.001;
+			if (that.removeArr[x] && that.removeArr[x].body && (!that.guide || !that.guide.parent)) {
+				that.removeArr[x].body.displays[0].scaleX += 0.005;
 				if (that.removeArr[x].body.position[1] < -4) {
 					that.world.removeBody(that.removeArr[x].body);
 					that.removeArr[x].body.displays[0] && that.removeArr[x].body.displays[0].parent && that.flowerGroup.removeChild(that.removeArr[x].body.displays[0]);
@@ -417,6 +446,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.bee.angle = 0;
 		this.bee.angularVelocity = 0;
 		if (this.guide && this.guide.parent) {
+			this.guide['process_' + this.guideProcess].visible = false;
 			this.guide.parent.removeChild(this.guide);
 			this.worldSpeed = 1000;
 			if (this.guideProcess < 3) {
@@ -436,7 +466,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			that.through.addChild(this.guide);
 			this.guide.addChild(that.through.tap_1);
 			this.guide.addChild(that.through.tap_2);
-			this.guide.process_3.visible = false;
 			this.guide.process_4.visible = true;
 			that.list = [1, 2, 1];
 			t = 1000;
@@ -499,7 +528,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			this.chooseList.push(type);
 			if (this.guide && this.guide.parent && this.guideProcess >= 3 && this.guideProcess < 6) {
 				this.guideProcess++;
-				this.guide['process_' + this.guideProcess].visible = false;
 				this.guide['process_' + (this.guideProcess + 1)].visible = true;
 			}
 			if (this.chooseList.length == 3) {

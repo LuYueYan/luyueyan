@@ -57,7 +57,7 @@ class dayEnergy extends eui.Component implements eui.UIComponent {
 		}
 	}
 	public shareFun() {
-		CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday());
+		CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday(),1);
 	}
 	public closeFun() {
 		let that = this;

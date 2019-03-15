@@ -2,11 +2,13 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public bgImg: eui.Image;
 	public addGold: eui.Group;
 	public goldText: eui.Label;
+	public goldImg: eui.Image;
 	public collection: eui.Image;
 	public moreScroller: eui.Scroller;
 	public moreGroup: eui.Group;
 	public tryBtn: eui.Group;
 	public tryImg: eui.Image;
+	public tryName: eui.Image;
 	public friendBtn: eui.Image;
 	public energyBtn: eui.Image;
 	public currentBall: eui.Image;
@@ -21,6 +23,8 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public travelTip: eui.Image;
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
+
+
 
 
 
@@ -69,14 +73,20 @@ class startScene extends eui.Component implements eui.UIComponent {
 						tryList.push(i);
 					}
 				}
-				that.tryIndex = Math.floor(Math.random() * tryList.length);
+				that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
 				that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
+				that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
 			}
 			that.goldText.text = '' + userDataMaster.gold;
 			that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
 			let energy = userDataMaster.sourceEnergy;
 			if (energy.uid && energy.day) {
 				that.addChild(new getEnergyModal(energy.uid, energy.day))
+			}
+			if (userDataMaster.todayVideoEnergy == 2) {
+				that.goldImg.texture + RES.getRes('img_moer_02_png');
+			} else {
+				egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600)
 			}
 		}, 500);
 
@@ -145,6 +155,10 @@ class startScene extends eui.Component implements eui.UIComponent {
 			userDataMaster.dayVideoEnergy.num++;
 			userDataMaster.myGold += num;
 			that.addChild(new getSuccess(-1, 'x ' + num));
+			if (userDataMaster.dayVideoEnergy.num == 2) {
+				that.goldImg.texture = RES.getRes('img_moer_02_png');
+				egret.Tween.removeTweens(that.goldImg);
+			}
 		}
 	}
 	public tryFun() {

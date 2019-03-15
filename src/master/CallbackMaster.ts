@@ -66,12 +66,36 @@ class CallbackMaster {
 
 		})
 	}
-	public static openShare(Callback: Function = null, judge = true, query = '') {
-		//参数1---回调函数 参数2---是否判断分享成功，默认判断
+	public static shareInfo = [
+		{
+			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_1.jpg',
+			title: '球球精灵要饿坏了，快点来喂养吧~'
+		},
+		{
+			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_2.jpg',
+			title: '我就是宇宙第一酷，酷跑酷跑一起奔跑吧！'
+		},
+		{
+			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_3.jpg',
+			title: '给你采集了一大袋能量果，快来领一份吧~'
+		},
+	]
+	public static openShare(Callback: Function = null, judge = true, query = '', shareType = 0) {
+		//参数1---回调函数 参数2---是否判断分享成功，默认判断 参数3----附加的参数  4--分享类型
 		// 好友助力
 		if (CallbackMaster.hasChecked) {
 			//如果审核通过了
+			let s;
+			if (shareType == 0) {
+				//默认随机分享
+				s = CallbackMaster.shareInfo[Math.floor(Math.random() * 2)];
+			} else {
+				s = CallbackMaster.shareInfo[2];
+			}
+
 			let obj = {
+				title: s.title,
+				imageUrl: s.imageUrl,
 				query: 'uid=' + userDataMaster.getMyInfo.uid + query
 			};
 			platform.shareAppMessage(obj);
@@ -101,7 +125,5 @@ class CallbackMaster {
 
 				}
 			})
-
 	}
-
 }

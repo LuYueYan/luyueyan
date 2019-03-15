@@ -1,12 +1,14 @@
 class rank extends eui.Component implements eui.UIComponent {
+	public bgImg: eui.Image;
 	public friendGroup: eui.Group;
+	public worldGroup: eui.Group;
 	public friend: eui.Image;
 	public world: eui.Image;
-	public worldGroup: eui.Group;
 	public lastPage: eui.Image;
 	public nextPage: eui.Image;
 	public pageText: eui.Label;
 	public goHome: eui.Button;
+
 
 	public dataGroup: eui.DataGroup = new eui.DataGroup();
 	public sourceArr: eui.ArrayCollection = new eui.ArrayCollection([]);
@@ -26,6 +28,7 @@ class rank extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
+		this.bgImg.height=this.stage.stageHeight;
 		platform.openDataContext.postMessage({
 			type: "rank",
 			width: 600,
