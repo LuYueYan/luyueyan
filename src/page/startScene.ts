@@ -23,8 +23,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public travelTip: eui.Image;
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
-
-
+	public circle_light:eui.Image;
 
 
 
@@ -89,7 +88,8 @@ class startScene extends eui.Component implements eui.UIComponent {
 				egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600)
 			}
 		}, 500);
-
+          egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500)
+		
 
 		if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
 			let list = userDataMaster.recommand['1'].games;
@@ -226,7 +226,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public energyFun() {
 		let that = this;
 		that.addChild(new dayEnergy());
-		that.energyTip.visible = false;
+		// that.energyTip.visible = false;
 	}
 	public startFun() {
 		let that = this;

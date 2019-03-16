@@ -15,7 +15,20 @@ class CallbackMaster {
 			query: 'type=newUser&uid=' + userDataMaster.getMyInfo.uid
 		};
 		platform.onShareAppMessage(obj);
-		platform.onShow(() => {
+		platform.onShow((option) => {
+			//是否分享链接打开的
+			if (option && option.query && option.query.uid) {
+				userDataMaster.shareUid = option.query.uid;
+				if (option.query.type && option.query.type == 'energy') {
+					//能量分享
+					userDataMaster.sourceEnergy.uid = option.query.suid || option.query.uid;
+					userDataMaster.sourceEnergy.day = option.query.day;
+					if(Main.scene&&Main.scene.getChildAt(0)){
+						Main.scene.getChildAt(0).addChild(new getEnergyModal(userDataMaster.sourceEnergy.uid,userDataMaster.sourceEnergy.day));
+					}
+				}
+			}
+
 			if (new Date().getTime() - CallbackMaster.shareTime > 3000) {
 				//超过三秒，算分享成功
 				CallbackMaster.shareSuc && CallbackMaster.shareSuc();
@@ -77,7 +90,7 @@ class CallbackMaster {
 		},
 		{
 			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_3.jpg',
-			title: '给你采集了一大袋能量果，快来领一份吧~'
+			title:'给你采集了一大袋能量果，快来领一份吧~'
 		},
 	]
 	public static openShare(Callback: Function = null, judge = true, query = '', shareType = 0) {
@@ -90,7 +103,8 @@ class CallbackMaster {
 				//默认随机分享
 				s = CallbackMaster.shareInfo[Math.floor(Math.random() * 2)];
 			} else {
-				s = CallbackMaster.shareInfo[2];
+				s.imageUrl=CallbackMaster.shareInfo[2].imageUrl;
+				s.title=(userDataMaster.myInfo.nickName || '') +CallbackMaster.shareInfo[2].title;
 			}
 
 			let obj = {

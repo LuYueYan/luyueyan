@@ -54,7 +54,7 @@
 	<e:Image id="travelImg_0" source="img_imprinting_a1_png" x="242" y="892" width="55" height="64"/>
 	<e:Image id="travelImg_1" source="img_imprinting_a1_png" x="317" y="892" width="55" height="64"/>
 	<e:Image id="travelImg_2" source="img_imprinting_a1_png" x="392" y="892" width="55" height="64"/>
-	<e:Group id="popularGroup" x="20" y="1023">
+	<e:Group id="popularGroup" y="1023" anchorOffsetX="0" width="710" horizontalCenter="0">
 		<e:Label id="fruitText" text="能量果喂养中（2000 / 5000）" x="65" y="1" fontFamily="Microsoft YaHei" size="20" textColor="0xab9dff"/>
 		<e:Image source="img_fruit_small_png" x="36" y="0"/>
 		<e:Rect width="650" height="10" x="30" y="31" fillColor="0x7f2fff" ellipseWidth="10"/>
@@ -63,7 +63,7 @@
 			<e:Image source="img_frame_digital_png" x="0" y="0"/>
 			<e:Label id="progressText" text="0%" x="1" y="9" fontFamily="Microsoft YaHei" size="20" width="60" anchorOffsetY="0" height="24" verticalAlign="middle" textAlign="center"/>
 		</e:Group>
-		<e:Image id="raiseBtn" source="btn_receive_11_png" y="107" horizontalCenter="0" touchEnabled="true" x="212" scaleX="1" scaleY="1"/>
+		<e:Image id="raiseBtn" source="btn_receive_11_png" y="107" touchEnabled="true" scaleX="1" scaleY="1" x="220"/>
 	</e:Group>
 	<e:Group id="fireGroup" x="145" y="1038" visible="false">
 		<e:Label id="fireText" text="成功邀请6位好友即可解锁火火球哦（0/6）" y="0" fontFamily="Microsoft YaHei" textColor="0x9382ff" size="24" x="0"/>

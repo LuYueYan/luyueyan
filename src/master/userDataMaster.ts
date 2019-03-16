@@ -1,5 +1,5 @@
 class userDataMaster {
-	public static myInfo: any = { uid: 0, openId: '', is_new_user: true };//用户信息
+	public static myInfo: any = { uid: 0, openId: '', is_new_user: true, nickName: '' };//用户信息
 	public static gold = 10000;//能量果
 	public static cats = [
 		{ id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 1, 2], des: '第一只拥有的精灵，洁白无一物', music: '《水晶》' },
@@ -203,7 +203,7 @@ class userDataMaster {
 		if (userDataMaster.dayEnergy.day == userDataMaster.getToday()) {
 			return userDataMaster.dayEnergy.num;
 		}
-		userDataMaster.dayEnergy={day:userDataMaster.getToday(),num:0}
+		userDataMaster.dayEnergy = { day: userDataMaster.getToday(), num: 0 }
 		return 0;
 	}
 	public static get todayTry() {
@@ -255,6 +255,7 @@ class userDataMaster {
 	}
 	public static async updateUser(res: any = null) {
 		let userInfo = res.userInfo;
+		userDataMaster.myInfo.nickName = userInfo.nickName;
 		let params: any = {
 			uid: userDataMaster.getMyInfo.uid,
 			nickName: userInfo.nickName,
@@ -295,7 +296,7 @@ class userDataMaster {
 					userDataMaster.getMyInfo = suc.data;
 
 					//测试测试………………
-					userDataMaster.myInfo.is_new_user=true;
+					userDataMaster.myInfo.is_new_user = true;
 					// userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
 					//初始化用户openid
 					platform.openDataContext.postMessage({

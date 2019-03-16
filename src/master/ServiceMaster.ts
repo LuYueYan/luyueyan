@@ -17,7 +17,7 @@ class ServiceMaster {
 	public static getAssistanceList:string='/other/getAssistanceList';//获取助力列表
 	public static receiveAssistance:string='/other/receiveAssistance';//领取助力奖励
 	public static getEnergy:string='/other/getEnergy';//点击分享链接进入游戏是否可以领取能量果
-	public static getEnergyList:string='/other/getEnergyList';//获取当前能量果可领数量&&领取能能量果
+	public static getEnergyDo:string='/other/getEnergyDo';//获取当前能量果可领数量&&领取能能量果
 	public static getGameData:string='/user/getGameData';//获得游戏数据
 	public static setGameData:string='/user/setGameData';//设置游戏数据
 

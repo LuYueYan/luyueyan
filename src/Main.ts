@@ -62,7 +62,6 @@ class Main extends eui.UILayer {
         userDataMaster.init();
         let option = platform.getLaunchOptionsSync();
         if (option && option.query && option.query.uid) {
-            console.log(option)
             userDataMaster.shareUid = option.query.uid;
             if (option.query.type && option.query.type == 'energy') {
                 //能量分享
@@ -70,19 +69,28 @@ class Main extends eui.UILayer {
                 userDataMaster.sourceEnergy.day = option.query.day;
             }
         }
-        await this.loadResource()
-        this.createGameScene();
+        await this.loadResource();
+        let that=this;
+        setTimeout(function () {
+            that.createGameScene();
+        }, 500);
+
 
     }
 
     private async loadResource() {
         try {
-            // const loadingView = new LoadingUI();
-            // this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
+            await RES.loadGroup("loading");
+            const loadingView = new LoadingUI(this.stage.stageHeight);
+            this.stage.addChild(loadingView);
             await this.loadTheme();
-            await RES.loadGroup("preload");
-            // this.stage.removeChild(loadingView);
+            await RES.loadGroup("preload", 0, loadingView);
+             let that=this;
+            setTimeout(function () {
+                that.stage.removeChild(loadingView);
+            }, 500);
+
         }
         catch (e) {
             console.error(e);
@@ -105,12 +113,13 @@ class Main extends eui.UILayer {
      * 创建场景界面
      * Create scene interface
      */
+    public static scene;
     protected createGameScene(): void {
         AdMaster.init();
         soundMaster.init();
         CallbackMaster.init();
         this.addChild(new startScene());
-
+         Main.scene=this.stage;
         //添加右上角转发
         platform.onShareAppMessage({})
     }

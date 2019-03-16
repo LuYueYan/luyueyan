@@ -1,8 +1,10 @@
 class dayEnergy extends eui.Component implements eui.UIComponent {
+	public body: eui.Group;
 	public closeBtn: eui.Button;
 	public shareBtn: eui.Button;
+	public img: eui.Image;
 	public getBtn: eui.Image;
-	public body: eui.Group;
+
 
 	public constructor() {
 		super();
@@ -31,6 +33,7 @@ class dayEnergy extends eui.Component implements eui.UIComponent {
 				break;
 			default: break;
 		}
+		egret.Tween.get(this.img,{loop:true}).to({y:262},600).to({y:300},600);
 		that.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
 		this.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
@@ -57,7 +60,7 @@ class dayEnergy extends eui.Component implements eui.UIComponent {
 		}
 	}
 	public shareFun() {
-		CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday(),1);
+		CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday(), 1);
 	}
 	public closeFun() {
 		let that = this;

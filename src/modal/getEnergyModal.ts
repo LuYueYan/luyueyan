@@ -52,8 +52,7 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 		}
 		ServiceMaster.post(ServiceMaster.getEnergy, params, (res) => {
 			if (res.code == 1 && res.data) {
-				console.log('获取的能量信息', res)
-				that.currentNum = res.Received;
+				that.currentNum = res.data.Received;
 				that.getText.text = "已领取（" + that.currentNum + "/5）";
 				if (that.currentNum >= 5) {
 					that.getBtn.texture = RES.getRes('btn_receive_03_png');
@@ -84,10 +83,10 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 				uid: userDataMaster.sourceEnergy.uid,
 				be_invitation_uid: userDataMaster.getMyInfo.uid
 			}
-			ServiceMaster.post(ServiceMaster.getEnergyList, params, (res) => {
+			ServiceMaster.post(ServiceMaster.getEnergyDo, params, (res) => {
 				if (res.code == 1 && res.data) {
 					console.log('领取好友分享的能量', res)
-					that.currentNum = res.Received;
+					that.currentNum ++;;
 					that.getText.text = "已领取（" + that.currentNum + "/5）";
 					that.state.visible = true;
 					that.numText.visible = true;

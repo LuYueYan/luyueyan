@@ -26,8 +26,8 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		{ index: 5, num: 30, score: 101, energy: 8, width: 310, top: 70, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
 		{ index: 6, num: 25, score: 101, energy: 8, width: 340, top: 80, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
 		{ index: 7, num: 30, score: 101, energy: 8, width: 200, top: 48, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
-		{ index: 8, num: 25, score: 101, energy: 8, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0x6fbaf7 },
-		{ index: 9, num: 20, score: 101, energy: 8, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x50c8ef },
+		{ index: 8, num: 25, score: 101, energy: 8, width: 340, top: 62, name: 'img_castle_h', begin: 0xf2a1f7, end: 0xb498ff },
+		{ index: 9, num: 20, score: 101, energy: 8, width: 340, top: 45, name: 'img_castle_i', begin: 0x4ddc98, end: 0x4dd4dc },
 		{ index: 10, num: 15, score: 101, energy: 8, width: 330, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea }
 	];
 
@@ -420,7 +420,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			boxBody.position = [12 + ran, y + that.adaptation]
 		}
 
-		var lightningShape: p2.Shape = new p2.Box({ width: 0.36, height: 4, material: new p2.Material(2) });
+		var lightningShape: p2.Shape = new p2.Box({ width: 0.92, height: 6.26, material: new p2.Material(2) });
 		let lightning = that.createBitmapByName('linear_light_png');
 
 		lightning.x = lightning.width / 2;
