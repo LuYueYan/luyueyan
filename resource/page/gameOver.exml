@@ -49,4 +49,14 @@
 			</e:Group>
 		</e:Group>
 	</e:Scroller>
+	<e:Group width="120" height="150" y="257" id="group_0" anchorOffsetX="60" anchorOffsetY="60" x="100">
+		<e:Rect width="120" height="120" horizontalCenter="0" ellipseWidth="40" ellipseHeight="40" id="mask_0" top="0"/>
+		<e:Image width="120" height="120" id="more_0" top="0"/>
+		<e:Label id="text_0" text="" y="124" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0"/>
+	</e:Group>
+	<e:Group id="group_1" width="120" height="150" y="261.55" anchorOffsetX="60" anchorOffsetY="64.55" x="650">
+		<e:Rect id="mask_1" width="120" height="120" horizontalCenter="0" ellipseWidth="40" ellipseHeight="40" top="0"/>
+		<e:Image id="more_1" width="120" height="120"/>
+		<e:Label text="" y="124" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" id="text_1"/>
+	</e:Group>
 </e:Skin>

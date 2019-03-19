@@ -16,7 +16,7 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Label id="numText" text="x 25" y="548" fontFamily="Microsoft YaHei" size="32" horizontalCenter="0"/>
+		<e:Label id="numText" text="x 40" y="548" fontFamily="Microsoft YaHei" size="32" horizontalCenter="0" visible="false"/>
 		<e:Image id="state" x="430" y="199" source="img_received_png" visible="false"/>
 	</e:Group>
 </e:Skin>

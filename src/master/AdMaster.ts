@@ -50,7 +50,7 @@ class AdMaster {
 	public static async list() {
 		await ServiceMaster.post(ServiceMaster.getConfig, {}, function (res) {
 			if (parseInt(res.code) === 1 && res.data) {
-				if (res.data.edition_1 == 1) {
+				if (res.data.edition_1 == 2) {
 					//审核通过，允许分享
 					CallbackMaster.hasChecked = true;
 				}

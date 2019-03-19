@@ -61,6 +61,12 @@ class dayEnergy extends eui.Component implements eui.UIComponent {
 	}
 	public shareFun() {
 		CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday(), 1);
+		setTimeout(function() {
+				platform.showModal({
+					title:'温馨提示',
+					content:'从分享链接点进去，就能获得一份能量果~'
+				});
+			}, 500);
 	}
 	public closeFun() {
 		let that = this;

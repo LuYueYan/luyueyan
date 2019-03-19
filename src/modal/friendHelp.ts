@@ -120,6 +120,13 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 			}
 		} else {
 			CallbackMaster.openShare(null, false);
+			setTimeout(function() {
+				platform.showModal({
+					title:'温馨提示',
+					content:'新好友加入，你就能获得能量果和火火球~'
+				});
+			}, 500);
+
 		}
 
 	}

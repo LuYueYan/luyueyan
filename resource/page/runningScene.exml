@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="runningSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+<e:Skin class="runningSceneSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16905082286" ></w:Config>
 	<e:Image source="img_cloud_png" horizontalCenter="0" top="0"/>
 	<e:Label id="scoreText" text="" y="61" size="80" horizontalCenter="0"/>
 	<e:Group id="flowerGroup" width="750" height="1334" touchThrough="true">
 	</e:Group>
+	<ns1:grayBg id="startBg"/>
 	<e:Button id="startBtn" label="" y="1060" anchorOffsetX="150" anchorOffsetY="150" horizontalCenter="0">
 		<e:skinName>
 		<e:Skin states="up,down,disabled">

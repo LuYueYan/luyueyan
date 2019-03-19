@@ -6,6 +6,7 @@ class CallbackMaster {
 	public static hasChecked: boolean = false;
 
 	public static saveShareSuc = null;//保存上次分享的回调
+	public static shareFailText='分享到不同的群才能获得奖励哦~';//分享失败的弹窗文案
 	public constructor() {
 	}
 	public static init() {
@@ -33,16 +34,19 @@ class CallbackMaster {
 				//超过三秒，算分享成功
 				CallbackMaster.shareSuc && CallbackMaster.shareSuc();
 				CallbackMaster.saveShareSuc = null;
+				CallbackMaster.shareFailText='分享到不同的群才能获得奖励哦~';
 			} else {
 				CallbackMaster.saveShareSuc = CallbackMaster.shareSuc;
 				//分享失败弹窗
 				let obj = {
 					title: '温馨提示',
-					content: '分享到不同的群才能获得奖励哦~',
+					content: CallbackMaster.shareFailText,
 					confirmText: '再试一次',
 					success(res) {
 						if (res.confirm) {
 							CallbackMaster.openShare(CallbackMaster.saveShareSuc)
+						}else{
+							CallbackMaster.shareFailText='分享到不同的群才能获得奖励哦~';
 						}
 					}
 				}
@@ -98,7 +102,7 @@ class CallbackMaster {
 		// 好友助力
 		if (CallbackMaster.hasChecked) {
 			//如果审核通过了
-			let s;
+			let s=CallbackMaster.shareInfo[0];
 			if (shareType == 0) {
 				//默认随机分享
 				s = CallbackMaster.shareInfo[Math.floor(Math.random() * 2)];

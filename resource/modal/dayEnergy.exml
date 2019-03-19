@@ -22,7 +22,9 @@
 		</e:Button>
 		<e:Image source="img_base_01_png" y="161.16" horizontalCenter="0"/>
 		<e:Image id="img" source="img_fruit_big_png" y="312" anchorOffsetX="88" anchorOffsetY="114.5" x="324"/>
-		<e:Image id="getBtn" source="btn_receive_01_png" y="520" touchEnabled="true" horizontalCenter="0"/>
+		<e:Group width="300" height="120" y="495" anchorOffsetY="0" horizontalCenter="0">
+			<e:Image id="getBtn" touchEnabled="true" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" source="btn_receive_01_png"/>
+		</e:Group>
 		<e:Image source="img_gift_small_png" x="22" y="639.19"/>
 		<e:Label text="赠送能量果礼包给好友 自己也可以领取一份哦" x="167" y="691" width="240" size="24" fontFamily="Microsoft YaHei" lineSpacing="10" textColor="0xb5a9ff"/>
 		<e:Image source="img_tittle_02_png" y="45" horizontalCenter="0"/>

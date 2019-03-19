@@ -38,7 +38,7 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
     private textField: egret.TextField;
     private pro: egret.Bitmap;
     private async createView() {
-
+        let dy=this.stageHeight-1334;
         let bgImg = this.createBitmapByName('img_bg_loading_jpg');
         bgImg.height = this.stageHeight;
         this.addChild(bgImg);
@@ -50,19 +50,19 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
         let proBg = this.createBitmapByName('img_bg_01_png');
         proBg.x = 75;
-        proBg.y = 1021;
+        proBg.y = 1021+dy;
         this.addChild(proBg);
 
         this.pro = this.createBitmapByName('img_bg_02_png');
         this.pro.width = 0;
         this.pro.x = 84;
-        this.pro.y = 1030;
+        this.pro.y = 1030+dy;
         this.addChild(this.pro);
 
 
         this.textField = new egret.TextField();
         this.addChild(this.textField);
-        this.textField.y = 1074;
+        this.textField.y = 1074+dy;
         this.textField.x = 84 - 30;
         this.textField.width = 100;
         this.textField.height = 200;
@@ -72,7 +72,7 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
         let text = new egret.TextField();
         this.addChild(text);
-        text.y = 1177;
+        text.y = 1177+dy;
         text.text = '抵制不良游戏  拒绝盗版游戏  注意自我保护  谨防受骗上当';
         text.width = 750;
         text.size = 24;
@@ -81,7 +81,7 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
         let text1 = new egret.TextField();
         this.addChild(text1);
-        text1.y = 1220;
+        text1.y = 1220+dy;
         text1.text = '适度游戏益脑  沉迷游戏伤身  合理安排时间  享受健康生活';
         text1.width = 750;
         text1.size = 24;
