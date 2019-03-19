@@ -109,7 +109,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		planeBody.displays = [];//与每个形状对应的显示对象
 		this.world.addBody(planeBody);
 		this.ceilArr.push(planeBody);
-
 		if (userDataMaster.getMyInfo.is_new_user && !this.trying) {
 			this.guide = new guideModal();
 			this.addChild(this.guide);
@@ -226,7 +225,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			this.worldSpeed = 1000000;
 			this.guideProcess = 3;//第三步引导结束
 		}
-		if (this.guide && this.guideProcess == 3 && that.hitNum == 10) {
+		if (this.guide && this.guideProcess == 3 && that.hitNum == 5) {
 			//引导结束
 			this.addChild(this.guide);
 			this.guide.process_7.visible = true;
