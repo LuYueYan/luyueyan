@@ -16,6 +16,7 @@ var startScene = (function (_super) {
         _this.tryIndex = -1; //今日试玩index
         _this.trying = false; //是否是试玩结束返回
         _this.energyAdd = 0; //能量加成百分比
+        _this.scrTerval = null; //左侧滚动定时器
         _this.trying = trying;
         return _this;
     }
@@ -54,29 +55,38 @@ var startScene = (function (_super) {
                         tryList.push(i);
                     }
                 }
-                that.tryIndex = Math.floor(Math.random() * tryList.length);
+                that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
                 that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
+                that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
+                egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
             }
             that.goldText.text = '' + userDataMaster.gold;
             that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
             var energy = userDataMaster.sourceEnergy;
-            if (energy.uid && energy.day) {
+            if (energy.uid != 0 && energy.day) {
                 that.addChild(new getEnergyModal(energy.uid, energy.day));
             }
+            if (userDataMaster.todayVideoEnergy == 2) {
+                that.goldImg.texture + RES.getRes('img_moer_02_png');
+            }
+            else {
+                egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600);
+            }
+            if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
+                var list = userDataMaster.recommand['1'].games;
+                that.sourceArr = new eui.ArrayCollection(list);
+                that.dataGroup = new eui.DataGroup();
+                that.dataGroup.dataProvider = that.sourceArr;
+                that.dataGroup.useVirtualLayout = true;
+                var layout = new eui.VerticalLayout();
+                layout.gap = 20;
+                that.dataGroup.layout = layout;
+                that.dataGroup.itemRenderer = moreItem;
+                that.moreGroup.height = list.length * 150 - 20;
+                that.moreGroup.addChild(that.dataGroup);
+            }
         }, 500);
-        if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
-            var list = userDataMaster.recommand['1'].games;
-            this.sourceArr = new eui.ArrayCollection(list);
-            this.dataGroup = new eui.DataGroup();
-            this.dataGroup.dataProvider = this.sourceArr;
-            this.dataGroup.useVirtualLayout = true;
-            var layout = new eui.VerticalLayout();
-            layout.gap = 20;
-            this.dataGroup.layout = layout;
-            this.dataGroup.itemRenderer = moreItem;
-            this.moreGroup.height = list.length * 150 - 20;
-            this.moreGroup.addChild(this.dataGroup);
-        }
+        egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
         // if (this.trying) {
         // 	this.addChild(new myBalls());
         // }
@@ -93,6 +103,17 @@ var startScene = (function (_super) {
         that.addGold.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
         userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
     };
+    // public moveScroller(): void {
+    // 	//改变滚动的位置
+    // 	var sc = this.moreScroller;
+    // 	if ((sc.viewport.scrollV + sc.height) >= sc.viewport.contentHeight) {
+    // 		sc.viewport.scrollV =0;
+    // 	}else{
+    //        sc.viewport.scrollV += 10;
+    // 	}
+    // 	//停止正在滚动的动画
+    // 	// sc.stopAnimation();
+    // }
     startScene.prototype.addGoldFun = function () {
         var that = this;
         switch (userDataMaster.todayVideoEnergy) {
@@ -101,6 +122,7 @@ var startScene = (function (_super) {
                 CallbackMaster.openShare(function () {
                     suc(50);
                 });
+                CallbackMaster.shareFailText = '分享到群或者好友就能获得能量果哦~';
                 break;
             case 1:
                 // 今天已经分享，还没看视频
@@ -110,6 +132,7 @@ var startScene = (function (_super) {
                     CallbackMaster.openShare(function () {
                         suc(100);
                     });
+                    CallbackMaster.shareFailText = '分享到群或者好友就能获得能量果哦~';
                 });
                 break;
             case 2:
@@ -125,6 +148,10 @@ var startScene = (function (_super) {
             userDataMaster.dayVideoEnergy.num++;
             userDataMaster.myGold += num;
             that.addChild(new getSuccess(-1, 'x ' + num));
+            if (userDataMaster.dayVideoEnergy.num == 2) {
+                that.goldImg.texture = RES.getRes('img_moer_02_png');
+                egret.Tween.removeTweens(that.goldImg);
+            }
         }
     };
     startScene.prototype.tryFun = function () {
@@ -134,10 +161,10 @@ var startScene = (function (_super) {
             AdMaster.useVideo(function () {
                 suc();
             }, function () {
-                console.log('share');
                 CallbackMaster.openShare(function () {
                     suc();
                 });
+                CallbackMaster.shareFailText = '分享到群或者好友就能立刻试玩' + userDataMaster.cats[that.tryIndex].name + '哦~';
             });
         }
         else {
@@ -180,8 +207,8 @@ var startScene = (function (_super) {
         CallbackMaster.openShare(function () {
             that.energyAdd = 0.1;
             that.energyAddGroup.visible = true;
+            that.shareTip.visible = false;
         });
-        that.shareTip.visible = false;
     };
     startScene.prototype.friendFun = function () {
         var that = this;
@@ -190,10 +217,11 @@ var startScene = (function (_super) {
     startScene.prototype.energyFun = function () {
         var that = this;
         that.addChild(new dayEnergy());
-        that.energyTip.visible = false;
+        // that.energyTip.visible = false;
     };
     startScene.prototype.startFun = function () {
         var that = this;
+        egret.Tween.removeAllTweens();
         var parent = that.parent;
         parent.removeChild(that);
         var currentBall = -1;

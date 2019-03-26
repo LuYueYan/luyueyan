@@ -58,6 +58,7 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
 		if (userDataMaster.cats[8].state) {
 			//已解锁
+			that.getBtn.texture = RES.getRes('btn_have_unlock_png');
 		}
 		if (!userDataMaster.cats[8].state && that.list.length >= 6) {
 			//可解锁
@@ -114,16 +115,17 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 				let cat = userDataMaster.cats[8];
 				cat.state = true;
 				userDataMaster.setCat(8, cat);
+				that.getBtn.texture = RES.getRes('btn_have_unlock_png');
 				that.addChild(new getSuccess(4, '火火球'));
 			} else {
 				//已解锁
 			}
 		} else {
 			CallbackMaster.openShare(null, false);
-			setTimeout(function() {
+			setTimeout(function () {
 				platform.showModal({
-					title:'温馨提示',
-					content:'新好友加入，你就能获得能量果和火火球~'
+					title: '温馨提示',
+					content: '新好友加入，你就能获得能量果和火火球~'
 				});
 			}, 500);
 

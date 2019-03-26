@@ -58,8 +58,7 @@ var getEnergyModal = (function (_super) {
         };
         ServiceMaster.post(ServiceMaster.getEnergy, params, function (res) {
             if (res.code == 1 && res.data) {
-                console.log('获取的能量信息', res);
-                that.currentNum = res.Received;
+                that.currentNum = res.data.Received || 0;
                 that.getText.text = "已领取（" + that.currentNum + "/5）";
                 if (that.currentNum >= 5) {
                     that.getBtn.texture = RES.getRes('btn_receive_03_png');
@@ -72,6 +71,7 @@ var getEnergyModal = (function (_super) {
                     //已领取
                     that.state.visible = true;
                     that.getBtn.texture = RES.getRes('btn_present_02_png');
+                    that.numText.visible = true;
                 }
                 else if (res.data.status == 3) {
                     //已领完
@@ -92,14 +92,14 @@ var getEnergyModal = (function (_super) {
                 uid: userDataMaster.sourceEnergy.uid,
                 be_invitation_uid: userDataMaster.getMyInfo.uid
             };
-            ServiceMaster.post(ServiceMaster.getEnergyList, params, function (res) {
+            ServiceMaster.post(ServiceMaster.getEnergyDo, params, function (res) {
                 if (res.code == 1 && res.data) {
-                    console.log('领取好友分享的能量', res);
-                    that.currentNum = res.Received;
+                    that.currentNum++;
+                    ;
                     that.getText.text = "已领取（" + that.currentNum + "/5）";
                     that.state.visible = true;
                     that.numText.visible = true;
-                    var gold = userDataMaster.myGold + 30;
+                    var gold = userDataMaster.myGold + 40;
                     userDataMaster.myGold = gold;
                     that.status = 2;
                     that.getBtn.texture = RES.getRes('btn_present_02_png');
@@ -107,11 +107,12 @@ var getEnergyModal = (function (_super) {
             });
         }
         else if (this.status == 2) {
-            CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid);
+            CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid, 1);
         }
     };
     getEnergyModal.prototype.closeFun = function () {
         this.parent.removeChild(this);
+        userDataMaster.sourceEnergy = { uid: 0, day: '' };
     };
     return getEnergyModal;
 }(eui.Component));

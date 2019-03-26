@@ -18,7 +18,7 @@ class moreItem extends eui.ItemRenderer implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		this.image.mask = this.imgMask;
+		// this.image.mask = this.imgMask;
 		this.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
 			CallbackMaster.recommandClick(1, that.data);
 			let type = 2;
@@ -41,7 +41,7 @@ class moreItem extends eui.ItemRenderer implements eui.UIComponent {
 	protected dataChanged(): void {
 		this.title.text = this.data.name;
 		this.image.source = this.data.image || '';
-		this.image.mask = this.imgMask;
+		// this.image.mask = this.imgMask;
 		// this.title.textColor = this.data.color || 0xFBF6E3;
 	}
 

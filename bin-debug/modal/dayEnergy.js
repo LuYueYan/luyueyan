@@ -34,6 +34,7 @@ var dayEnergy = (function (_super) {
                 break;
             default: break;
         }
+        egret.Tween.get(this.img, { loop: true }).to({ y: 262 }, 600).to({ y: 300 }, 600);
         that.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         this.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
@@ -61,7 +62,13 @@ var dayEnergy = (function (_super) {
         }
     };
     dayEnergy.prototype.shareFun = function () {
-        CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday());
+        CallbackMaster.openShare(null, false, '&type=energy&day=' + userDataMaster.getToday(), 1);
+        setTimeout(function () {
+            platform.showModal({
+                title: '温馨提示',
+                content: '从分享链接点进去，就能获得一份能量果~'
+            });
+        }, 500);
     };
     dayEnergy.prototype.closeFun = function () {
         var that = this;

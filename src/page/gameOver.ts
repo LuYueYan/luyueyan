@@ -158,6 +158,13 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		})
 	}
 	public updateScore() {
+		let that = this;
+		platform.openDataContext.postMessage({
+			type: "updateScore",
+			score: that.score,
+			width: 80,
+			height: 80
+		});
 		let params = {
 			score: this.score,
 			uid: userDataMaster.getMyInfo.uid

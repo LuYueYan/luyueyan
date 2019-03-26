@@ -97,6 +97,12 @@ var friendHelp = (function (_super) {
         }
         else {
             CallbackMaster.openShare(null, false);
+            setTimeout(function () {
+                platform.showModal({
+                    title: '温馨提示',
+                    content: '新好友加入，你就能获得能量果和火火球~'
+                });
+            }, 500);
         }
     };
     friendHelp.prototype.closeFun = function () {

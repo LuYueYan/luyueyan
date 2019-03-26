@@ -67,6 +67,7 @@ class userDataMaster {
 	public static requestTimes = 0;//请求游戏数据的次数
 	public static dayTry = '';//上次试玩的日期
 	public static dayVideoEnergy = { day: '', num: 0 };//每日通过看视频/分享获得能量
+	public static loginCallback = null;//弹窗登录成功的回调
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -270,6 +271,8 @@ class userDataMaster {
 				if (parseInt(suc.code) === 1 && suc.data) {
 					//修改用户信息成功
 					userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
+					userDataMaster.loginCallback && userDataMaster.loginCallback();
+					userDataMaster.loginCallback = null;
 				}
 			}
 		);
@@ -296,7 +299,7 @@ class userDataMaster {
 					userDataMaster.getMyInfo = suc.data;
 
 					//测试测试………………
-					// userDataMaster.myInfo.is_new_user = true;
+					userDataMaster.myInfo.is_new_user = true;
 
 					// userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
 					//初始化用户openid

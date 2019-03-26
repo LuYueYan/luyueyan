@@ -30,6 +30,7 @@ var rank = (function (_super) {
     rank.prototype.init = function () {
         var _this = this;
         var that = this;
+        this.bgImg.height = this.stage.stageHeight;
         platform.openDataContext.postMessage({
             type: "rank",
             width: 600,

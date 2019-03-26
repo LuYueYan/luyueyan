@@ -33,6 +33,8 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public trying = false;//是否是试玩结束返回
 	public energyAdd = 0;//能量加成百分比
 	public scrTerval = null;//左侧滚动定时器
+	public dataGroup2: eui.DataGroup;
+	public moreGroup2: eui.Group;
 	public constructor(trying = false) {
 		super();
 		this.trying = trying;
@@ -76,7 +78,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 				that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
 				that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
 				that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
-				egret.Tween.get(that.tryBtn,{loop:true}).to({rotation:20},100).to({rotation:-20},200).to({rotation:0},100).wait(1000);
+				egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
 			}
 			that.goldText.text = '' + userDataMaster.gold;
 			that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
@@ -99,9 +101,34 @@ class startScene extends eui.Component implements eui.UIComponent {
 				layout.gap = 20;
 				that.dataGroup.layout = layout;
 				that.dataGroup.itemRenderer = moreItem;
-				that.moreGroup.height = list.length * 150 - 20;
+
+				that.dataGroup2 = new eui.DataGroup();
+				that.dataGroup2.dataProvider = that.sourceArr;
+				that.dataGroup2.useVirtualLayout = true;
+				let layout2 = new eui.VerticalLayout();
+				layout2.gap = 20;
+				that.dataGroup2.layout = layout2;
+				that.dataGroup2.itemRenderer = moreItem;
+
+				that.moreGroup.height = list.length * 150;
+				that.moreGroup2.height = list.length * 150;
 				that.moreGroup.addChild(that.dataGroup);
-				
+				that.moreGroup2.addChild(that.dataGroup2);
+				that.moreGroup2.y = that.moreGroup.height;
+				that.moreScroller.scrollPolicyV = 'off';//禁止垂直滚动
+				that.scrTerval = setInterval(() => {
+					egret.Tween.get(that.moreGroup).to({ y: that.moreGroup.y - 450 }, 1000).wait(100).call(() => {
+						if (that.moreGroup.y <= -that.moreGroup.height) {
+							that.moreGroup.y = that.moreGroup2.y + that.moreGroup2.height;
+						}
+					});
+					egret.Tween.get(that.moreGroup2).to({ y: that.moreGroup2.y - 450 }, 1000).wait(100).call(() => {
+						if (that.moreGroup2.y <= -that.moreGroup.height) {
+							that.moreGroup2.y = that.moreGroup.y + that.moreGroup.height;
+						}
+					});
+
+				}, 3000);
 			}
 		}, 500);
 		egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
@@ -243,6 +270,18 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public startFun() {
 		let that = this;
 		egret.Tween.removeAllTweens();
+		clearInterval(that.scrTerval);
+		that.houseBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
+		that.travelBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this)
+		that.rankBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this)
+		that.shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this)
+		that.friendBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this)
+		that.energyBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this)
+		that.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
+		that.tryBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
+		that.addGold.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+		userDataMaster.myCollection.removeEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
+
 		let parent = that.parent;
 		parent.removeChild(that);
 		let currentBall = -1;

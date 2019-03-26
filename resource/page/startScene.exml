@@ -12,9 +12,10 @@
 	<e:Image id="circle_light" source="img_aperture_png" y="413" anchorOffsetX="193" anchorOffsetY="193" horizontalCenter="0"/>
 	<e:Image source="img_bg_home_02_png" y="383.97" horizontalCenter="0.5"/>
 	<e:Image source="img_bg_game_png" y="284"/>
-	<e:Scroller id="moreScroller" width="140" height="448" y="306" anchorOffsetY="0" x="0">
+	<e:Scroller id="moreScroller" width="140" height="450" y="309" anchorOffsetY="0" x="0">
 		<e:Group>
-			<e:Group id="moreGroup" width="100%" scaleX="1" scaleY="1" height="448"/>
+			<e:Group id="moreGroup" width="100%" scaleX="1" scaleY="1" height="450"/>
+			<e:Group id="moreGroup2" width="100%" scaleX="1" scaleY="1" height="450"/>
 		</e:Group>
 	</e:Scroller>
 	<e:Group id="tryBtn" x="663" y="359.5" touchEnabled="true" anchorOffsetY="81" height="162" anchorOffsetX="63">

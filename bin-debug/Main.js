@@ -98,7 +98,7 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var option;
+            var option, that;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -106,7 +106,6 @@ var Main = (function (_super) {
                         userDataMaster.init();
                         option = platform.getLaunchOptionsSync();
                         if (option && option.query && option.query.uid) {
-                            console.log(option);
                             userDataMaster.shareUid = option.query.uid;
                             if (option.query.type && option.query.type == 'energy') {
                                 //能量分享
@@ -117,7 +116,10 @@ var Main = (function (_super) {
                         return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
-                        this.createGameScene();
+                        that = this;
+                        setTimeout(function () {
+                            that.createGameScene();
+                        }, 500);
                         return [2 /*return*/];
                 }
             });
@@ -125,30 +127,35 @@ var Main = (function (_super) {
     };
     Main.prototype.loadResource = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var loadingView_1, that_1, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        // const loadingView = new LoadingUI();
-                        // this.stage.addChild(loadingView);
+                        _a.trys.push([0, 5, , 6]);
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
                     case 1:
-                        // const loadingView = new LoadingUI();
-                        // this.stage.addChild(loadingView);
                         _a.sent();
-                        return [4 /*yield*/, this.loadTheme()];
+                        return [4 /*yield*/, RES.loadGroup("loading")];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload")];
+                        loadingView_1 = new LoadingUI(this.stage.stageHeight);
+                        this.stage.addChild(loadingView_1);
+                        return [4 /*yield*/, this.loadTheme()];
                     case 3:
                         _a.sent();
-                        return [3 /*break*/, 5];
+                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView_1)];
                     case 4:
+                        _a.sent();
+                        that_1 = this;
+                        setTimeout(function () {
+                            that_1.stage.removeChild(loadingView_1);
+                        }, 500);
+                        return [3 /*break*/, 6];
+                    case 5:
                         e_1 = _a.sent();
                         console.error(e_1);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -164,15 +171,12 @@ var Main = (function (_super) {
             }, _this);
         });
     };
-    /**
-     * 创建场景界面
-     * Create scene interface
-     */
     Main.prototype.createGameScene = function () {
         AdMaster.init();
         soundMaster.init();
         CallbackMaster.init();
         this.addChild(new startScene());
+        Main.scene = this.stage;
         //添加右上角转发
         platform.onShareAppMessage({});
     };

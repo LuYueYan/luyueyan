@@ -119,7 +119,7 @@ var ServiceMaster = (function () {
     ServiceMaster.getAssistanceList = '/other/getAssistanceList'; //获取助力列表
     ServiceMaster.receiveAssistance = '/other/receiveAssistance'; //领取助力奖励
     ServiceMaster.getEnergy = '/other/getEnergy'; //点击分享链接进入游戏是否可以领取能量果
-    ServiceMaster.getEnergyList = '/other/getEnergyList'; //获取当前能量果可领数量&&领取能能量果
+    ServiceMaster.getEnergyDo = '/other/getEnergyDo'; //获取当前能量果可领数量&&领取能能量果
     ServiceMaster.getGameData = '/user/getGameData'; //获得游戏数据
     ServiceMaster.setGameData = '/user/setGameData'; //设置游戏数据
     return ServiceMaster;

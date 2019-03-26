@@ -3,8 +3,8 @@ class movieMaster {
 	public constructor() {
 	}
 	public static init() {
-		let data = RES.getRes("gif2048_json");
-		let txtr = RES.getRes("gif2048_png");
+		let data = RES.getRes("continue_json");
+		let txtr = RES.getRes("continue_png");
 		movieMaster.mcFactory = new egret.MovieClipDataFactory(data, txtr)
 	}
 	public static getGif(name) {

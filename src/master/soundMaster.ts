@@ -28,7 +28,7 @@ class soundMaster {
     }
     public static playSongMusic(index = 0) {
         if (soundMaster.songArr[index].sound && soundMaster.isMusic) {
-            soundMaster.soundChannel = soundMaster.songArr[index].sound.play(0, 1);
+            soundMaster.soundChannel = soundMaster.songArr[index].sound.play(0, -1);
         }
     }
     public static stopSongMusic() {

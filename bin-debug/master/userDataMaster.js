@@ -79,7 +79,7 @@ var userDataMaster = (function () {
                     if (data.info.length > 0) {
                         var info = JSON.parse(data.info);
                         if (info.runCat >= 0) {
-                            userDataMaster.runCat = info.runCat;
+                            userDataMaster.myRunCat = info.runCat;
                         }
                         if (info.dayEnergy) {
                             userDataMaster.dayEnergy = info.dayEnergy;
@@ -235,10 +235,10 @@ var userDataMaster = (function () {
                         left *= scale, top *= scale, width *= scale, height *= scale;
                         _a = userDataMaster;
                         return [4 /*yield*/, platform.createUserInfoButton({
-                                // type: 'image',
-                                type: 'text',
-                                text: '获取用户信息',
-                                // image: '../../resource/assets/imgData/img_yxbj.png',
+                                type: 'image',
+                                // type: 'text',
+                                // text: '获取用户信息',
+                                image: '../../resource/assets/imgData/img_yxbj.png',
                                 style: {
                                     left: left,
                                     top: top,
@@ -268,6 +268,7 @@ var userDataMaster = (function () {
             var userInfo, params;
             return __generator(this, function (_a) {
                 userInfo = res.userInfo;
+                userDataMaster.myInfo.nickName = userInfo.nickName;
                 params = {
                     uid: userDataMaster.getMyInfo.uid,
                     nickName: userInfo.nickName,
@@ -307,6 +308,8 @@ var userDataMaster = (function () {
                             if (parseInt(suc.code) === 1 && suc.data) {
                                 //登录成功
                                 userDataMaster.getMyInfo = suc.data;
+                                //测试测试………………
+                                // userDataMaster.myInfo.is_new_user = true;
                                 // userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
                                 //初始化用户openid
                                 platform.openDataContext.postMessage({
@@ -328,18 +331,18 @@ var userDataMaster = (function () {
         var day = date.getDate() > 9 ? (date.getDate()) + '' : '0' + date.getDate();
         return date.getFullYear() + '-' + month + '-' + day;
     };
-    userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: true }; //用户信息
-    userDataMaster.gold = 10000; //能量果
+    userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: true, nickName: '' }; //用户信息
+    userDataMaster.gold = 0; //能量果
     userDataMaster.cats = [
         { id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 1, 2], des: '第一只拥有的精灵，洁白无一物', music: '《水晶》' },
-        { id: 2, name: '摇滚球', state: false, process: 0, target: 1000, belong: [3, 5, 6], des: '浑身散发魔性，带来的音乐也是酷酷风', music: '《幽默》' },
-        { id: 3, name: '水灵球', state: false, process: 0, target: 2000, belong: [7, 8, 10], des: '蜻蜓点水般的灵动，似风入海洋', music: '《沙滩》' },
-        { id: 4, name: '跑酷球', state: false, process: 0, target: 3000, belong: [11, 12, 13], des: '天生顽皮，似乎喂养了很多能量果', music: '《超越》' },
+        { id: 2, name: '摇滚球', state: false, process: 0, target: 20000, belong: [3, 5, 6], des: '浑身散发魔性，带来的音乐也是酷酷风', music: '《幽默》' },
+        { id: 3, name: '水灵球', state: false, process: 0, target: 15000, belong: [7, 8, 10], des: '蜻蜓点水般的灵动，似风入海洋', music: '《沙滩》' },
+        { id: 4, name: '跑酷球', state: false, process: 0, target: 10000, belong: [11, 12, 13], des: '天生顽皮，似乎喂养了很多能量果', music: '《超越》' },
         { id: 5, name: '火火球', state: false, process: 0, target: 0, belong: [15, 16, 17], des: '别看它小小的身体，却有大大的能量', music: '《希望》' },
-        { id: 6, name: '黑洞球', state: false, process: 0, target: 5000, belong: [18, 20, 21], des: '想法经常出乎意料，常常让你冒冷', music: '《迷宫》' },
-        { id: 7, name: '爆破球', state: false, process: 0, target: 10000, belong: [22, 23, 25], des: '拥有一秒燃爆森林的力量', music: '《时空》' },
-        { id: 8, name: '旋风球', state: false, process: 0, target: 8000, belong: [26, 27, 28], des: '可以带着风飞舞，跑遍世界角落', music: '《海洋》' },
-        { id: 9, name: '懒懒球', state: false, process: 0, target: 6000, belong: [30, 31, 32], des: '找不出第二只比懒懒球还懒的精灵了', music: '《星辰》' }
+        { id: 6, name: '黑洞球', state: false, process: 0, target: 8000, belong: [18, 20, 21], des: '想法经常出乎意料，常常让你冒冷', music: '《迷宫》' },
+        { id: 7, name: '爆破球', state: false, process: 0, target: 6000, belong: [22, 23, 25], des: '拥有一秒燃爆森林的力量', music: '《时空》' },
+        { id: 8, name: '旋风球', state: false, process: 0, target: 5000, belong: [26, 27, 28], des: '可以带着风飞舞，跑遍世界角落', music: '《海洋》' },
+        { id: 9, name: '懒懒球', state: false, process: 0, target: 3000, belong: [30, 31, 32], des: '找不出第二只比懒懒球还懒的精灵了', music: '《星辰》' }
     ];
     userDataMaster.travels = [
         { index: 0, id: 0, name: '月之桥', state: 0 },
