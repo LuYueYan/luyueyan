@@ -72,7 +72,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let cats = userDataMaster.cats;
-		for (let i = 0, len = this.positionArr.length; i < len; i++) {
+		for (let len = this.positionArr.length,i=len-1; i >=0; i--) {
 			this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
 			if (cats[i].state) {
 				//已获得

@@ -299,7 +299,7 @@ class userDataMaster {
 					userDataMaster.getMyInfo = suc.data;
 
 					//测试测试………………
-					userDataMaster.myInfo.is_new_user = true;
+					// userDataMaster.myInfo.is_new_user = true;
 
 					// userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
 					//初始化用户openid

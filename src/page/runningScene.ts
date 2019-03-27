@@ -25,19 +25,19 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public hitNum = 0;//当前主题的建筑出现次数
 	public perfectNum = 0;//连续击中中心光束的次数
 	public themeArr = [
-		{ index: 1, num: 15, score: 52, energy: 2, width: 340, tw: 340,th:0, left: 175, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
-		{ index: 5, num: 30, score: 101, energy: 5, width: 340, tw: 340, left: 170, top: 72, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
-		{ index: 8, num: 25, score: 101, energy: 5, width: 340, tw: 340, left: 175, top: 55, name: 'img_castle_h', begin: 0xf8a5fd, end: 0xb295ff },
-		{ index: 9, num: 20, score: 101, energy: 5, width: 340, tw: 340, left: 170, top: 45, name: 'img_castle_i', begin: 0x4ddcae, end: 0x4dd4dc },
-		{ index: 10, num: 15, score: 101, energy: 5, width: 340, tw: 340, left: 175, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea },
-		{ index: 2, num: 20, score: 64, energy: 3, width: 250, tw: 250, left: 130, top: 55, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
-		{ index: 3, num: 30, score: 76, energy: 4, width: 250, tw: 205, left: 130, top: 45, name: 'img_castle_c', begin: 0xabdf85, end: 0x3ccd84 },
-		{ index: 6, num: 25, score: 101, energy: 5, width: 250, tw: 250, left: 130, top: 65, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
-		{ index: 4, num: 25, score: 88, energy: 5, width: 250, tw: 110, left: 118, top: 33, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
-		{ index: 7, num: 30, score: 101, energy: 5, width: 250, tw: 160, left: 132, top: 35, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
+		{ index: 1, num: 15, score: 52, energy: 2, width: 340, tw: 340, th: 18, left: 175, top: 60, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
+		{ index: 5, num: 30, score: 101, energy: 5, width: 340, tw: 340, th: 45, left: 170, top: 72, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
+		{ index: 8, num: 25, score: 101, energy: 5, width: 340, tw: 340, th: 18, left: 175, top: 55, name: 'img_castle_h', begin: 0xf8a5fd, end: 0xb295ff },
+		{ index: 9, num: 20, score: 101, energy: 5, width: 340, tw: 340, th: 0, left: 170, top: 45, name: 'img_castle_i', begin: 0x4ddcae, end: 0x4dd4dc },
+		{ index: 10, num: 15, score: 101, energy: 5, width: 340, tw: 340, th: 0, left: 175, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea },
+		{ index: 2, num: 20, score: 64, energy: 3, width: 250, tw: 250, th: 12, left: 130, top: 55, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
+		{ index: 3, num: 30, score: 76, energy: 4, width: 250, tw: 205, th: 12, left: 130, top: 45, name: 'img_castle_c', begin: 0xabdf85, end: 0x3ccd84 },
+		{ index: 6, num: 25, score: 101, energy: 5, width: 250, tw: 250, th: 20, left: 130, top: 65, name: 'img_castle_f', begin: 0xf3d781, end: 0xdf7252 },
+		{ index: 4, num: 25, score: 88, energy: 5, width: 250, tw: 110, th: 0, left: 118, top: 33, name: 'img_castle_d', begin: 0x9f3c70, end: 0x5f1c5a },
+		{ index: 7, num: 30, score: 101, energy: 5, width: 250, tw: 160, th: 15, left: 132, top: 35, name: 'img_castle_g', begin: 0xffa7a0, end: 0xf4746c },
 
 	];
-	//num--该主题的数量 score--单次击中分数 energy--单次击中能量 width--建筑总宽度 tw--接触面宽度 
+	//num--该主题的数量 score--单次击中分数 energy--单次击中能量 width--建筑总宽度 tw--接触面宽度  th--接触面顶部距离图片顶部距离
 	// left--发光点距离左侧距离  top--发光点距离顶部距离 name--建筑图片名字 begin主题渐变起色 end--主题渐变结束色
 	public buildingLoop = {
 		img_castle_a: [],
@@ -70,7 +70,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public trying = false;//是否试玩
 	public energyAdd = 0;//本局能量加成百分比
 	public perfectGif;
-	public constructor(theme = 1, score = 0, hitNum = 0, currentBall = -1, rebornNum = 0, energy = 0, energyAdd = 0) {
+	public constructor(theme = 1, score = 0, hitNum = 0, currentBall = -1, rebornNum = 0, energy = 0, energyAdd = 0, themeArr = []) {
 		super();
 		this.currentTheme = theme;
 		this.score = score;
@@ -85,6 +85,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.energyAdd = energyAdd;
 		this.rebornNum = rebornNum;
 		this.energy = energy;
+		if (themeArr.length > 0) {
+			this.themeArr = themeArr;
+		}
 	}
 	protected partAdded(partName: string, instance: any): void {
 		super.partAdded(partName, instance);
@@ -101,7 +104,13 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		let that = this;
 		AdMaster.closeBannerAd();
 		this.worldSpeed = 1000000;
-		that.randomTheme();
+		if (that.rebornNum == 0) {
+			that.randomTheme();
+		} else {
+			let current = that.themeArr[that.currentTheme - 1];
+			that.createBg(current.begin, current.end);
+		}
+
 		this.scoreText.text = this.score + '';
 		this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
 		let ball = userDataMaster.cats[this.currentBall];
@@ -149,7 +158,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			if (that.currentTimer) {
 				that.currentTimer = egret.getTimer();
 			}
-
 		})
 	}
 	public randomTheme() {
@@ -157,13 +165,16 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		let arr = [];
 		let sourceArr = this.themeArr;
 		let len = 5;
-		for (let i = 0; i < len; i++) {
+		for (let i = 0; i < 5; i++) {
 			let ran = Math.floor(Math.random() * len);
 			arr.push(sourceArr[ran]);
+			let ran2 = Math.floor(Math.random() * len);
+			arr.push(sourceArr[ran2 + len]);
+			sourceArr.splice(ran2 + len, 1);
 			sourceArr.splice(ran, 1);
 			len--;
 		}
-		this.themeArr = arr.concat(sourceArr);
+		this.themeArr = arr;
 		this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end);
 	}
 	public createBg(begin: number, end: number) {
@@ -214,8 +225,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.currentTimer = egret.getTimer();
 		var stageHeight: number = egret.MainContext.instance.stage.stageHeight;//获取舞台高度？？？？
 		var l = this.world.bodies.length;//所有body的长度
-		let marginTop = that.themeArr[that.currentTheme - 1].top + 10;
-		let marginLeft = that.themeArr[that.currentTheme - 1].left;
+		var currentTheme = that.themeArr[that.currentTheme - 1];
+		let marginTop = currentTheme.top + 10;
+		let marginLeft = currentTheme.left;
 		for (var i: number = 0; i < l; i++) {
 			var boxBody: p2.Body = this.world.bodies[i];
 			var len = boxBody.displays.length;
@@ -290,25 +302,16 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			}, that);
 
 		}
-		let hitright = that.ceilArr[0].overlaps(that.bee);
-		if (hitright) {
-			that.bee.velocity = [-25, -8];
-			that.bee.angle = -0.2;
-			that.bee.mass = 8000;
-		}
-		let hitleft = that.ceilArr[1].overlaps(that.bee);
-		if (hitleft) {
-			that.bee.velocity = [25, -8];
-			that.bee.angle = 0.2;
-			that.bee.mass = 8000;
-		}
+
 		// let hit = that.flowerArr[0].body.overlaps(that.bee);
 
 		// let top = (that.bee.position[1] - that.bee.displays[0].height / 2 / that.factor) - (that.flowerArr[0].body.position[1] + that.flowerArr[0].body.displays[0].height / 2 / that.factor);
 		let dh = (that.bee.position[1] - that.flowerArr[0].body.position[1]) * that.factor;
 		// let dw = Math.abs(that.bee.position[0] - that.flowerArr[0].body.position[0]) - that.flowerArr[0].body.displays[0].width / 2/that.factor;
-		let dw = Math.abs(that.bee.position[0] - that.flowerArr[0].body.position[0]) - that.themeArr[that.currentTheme - 1].tw / 2 / that.factor;
-		if (!that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && dw <= 0 && ((that.flowerArr[0].params.type != 'center' && dh <= 357.5 - 30 && dh >= 150) || (dh <= 357.5 - 60 && dh >= 200))) {
+		let dw = Math.abs(that.bee.position[0] - that.flowerArr[0].body.position[0]) - currentTheme.tw / 2 / that.factor;
+		if (!that.flowerArr[0].params.haveHit && that.bee.velocity[1] <= 0 && dw <= 0 && (dh <= 357.5 - currentTheme.th && dh >= 150)) {
+			that.score += that.themeArr[that.currentTheme - 1].score;
+			that.energy += that.themeArr[that.currentTheme - 1].energy;
 			if (that.flowerArr[0].body.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].body.displays[0].x - 30 <= that.bee.displays[0].x) {
 				// console.log('center')
 				if (that.flowerArr[0].body.displays[1].parent) {
@@ -320,10 +323,11 @@ class runningScene extends eui.Component implements eui.UIComponent {
 					egret.Tween.removeTweens(that.perfectGroup);
 					that.perfectGroup.visible = true;
 
-					// that.perfectGroup.scaleX = 0, that.perfectGroup.scaleY = 0;
+					that.perfectGroup.scaleX = 2.5, that.perfectGroup.scaleY = 2.5;
 					that.perfectGroup.alpha = 1;
 					that.perfectGif.gotoAndPlay(0, 1)
 					that.perfectText.text = 'Combo x' + that.perfectNum;
+					that.score += 100;
 					that.addChildAt(that.perfectGroup, 2);
 					egret.Tween.get(that.perfectGroup).to({ scaleX: 1, scaleY: 1 }, 500).to({ alpha: 0 }, 2000).call(() => {
 						that.perfectGroup.parent && that.perfectGroup.parent.removeChild(that.perfectGroup);
@@ -332,8 +336,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			} else {
 				that.perfectNum = 0;
 			}
-			that.score += that.themeArr[that.currentTheme - 1].score;
-			that.energy += that.themeArr[that.currentTheme - 1].energy;
 			platform.vibrateShort({ success(res) { } })
 			that.bee.mass = 3000;
 			this.scoreText.text = this.score + '';
@@ -366,7 +368,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 				that.bee.angularVelocity = 0.01;
 			}
 			that.hitNum++;
-			let judgeHitNum = that.hitNum == that.themeArr[that.currentTheme - 1].num;
+			let judgeHitNum = that.hitNum == currentTheme.num;
 			if (judgeHitNum) {
 				// if(that.trying){
 				// 	//是试玩
@@ -378,18 +380,16 @@ class runningScene extends eui.Component implements eui.UIComponent {
 
 				that.hitNum = 0;
 				that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
+				currentTheme = that.themeArr[that.currentTheme - 1];
 				//难度增大
-				if (that.currentTheme < 6) {
-					that.worldSpeed = 1000 - that.currentTheme * 80;
-				} else {
-					that.worldSpeed = 1000 - (that.currentTheme - 5) * 80;
+				if (that.currentTheme % 2 == 1) {
+					that.worldSpeed = 1000 - Math.floor(that.currentTheme / 2) * 80;
 				}
 
-
-				this.createBg(that.themeArr[that.currentTheme - 1].begin, that.themeArr[that.currentTheme - 1].end)
-				let current = that.themeArr[that.currentTheme - 1].name;
+				this.createBg(currentTheme.begin, currentTheme.end)
+				let current = currentTheme.name;
 				for (let i = 0; i < that.flowerArr.length; i++) {
-					that.flowerArr[i].body.shapes[0].width = this.themeArr[this.currentTheme - 1].width / this.factor;
+					that.flowerArr[i].body.shapes[0].width = currentTheme.width / this.factor;
 					if (i == 0) {
 						that.flowerArr[i].body.displays[0].texture = RES.getRes(current + '1_png');
 
@@ -397,19 +397,34 @@ class runningScene extends eui.Component implements eui.UIComponent {
 						that.flowerArr[i].body.displays[0].texture = RES.getRes(current + '2_png');
 					}
 
-					let mt = that.themeArr[that.currentTheme - 1].top + 10;
-					let ml = that.themeArr[that.currentTheme - 1].left;
+					let mt = currentTheme.top + 10;
+					let ml = currentTheme.left;
 					that.flowerArr[i].body.displays[1].y = stageHeight - that.flowerArr[i].body.position[1] * this.factor - (that.flowerArr[i].body.displays[0].height / 2 - mt) * that.flowerArr[i].body.displays[0].scaleY;
 					that.flowerArr[i].body.displays[1].x = that.flowerArr[i].body.position[0] * this.factor - (that.flowerArr[i].body.displays[0].width / 2 - ml) * that.flowerArr[i].body.displays[0].scaleX;
 				}
 				// that.throughFun();
 			}
-			let cur = that.themeArr[that.currentTheme - 1].name;
 
-			that.flowerArr[0].body.displays[0].texture = RES.getRes(cur + '1_png');
+			that.flowerArr[0].body.displays[0].texture = RES.getRes(currentTheme.name + '1_png');
 			egret.Tween.get(that.flowerArr[0].body.displays[1]).to({ height: 313 }, 500);
-			let type = r.params.type == 'right' ? 'left' : 'right';
-			that.createFlower(type);
+			setTimeout(function () {
+				let type = r.params.type == 'right' ? 'left' : 'right';
+				that.createFlower(type);
+			}, 50);
+		} else {
+			//是否撞墙
+			let hitright = that.ceilArr[0].overlaps(that.bee);
+			if (hitright && !(that.bee.velocity[0] < 0 && that.bee.velocity[1] > 0)) {
+				that.bee.velocity = [-25, -8];
+				that.bee.angle = -0.2;
+				that.bee.mass = 8000;
+			}
+			let hitleft = that.ceilArr[1].overlaps(that.bee);
+			if (hitleft && !(that.bee.velocity[0] > 0 && that.bee.velocity[1] > 0)) {
+				that.bee.velocity = [25, -8];
+				that.bee.angle = 0.2;
+				that.bee.mass = 8000;
+			}
 		}
 		if (that.bee.velocity[1] <= 0) {
 			that.bee.damping = 0;
@@ -436,13 +451,12 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			}
 		}
 		if (that.flowerArr[0].params.type !== "center") {
-			let cur = that.themeArr[that.currentTheme - 1].name;
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0, len = that.flowerArr.length; i < len; i++) {
 				if (that.flowerArr[i].body.displays[0].scaleX < 1) {
 					that.flowerArr[i].body.displays[0].scaleX += 0.001 * 1000 / that.worldSpeed;
 					that.flowerArr[i].body.displays[0].scaleY += 0.001 * 1000 / that.worldSpeed;
-					that.flowerArr[i].body.displays[1].scaleX += 0.001 * 1000 / that.worldSpeed;
-					that.flowerArr[i].body.displays[1].scaleY += 0.001 * 1000 / that.worldSpeed;
+					// that.flowerArr[i].body.displays[1].scaleX += 0.001 * 1000 / that.worldSpeed;
+					// that.flowerArr[i].body.displays[1].scaleY += 0.001 * 1000 / that.worldSpeed;
 					that.flowerArr[i].body.velocity[1] = -2;
 
 				}
@@ -453,6 +467,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		//died
 		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
+		soundMaster.stopSongMusic();
 		if (this.rebornNum == 0) {
 			//可复活
 			this.rebornNum++;
@@ -472,7 +487,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		AdMaster.useVideo(() => {
 			suc();
 		}, () => {
-			console.log('share')
+			// console.log('share')
 			CallbackMaster.openShare(() => {
 				suc();
 			})
@@ -486,8 +501,9 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			let rebornNum = that.rebornNum;
 			let energy = that.energy;
 			let energyAdd = that.energyAdd;
+			let themeArr = that.themeArr;
 			parent.removeChild(that);
-			parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy, energyAdd));
+			parent.addChild(new runningScene(theme, score, hitNum, currentBall, rebornNum, energy, energyAdd, themeArr));
 		}
 	}
 	public createBee() {
@@ -560,7 +576,6 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		that.world.addBody(boxBody);
 		setTimeout(() => {
 			that.flowerGroup.addChildAt(display, 0);
-
 			that.flowerGroup.addChildAt(lightning, 1);
 		}, 100)
 		that.flowerArr.push({ body: boxBody, params: { type, haveHit: false } });

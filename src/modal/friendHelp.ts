@@ -30,11 +30,10 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 	public icon_5: eui.Image;
 	public text_5: eui.Label;
 	public get_5: eui.Button;
-	public ball: eui.Image;
 	public closeBtn: eui.Button;
 	public getBtn: eui.Image;
 
-
+	public fireBall;
 	public list = [];//"status":  状态1未领取2已领取
 	public constructor() {
 		super();
@@ -63,8 +62,12 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 		if (!userDataMaster.cats[8].state && that.list.length >= 6) {
 			//可解锁
 			that.getBtn.texture = RES.getRes('btn_unlocking_png');
-
 		}
+		this.fireBall = movieMaster.getGif('fire_ball');
+		this.fireBall.y = 297 ;
+		this.fireBall.x = 245;
+		this.body.addChild(this.fireBall);
+		this.fireBall.gotoAndPlay(0, -1);
 	}
 	public getList() {
 		let that = this;
@@ -100,6 +103,8 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 				gold += 150;
 				userDataMaster.myGold = gold;
 				that['get_' + i].visible = false;
+				that['icon_' + i].visible = false;
+				that['text_' + i].visible = false;
 				that.list[i].status = 2;
 				that.addChild(new getSuccess(-1, 'x 150'));
 			}

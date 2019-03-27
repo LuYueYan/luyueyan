@@ -60,13 +60,14 @@ class travelScene extends eui.Component implements eui.UIComponent {
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
 		this.scroller.height = this.stage.stageHeight;
 		this.createFun();
+		AdMaster.closeBannerAd();
 	}
 	public createFun() {
 		let that = this;
 		let data = that.dataArr;
 		let travels = userDataMaster.travels;
 		for (let i = 0; i < data.length; i++) {
-			let name, travel,text;
+			let name, travel, text;
 			if (data[i].type == 1 && i > 0 && travels[i].state == 1) {
 				//已领取的礼包
 				name = 'img_gift_a3_png';
@@ -86,14 +87,14 @@ class travelScene extends eui.Component implements eui.UIComponent {
 			if (data[i].type == 0 && data[i].index < userDataMaster.travelList.length) {
 				//已解锁
 				name = 'img_bg_imprinting_1_png';
-				travel = that.createBitmapByName('img_imprinting_b' + (data[i].index + 1) + '_png', data[i].x-15, data[i].y-15, 156, 135);
-				let txt=userDataMaster.travels[userDataMaster.travelList[data[i].index]].name;
-				text=new eui.Label(txt);
-				text.size=20;
-				text.textColor=0x473678;
-				text.x=data[i].x-15+(156-text.width)/2;
-				text.y=data[i].y+130;
-				
+				travel = that.createBitmapByName('img_imprinting_b' + (data[i].index + 1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
+				let txt = userDataMaster.travels[userDataMaster.travelList[data[i].index]].name;
+				text = new eui.Label(txt);
+				text.size = 20;
+				text.textColor = 0x473678;
+				text.x = data[i].x - 15 + (156 - text.width) / 2;
+				text.y = data[i].y + 130;
+
 			}
 			let img = that.createBitmapByName(name, data[i].x - 15, data[i].y - 15);
 			this.content.addChild(img);
@@ -125,6 +126,9 @@ class travelScene extends eui.Component implements eui.UIComponent {
 	public closeFun() {
 		let parent = this.parent;
 		parent.removeChild(this);
+		if (AdMaster.cacheBannerAd) {
+			AdMaster.openBannerAd({ width: 700, height: 300 });
+		}
 	}
 	public createBitmapByName(name: string, x: number = 0, y: number = 0, center: number = 0, vertical: number = 0): egret.Bitmap {
 		//center 是否水平居中  vertical 垂直居中
@@ -138,7 +142,7 @@ class travelScene extends eui.Component implements eui.UIComponent {
 		}
 		if (vertical > 0) {
 			result.y = y + (vertical - result.height) / 2;
-			
+
 		}
 		return result;
 	}
