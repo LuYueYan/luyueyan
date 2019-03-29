@@ -66,35 +66,43 @@ class travelScene extends eui.Component implements eui.UIComponent {
 		let that = this;
 		let data = that.dataArr;
 		let travels = userDataMaster.travels;
+		let travelList = userDataMaster.travelList;
 		for (let i = 0; i < data.length; i++) {
 			let name, travel, text;
 			if (data[i].type == 1 && i > 0 && travels[i].state == 1) {
 				//已领取的礼包
 				name = 'img_gift_a3_png';
 			}
-			if (data[i].type == 1 && i > 0 && travels[i].state == 0 && data[i - 1].index < userDataMaster.travelList.length) {
+			if (data[i].type == 1 && i > 0 && travels[i].state == 0 && data[i - 1].index < travelList.length) {
 				//可领取的礼包
 				name = 'img_gift_a2_png';
 			}
-			if (data[i].type == 1 && i > 0 && data[i - 1].index >= userDataMaster.travelList.length) {
+			if (data[i].type == 1 && i > 0 && data[i - 1].index >= travelList.length) {
 				//不能领取的礼包
 				name = 'img_gift_a1_png';
 			}
-			if (data[i].type == 0 && data[i].index >= userDataMaster.travelList.length) {
+			if (data[i].type == 0 && data[i].index >= travelList.length) {
 				//未解锁
 				name = 'img_bg_imprinting_2_png';
 			}
-			if (data[i].type == 0 && data[i].index < userDataMaster.travelList.length) {
+			if (data[i].type == 0 && data[i].index < travelList.length) {
 				//已解锁
 				name = 'img_bg_imprinting_1_png';
-				travel = that.createBitmapByName('img_imprinting_b' + (data[i].index + 1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
-				let txt = userDataMaster.travels[userDataMaster.travelList[data[i].index]].name;
+				let index = travelList[data[i].index];
+				travel = that.createBitmapByName('img_imprinting_b' + (travels[index].id+1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
+				let txt = travels[index].name;
 				text = new eui.Label(txt);
 				text.size = 20;
 				text.textColor = 0x473678;
 				text.x = data[i].x - 15 + (156 - text.width) / 2;
 				text.y = data[i].y + 130;
-
+				if (travels[index].state == 2) {
+					//是新的
+					travels[index].state = 1;
+					let is_new=that.createBitmapByName('img_label_02_png',data[i].x + 80, data[i].y - 20);
+                    this.content.addChild(is_new);
+					userDataMaster.setTravel(index, travels[index]);
+				}
 			}
 			let img = that.createBitmapByName(name, data[i].x - 15, data[i].y - 15);
 			this.content.addChild(img);

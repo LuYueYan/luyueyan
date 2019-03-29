@@ -53,7 +53,7 @@ class userDataMaster {
 		{ index: 31, id: 25, name: '万颗紫', state: 0 },
 		{ index: 32, id: 26, name: '七彩云', state: 0 },
 		{ index: 33, id: -1, name: '', state: 0 }
-	];
+	];//state-当前状态 0--未获得 1--已获得 2--新获得尚未查看
 	public static travelList = [];//我拥有的印记
 	public static dayEnergy = { day: '', num: 0 };//上次领取每日能量的日期
 	public static myCollection: eui.ArrayCollection;
@@ -68,6 +68,7 @@ class userDataMaster {
 	public static dayTry = '';//上次试玩的日期
 	public static dayVideoEnergy = { day: '', num: 0 };//每日通过看视频/分享获得能量
 	public static loginCallback = null;//弹窗登录成功的回调
+	public static degree = 0;//当前难度阶段
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -101,6 +102,9 @@ class userDataMaster {
 					let data = res.data;
 					if (data.energy > 0) {
 						userDataMaster.myGold = data.energy;
+					}
+					if (data.high_score) {
+						userDataMaster.bestScore = data.high_score;
 					}
 					if (data.spirit_data.length > 0) {
 

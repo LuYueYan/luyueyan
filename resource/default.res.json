@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,imprinting_black_json,imprinting_light_json,btn_jump_png,btn_click_01_png,btn_click_02_png,img_bg_fruit_number_png,img_bg_game_png,img_bg_gift_png,img_bg_home_01_png,img_bg_home_02_png,img_bg_imprinting_1_png,img_bg_imprinting_2_png,img_bg_imprinting_bottom_png,img_bg_imprinting_top_png,img_base_01_png,img_base_02_png,img_bg_base_01_png,img_bg_click_png,img_bg_revival_jpg,img_bg_text_png,img_bg_time_png,img_bullet_frame_png,img_bg_play_try_png,img_bg_ranking_01_png,img_bg_ranking_02_png,img_collect_png,img_click_01_png,img_click_02_png,img_elf_42_png,img_elf_52_png,img_elf_62_png,img_elf_72_png,img_elf_82_png,img_elf_a2_png,img_elf_b1_png,img_elf_fire_png,img_elf_02_png,img_elf_12_png,img_elf_22_png,img_elf_32_png,img_light_png,img_gift_fruit_png,img_gift_small_png,img_finger_png,img_fruit_big_png,img_gift_a1_png,img_gift_a2_png,img_gift_a3_png,img_gift_big_png,img_game_tittle_png,img_tittle_06_png,img_tittle_04_png,img_tittle_05_png,btn_list_json,text_list_json,img_castle_e1_png,img_castle_e2_png,img_castle_f1_png,img_castle_f2_png,img_castle_g1_png,img_castle_g2_png,img_castle_h1_png,img_castle_h2_png,img_castle_i1_png,img_castle_i2_png,img_castle_j1_png,img_castle_j2_png,img_castle_a1_png,img_castle_a2_png,img_castle_b1_png,img_castle_b2_png,img_castle_c1_png,img_castle_c2_png,img_castle_d1_png,img_castle_d2_png,btn_receive_video_png,img_play_try_png,img_cloud_png,img_moer_01_png,img_moer_02_png,share_text_png,img_aperture_png,continue_bg_png,lightning2_png,btn_have_unlock_png,ball_travel_gif_json,ball_travel_gif_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,imprinting_black_json,imprinting_light_json,btn_jump_png,btn_click_01_png,btn_click_02_png,img_bg_fruit_number_png,img_bg_game_png,img_bg_gift_png,img_bg_home_01_png,img_bg_home_02_png,img_bg_imprinting_1_png,img_bg_imprinting_2_png,img_bg_imprinting_bottom_png,img_bg_imprinting_top_png,img_base_01_png,img_base_02_png,img_bg_base_01_png,img_bg_click_png,img_bg_revival_jpg,img_bg_text_png,img_bg_time_png,img_bullet_frame_png,img_bg_play_try_png,img_bg_ranking_01_png,img_bg_ranking_02_png,img_collect_png,img_click_01_png,img_click_02_png,img_elf_42_png,img_elf_52_png,img_elf_62_png,img_elf_72_png,img_elf_82_png,img_elf_a2_png,img_elf_b1_png,img_elf_fire_png,img_elf_02_png,img_elf_12_png,img_elf_22_png,img_elf_32_png,img_light_png,img_gift_fruit_png,img_gift_small_png,img_finger_png,img_fruit_big_png,img_gift_a1_png,img_gift_a2_png,img_gift_a3_png,img_gift_big_png,img_game_tittle_png,img_tittle_06_png,img_tittle_04_png,img_tittle_05_png,btn_list_json,text_list_json,img_castle_e1_png,img_castle_e2_png,img_castle_f1_png,img_castle_f2_png,img_castle_g1_png,img_castle_g2_png,img_castle_h1_png,img_castle_h2_png,img_castle_i1_png,img_castle_i2_png,img_castle_j1_png,img_castle_j2_png,img_castle_a1_png,img_castle_a2_png,img_castle_b1_png,img_castle_b2_png,img_castle_c1_png,img_castle_c2_png,img_castle_d1_png,img_castle_d2_png,btn_receive_video_png,img_play_try_png,img_cloud_png,img_moer_01_png,img_moer_02_png,share_text_png,img_aperture_png,continue_bg_png,lightning2_png,btn_have_unlock_png,ball_travel_gif_json,ball_travel_gif_png,img_tittle_07_png,btn_share_get_png,img_label_06_png,img_label_07_png",
 			"name": "preload"
 		},
 		{
@@ -599,6 +599,26 @@
 			"name": "ball_travel_gif_png",
 			"type": "image",
 			"url": "assets/Aimages/ball_travel_gif.png"
+		},
+		{
+			"name": "img_tittle_07_png",
+			"type": "image",
+			"url": "assets/Aimages/img_tittle_07.png"
+		},
+		{
+			"name": "btn_share_get_png",
+			"type": "image",
+			"url": "assets/Aimages/btn_share_get.png"
+		},
+		{
+			"name": "img_label_06_png",
+			"type": "image",
+			"url": "assets/Aimages/img_label_06.png"
+		},
+		{
+			"name": "img_label_07_png",
+			"type": "image",
+			"url": "assets/Aimages/img_label_07.png"
 		}
 	]
 }

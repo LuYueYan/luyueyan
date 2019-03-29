@@ -72,12 +72,12 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let cats = userDataMaster.cats;
-		for (let len = this.positionArr.length,i=len-1; i >=0; i--) {
+		for (let len = this.positionArr.length, i = len - 1; i >= 0; i--) {
 			this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
 			if (cats[i].state) {
 				//已获得
 			} else {
-				if (this.guideFeed&&this.currentBall == 0) {
+				if (this.guideFeed && this.currentBall == 0) {
 					this.currentBall = i;
 				}
 				this.filterFun(this['img_' + i]);
@@ -96,7 +96,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 			}
 		}
 		this.changeInfo(this.currentBall);
-		this.bgImg.height=this.stage.stageHeight;
+		this.bgImg.height = this.stage.stageHeight;
 		var blurFliter = new egret.BlurFilter(4, 4);
 		this.processBar.filters = [blurFliter];
 		this.goldText.text = userDataMaster.myGold + '';
@@ -353,6 +353,8 @@ class myBalls extends eui.Component implements eui.UIComponent {
 				}
 				userDataMaster.setCat(this.currentBall, cat);
 				this.changeInfo(this.currentBall, true);
+			} else {
+				this.addChild(new getEnergyModal(userDataMaster.myInfo.uid, userDataMaster.getToday(), 2));
 			}
 		} else if (cat.state && this.currentBall != userDataMaster.runCat) {
 			//带他出发

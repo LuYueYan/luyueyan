@@ -10,21 +10,25 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var getEnergyModal = (function (_super) {
     __extends(getEnergyModal, _super);
-    function getEnergyModal(suid, day) {
+    function getEnergyModal(suid, day, type) {
         if (suid === void 0) { suid = 0; }
         if (day === void 0) { day = ''; }
+        if (type === void 0) { type = 1; }
         var _this = _super.call(this) || this;
         _this.currentNum = 0; //已领取
         _this.status = 1; // //状态 1可领取 2已领取过 3已领取完 4已过期
         _this.suid = userDataMaster.myInfo.uid;
         _this.day = userDataMaster.getToday();
         _this.requestTime = 0; //请求次数
+        _this.type = 1;
+        // suid--分享源用户id day--日期  type--使用界面 1-每日能量界面 2-我的球球界面弹窗
         if (suid) {
             _this.suid = suid;
         }
         if (day != '') {
-            day = day;
+            _this.day = day;
         }
+        _this.type = type;
         return _this;
     }
     getEnergyModal.prototype.partAdded = function (partName, instance) {
@@ -36,7 +40,16 @@ var getEnergyModal = (function (_super) {
     };
     getEnergyModal.prototype.init = function () {
         var that = this;
-        that.getMyInfo();
+        if (that.type == 1) {
+            that.getMyInfo();
+        }
+        else {
+            that.numTip.visible = true;
+            that.title.texture = RES.getRes('img_tittle_07_png');
+            that.getBtn.texture = RES.getRes('btn_share_get_png');
+            that.getText.text = '分享到群，自己就能领取一份';
+            that.status = 2;
+        }
         this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
     };
@@ -99,7 +112,7 @@ var getEnergyModal = (function (_super) {
                     that.getText.text = "已领取（" + that.currentNum + "/5）";
                     that.state.visible = true;
                     that.numText.visible = true;
-                    var gold = userDataMaster.myGold + 40;
+                    var gold = userDataMaster.myGold + 100;
                     userDataMaster.myGold = gold;
                     that.status = 2;
                     that.getBtn.texture = RES.getRes('btn_present_02_png');

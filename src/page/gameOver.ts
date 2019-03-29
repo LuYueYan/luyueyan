@@ -6,6 +6,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public openBall: eui.Button;
 	public energyNum: eui.Label;
 	public getEnergy: eui.Image;
+	public energyAddImg: eui.Image;
 	public travel_0: eui.Group;
 	public travel_img_0: eui.Image;
 	public travel_name_0: eui.Label;
@@ -26,18 +27,21 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public text_1: eui.Label;
 
 
+
 	public score = 0;
 	public ballId = 0;//这局用的球类型
 	public energy = 0;//本局获得的能量果数量
+	public energyAdd = 0;//能量果加成百分几
 	public more_list = [];//推荐位列表v
 	public terval = null;//定时器
 	public more_index_0 = 0;
 	public more_index_1 = 0;
-	public constructor(score = 0, ballId = 0, energy = 0) {
+	public constructor(score = 0, ballId = 0, energy = 0, energyAdd = 0) {
 		super();
 		this.score = score;
 		this.ballId = ballId;
-		this.energy = energy;
+		this.energy = parseInt(energy * (1 + energyAdd) + '');
+		this.energyAdd = energyAdd;
 	}
 	protected partAdded(partName: string, instance: any): void {
 		super.partAdded(partName, instance);
@@ -60,6 +64,9 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		that.scoreText.text = that.score + '';
 		userDataMaster.myGold += that.energy;
 		that.energyNum.text = 'x ' + that.energy;
+		if (that.energyAdd != 0) {
+			that.energyAddImg.visible = true;
+		}
 		let travel = userDataMaster.MyCats[that.ballId].belong;
 		let ran = Math.floor(Math.random() * travel.length);
 		let newArr = [];
@@ -76,14 +83,14 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		that.travel_name_1.text = item_1.name;
 		if (item_0.state == 0) {
 			//初次获得
-			item_0.state = 1;
+			item_0.state = 2;
 			that.travel_new_0.visible = true;
 			userDataMaster.setTravel(newArr[0], item_0);
 			userDataMaster.travelList.push(newArr[0]);
 		}
 		if (item_1.state == 0) {
 			//初次获得
-			item_1.state = 1;
+			item_1.state = 2;
 			that.travel_new_1.visible = true;
 			userDataMaster.travelList.push(newArr[1]);
 			userDataMaster.setTravel(newArr[1], item_1);
@@ -165,6 +172,9 @@ class gameOver extends eui.Component implements eui.UIComponent {
 			width: 80,
 			height: 80
 		});
+		if (this.score > userDataMaster.bestScore) {
+			userDataMaster.bestScore = this.score;
+		}
 		let params = {
 			score: this.score,
 			uid: userDataMaster.getMyInfo.uid

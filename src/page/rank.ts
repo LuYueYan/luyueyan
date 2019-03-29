@@ -48,9 +48,7 @@ class rank extends eui.Component implements eui.UIComponent {
 		this.goHome.addEventListener(egret.TouchEvent.TOUCH_TAP, this.goHomeFun, this);
 		this.friend.addEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this);
 		this.world.addEventListener(egret.TouchEvent.TOUCH_TAP, this.worldFun, this);
-		// if (!userData.getInstance().haveNickName) {
-		// 	userData.getInstance().createLoginBtn(381, 124, 258, 112);
-		// }
+	
 	}
 	public changePage(type) {
 		if (this.currentType == 'friend') {
@@ -78,7 +76,7 @@ class rank extends eui.Component implements eui.UIComponent {
 				that.sourceArr.removeAll();
 				this.pageText.text = that.worldPage + ' / ' + that.endPage;
 				for (let i = 0; i < data.length; i++) {
-					// data[i].index = (that.worldPage - 1) * that.pageSize + i + 1;
+				
 					that.sourceArr.addItem(data[i]);
 				}
 			}
@@ -111,7 +109,5 @@ class rank extends eui.Component implements eui.UIComponent {
 	public goHomeFun() {
 		let parent = this.parent;
 		parent.removeChild(this);
-		parent.addChild(new startScene());
-		// userData.getInstance().userInfoBtn&&userData.getInstance().userInfoBtn.destroy();
 	}
 }

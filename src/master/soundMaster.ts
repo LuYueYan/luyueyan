@@ -2,6 +2,7 @@ class soundMaster {
     public static bg_sound: egret.Sound;//背景音乐
     public static songArr = [
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_2.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_3.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_4.mp3', sound: null },

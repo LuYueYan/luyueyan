@@ -4,8 +4,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public goldText: eui.Label;
 	public goldImg: eui.Image;
 	public collection: eui.Image;
-	public moreScroller: eui.Scroller;
-	public moreGroup: eui.Group;
+	public circle_light: eui.Image;
 	public tryBtn: eui.Group;
 	public tryImg: eui.Image;
 	public tryName: eui.Image;
@@ -23,18 +22,24 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public travelTip: eui.Image;
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
-	public circle_light: eui.Image;
+	public touchRect: eui.Rect;
 
 
-
-	public dataGroup: eui.DataGroup;
-	public sourceArr: eui.ArrayCollection;
 	public tryIndex = -1;//今日试玩index
 	public trying = false;//是否是试玩结束返回
 	public energyAdd = 0;//能量加成百分比
-	public scrTerval = null;//左侧滚动定时器
-	public dataGroup2: eui.DataGroup;
-	public moreGroup2: eui.Group;
+	public touchPosition = [
+		{ x: 0, y: 0, name: 'houseBtn', func: 'houseFun' },
+		{ x: 0, y: 0, name: 'travelBtn', func: 'travelFun' },
+		{ x: 0, y: 0, name: 'rankBtn', func: 'rankFun' },
+		{ x: 0, y: 0, name: 'shareBtn', func: 'shareFun' },
+		{ x: 0, y: 0, name: 'friendBtn', func: 'friendFun' },
+		{ x: 0, y: 0, name: 'energyBtn', func: 'energyFun' },
+		{ x: 0, y: 0, name: 'startBtn', func: 'startFun' },
+		{ x: 0, y: 0, name: 'tryBtn', func: 'tryFun' },
+		{ x: 0, y: 0, name: 'addGold', func: 'addGoldFun' }
+	]
+	public moreCom: moreScroller;
 	public constructor(trying = false) {
 		super();
 		this.trying = trying;
@@ -59,27 +64,30 @@ class startScene extends eui.Component implements eui.UIComponent {
 				AdMaster.openBannerAd({ width: 700, height: 300 });
 			}
 		}, 1000);
-
+		that.moreCom = new moreScroller();
+		that.moreCom.y = 300;
+		that.addChild(that.moreCom);
+		that.moreCom.cacheAsBitmap = true;
 		let match = DeviceMaster.model.match(/iPhone ?X/ig);
 		if (match) {
 			that.collection.y = 80;
 		}
 		setTimeout(function () {
-			if (userDataMaster.todayTry) {
-				//今天还没试玩
-				that.tryBtn.visible = true;
-				let tryList = [];
-				let cats = userDataMaster.cats;
-				for (let i = 0, len = cats.length; i < len; i++) {
-					if (!cats[i].state) {
-						tryList.push(i);
-					}
+
+			//今天试玩
+			// that.tryBtn.visible = true;
+			let tryList = [];
+			let cats = userDataMaster.cats;
+			for (let i = 0, len = cats.length; i < len; i++) {
+				if (!cats[i].state) {
+					tryList.push(i);
 				}
-				that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
-				that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
-				that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
-				egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
 			}
+			that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
+			that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
+			that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
+			egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
+
 			that.goldText.text = '' + userDataMaster.gold;
 			that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
 			let energy = userDataMaster.sourceEnergy;
@@ -91,45 +99,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 			} else {
 				egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600)
 			}
-			if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
-				let list = userDataMaster.recommand['1'].games;
-				that.sourceArr = new eui.ArrayCollection(list);
-				that.dataGroup = new eui.DataGroup();
-				that.dataGroup.dataProvider = that.sourceArr;
-				that.dataGroup.useVirtualLayout = true;
-				let layout = new eui.VerticalLayout();
-				layout.gap = 20;
-				that.dataGroup.layout = layout;
-				that.dataGroup.itemRenderer = moreItem;
 
-				that.dataGroup2 = new eui.DataGroup();
-				that.dataGroup2.dataProvider = that.sourceArr;
-				that.dataGroup2.useVirtualLayout = true;
-				let layout2 = new eui.VerticalLayout();
-				layout2.gap = 20;
-				that.dataGroup2.layout = layout2;
-				that.dataGroup2.itemRenderer = moreItem;
-
-				that.moreGroup.height = list.length * 150;
-				that.moreGroup2.height = list.length * 150;
-				that.moreGroup.addChild(that.dataGroup);
-				that.moreGroup2.addChild(that.dataGroup2);
-				that.moreGroup2.y = that.moreGroup.height;
-				that.moreScroller.scrollPolicyV = 'off';//禁止垂直滚动
-				that.scrTerval = setInterval(() => {
-					egret.Tween.get(that.moreGroup).to({ y: that.moreGroup.y - 450 }, 1000).wait(100).call(() => {
-						if (that.moreGroup.y <= -that.moreGroup.height) {
-							that.moreGroup.y = that.moreGroup2.y + that.moreGroup2.height;
-						}
-					});
-					egret.Tween.get(that.moreGroup2).to({ y: that.moreGroup2.y - 450 }, 1000).wait(100).call(() => {
-						if (that.moreGroup2.y <= -that.moreGroup.height) {
-							that.moreGroup2.y = that.moreGroup.y + that.moreGroup.height;
-						}
-					});
-
-				}, 3000);
-			}
 		}, 500);
 		egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
 		// if (this.trying) {
@@ -137,28 +107,26 @@ class startScene extends eui.Component implements eui.UIComponent {
 		// }
 		egret.Tween.get(that.collection, { loop: true }).to({ x: 230 }, 500).to({ x: 244 }, 300);
 		egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 1000).to({ scaleX: 1, scaleY: 1 }, 800);
-		that.houseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
-		that.travelBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this)
-		that.rankBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this)
-		that.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this)
-		that.friendBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this)
-		that.energyBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this)
-		that.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-		that.tryBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
-		that.addGold.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+
+		that.touchRect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+
 		userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
 	}
-	// public moveScroller(): void {
-	// 	//改变滚动的位置
-	// 	var sc = this.moreScroller;
-	// 	if ((sc.viewport.scrollV + sc.height) >= sc.viewport.contentHeight) {
-	// 		sc.viewport.scrollV =0;
-	// 	}else{
-	//        sc.viewport.scrollV += 10;
-	// 	}
-	// 	//停止正在滚动的动画
-	// 	// sc.stopAnimation();
-	// }
+	public touchFun(e: egret.TouchEvent) {
+		let that = this;
+		let tx = e.stageX;
+		let ty = e.stageY;
+		let arr = that.touchPosition;
+		for (let i = 0, len = arr.length; i < len; i++) {
+			let target = that[arr[i].name];
+			let dx = tx - (target.x - target.anchorOffsetX);
+			let dy = ty - (target.y - target.anchorOffsetY);
+			if (dx >= 0 && dx <= target.width && dy >= 0 && dy <= target.height) {
+				that[arr[i].func] && that[arr[i].func]();
+				return;
+			}
+		}
+	}
 	public addGoldFun() {
 		let that = this;
 		switch (userDataMaster.todayVideoEnergy) {
@@ -247,7 +215,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	}
 	public rankFun() {
 		let that = this;
-		that.addChild(new rank())
+		that.addChild(new rank());
 	}
 	public shareFun() {
 		let that = this;
@@ -265,23 +233,13 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public energyFun() {
 		let that = this;
 		that.addChild(new dayEnergy());
-		// that.energyTip.visible = false;
 	}
 	public startFun() {
 		let that = this;
 		egret.Tween.removeAllTweens();
-		clearInterval(that.scrTerval);
-		that.houseBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
-		that.travelBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this)
-		that.rankBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this)
-		that.shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this)
-		that.friendBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this)
-		that.energyBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this)
-		that.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-		that.tryBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
-		that.addGold.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+		that.touchRect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 		userDataMaster.myCollection.removeEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
-
+		clearInterval(moreScroller.getInstance().scrTerval);
 		let parent = that.parent;
 		parent.removeChild(that);
 		let currentBall = -1;

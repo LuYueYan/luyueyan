@@ -31,6 +31,7 @@
 				<e:Label text="获取更多的能量果 可以喂养球球小精灵哦 " x="180" y="76" width="218" size="20" fontFamily="Microsoft YaHei" textColor="0xab9dff" lineSpacing="5"/>
 				<e:Label id="energyNum" text="x 50" x="294" y="33" fontFamily="Microsoft YaHei" size="28" textColor="0xffea00"/>
 				<e:Image id="getEnergy" x="527" touchEnabled="true" y="80.5" source="btn_receive_05_png" width="186" height="71" anchorOffsetX="93" anchorOffsetY="35.5"/>
+					<e:Image id="energyAddImg" source="text_list_json.img_label_03_png" x="146" y="-1" touchEnabled="false" visible="false"/>
 				</e:Group>
 				<e:Group id="travel_0" width="650" height="160" y="170" anchorOffsetX="0" anchorOffsetY="0" x="0">
 				<e:Image id="travel_img_0" x="30" verticalCenter="0" source="img_imprinting_a1_png"/>

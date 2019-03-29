@@ -75,7 +75,9 @@ var AdMaster = (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, ServiceMaster.post(ServiceMaster.getConfig, {}, function (res) {
                             if (parseInt(res.code) === 1 && res.data) {
-                                if (res.data.edition_1 == 2) {
+                                // res.data.banner_id=['adunit-9770641ec26321d7'];
+                                // res.data.video_id=['adunit-d0c0bc599cd9d2b6'];
+                                if (res.data.edition_2 == 2) {
                                     //审核通过，允许分享
                                     CallbackMaster.hasChecked = true;
                                 }

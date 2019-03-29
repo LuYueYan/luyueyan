@@ -30,11 +30,17 @@ var friendHelp = (function (_super) {
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
         if (userDataMaster.cats[8].state) {
             //已解锁
+            that.getBtn.texture = RES.getRes('btn_have_unlock_png');
         }
         if (!userDataMaster.cats[8].state && that.list.length >= 6) {
             //可解锁
             that.getBtn.texture = RES.getRes('btn_unlocking_png');
         }
+        this.fireBall = movieMaster.getGif('fire_ball');
+        this.fireBall.y = 297;
+        this.fireBall.x = 245;
+        this.body.addChild(this.fireBall);
+        this.fireBall.gotoAndPlay(0, -1);
     };
     friendHelp.prototype.getList = function () {
         var _this = this;
@@ -75,6 +81,8 @@ var friendHelp = (function (_super) {
                 gold += 150;
                 userDataMaster.myGold = gold;
                 that['get_' + i].visible = false;
+                that['icon_' + i].visible = false;
+                that['text_' + i].visible = false;
                 that.list[i].status = 2;
                 that.addChild(new getSuccess(-1, 'x 150'));
             }
@@ -89,6 +97,7 @@ var friendHelp = (function (_super) {
                 var cat = userDataMaster.cats[8];
                 cat.state = true;
                 userDataMaster.setCat(8, cat);
+                that.getBtn.texture = RES.getRes('btn_have_unlock_png');
                 that.addChild(new getSuccess(4, '火火球'));
             }
             else {

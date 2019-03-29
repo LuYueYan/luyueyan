@@ -12,17 +12,11 @@
 	<e:Image id="circle_light" source="img_aperture_png" y="413" anchorOffsetX="193" anchorOffsetY="193" horizontalCenter="0"/>
 	<e:Image source="img_bg_home_02_png" y="383.97" horizontalCenter="0.5"/>
 	<e:Image source="img_bg_game_png" y="284"/>
-	<e:Scroller id="moreScroller" width="140" height="450" y="309" anchorOffsetY="0" x="0">
-		<e:Group>
-			<e:Group id="moreGroup" width="100%" scaleX="1" scaleY="1" height="450"/>
-			<e:Group id="moreGroup2" width="100%" scaleX="1" scaleY="1" height="450"/>
-		</e:Group>
-	</e:Scroller>
 	<e:Group id="tryBtn" x="663" y="359.5" touchEnabled="true" anchorOffsetY="81" height="162" anchorOffsetX="63">
 		<e:Image y="6" source="img_bg_play_try_png"/>
-		<e:Image id="tryImg" source="img_elf_22_png" width="110" height="110" horizontalCenter="1" y="12"/>
+		<e:Image id="tryImg" width="110" height="110" horizontalCenter="1" y="12" source=""/>
 		<e:Image source="img_play_try_png" y="9"/>
-		<e:Image id="tryName" scaleX="0.8" scaleY="0.8" bottom="0" horizontalCenter="0" source="text_list_json.img_name_01_png"/>
+		<e:Image id="tryName" scaleX="0.8" scaleY="0.8" bottom="0" horizontalCenter="0" source=""/>
 	</e:Group>
 	<e:Image id="friendBtn" x="616" y="459" touchEnabled="true" source="icn_home_05_png"/>
 	<e:Image id="energyBtn" x="616" y="617" touchEnabled="true" source="icn_home_06_png"/>
@@ -32,18 +26,14 @@
 		<e:Image source="text_list_json.img_fruit_small_png" x="0" verticalCenter="0"/>
 		<e:Label text="能量果加成：10%" x="28" size="22" fontFamily="Microsoft YaHei" textColor="0xfffc01" verticalCenter="0" bold="true"/>
 	</e:Group>
-	<e:Image id="startBtn" y="805.5" touchEnabled="true" source="btn_start_png" anchorOffsetX="147.5" anchorOffsetY="50.5" horizontalCenter="0"/>
-	<e:Group y="893" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
-		<e:Image id="houseBtn" x="22" y="36" touchEnabled="true" source="icn_home_01_png"/>
-		<e:Image id="travelBtn" x="202" y="32" touchEnabled="true" source="icn_home_02_png"/>
-		<e:Image id="rankBtn" x="318" y="56" touchEnabled="true" source="icn_home_03_png"/>
-		<e:Image id="shareBtn" x="430" y="50" touchEnabled="true" source="icn_home_04_png"/>
-		<e:layout>
-		<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="45"/>
-		</e:layout>
-	</e:Group>
+	<e:Image id="startBtn" y="805" touchEnabled="true" source="btn_start_png" anchorOffsetX="147.5" anchorOffsetY="50.5" horizontalCenter="0"/>
+	<e:Image id="houseBtn" y="893" touchEnabled="true" source="icn_home_01_png" x="60"/>
+	<e:Image id="travelBtn" x="230" y="893" touchEnabled="true" source="icn_home_02_png"/>
+	<e:Image id="rankBtn" x="400" y="893" touchEnabled="true" source="icn_home_03_png"/>
+	<e:Image id="shareBtn" x="570" y="893" touchEnabled="true" source="icn_home_04_png"/>
 	<e:Image id="houseTip" source="img_label_01_png" x="144" y="883"/>
 	<e:Image id="travelTip" source="img_label_02_png" x="324" y="883"/>
 	<e:Image id="shareTip" source="img_label_03_png" x="598" y="883"/>
 	<e:Image id="energyTip" source="img_label_04_png" x="673" y="607"/>
+	<e:Rect id="touchRect" width="750" height="1334" fillColor="0xffffff" strokeAlpha="1" fillAlpha="0" touchEnabled="true"/>
 </e:Skin>

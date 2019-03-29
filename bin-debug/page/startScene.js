@@ -45,21 +45,19 @@ var startScene = (function (_super) {
             that.collection.y = 80;
         }
         setTimeout(function () {
-            if (userDataMaster.todayTry) {
-                //今天还没试玩
-                that.tryBtn.visible = true;
-                var tryList = [];
-                var cats = userDataMaster.cats;
-                for (var i = 0, len = cats.length; i < len; i++) {
-                    if (!cats[i].state) {
-                        tryList.push(i);
-                    }
+            //今天试玩
+            // that.tryBtn.visible = true;
+            var tryList = [];
+            var cats = userDataMaster.cats;
+            for (var i = 0, len = cats.length; i < len; i++) {
+                if (!cats[i].state) {
+                    tryList.push(i);
                 }
-                that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
-                that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
-                that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
-                egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
             }
+            that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
+            that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
+            that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
+            egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
             that.goldText.text = '' + userDataMaster.gold;
             that.currentBall.texture = RES.getRes('img_elf_' + userDataMaster.runCat + '2_png');
             var energy = userDataMaster.sourceEnergy;
@@ -82,8 +80,31 @@ var startScene = (function (_super) {
                 layout.gap = 20;
                 that.dataGroup.layout = layout;
                 that.dataGroup.itemRenderer = moreItem;
-                that.moreGroup.height = list.length * 150 - 20;
+                that.dataGroup2 = new eui.DataGroup();
+                that.dataGroup2.dataProvider = that.sourceArr;
+                that.dataGroup2.useVirtualLayout = true;
+                var layout2 = new eui.VerticalLayout();
+                layout2.gap = 20;
+                that.dataGroup2.layout = layout2;
+                that.dataGroup2.itemRenderer = moreItem;
+                that.moreGroup.height = list.length * 150;
+                that.moreGroup2.height = list.length * 150;
                 that.moreGroup.addChild(that.dataGroup);
+                that.moreGroup2.addChild(that.dataGroup2);
+                that.moreGroup2.y = that.moreGroup.height;
+                that.moreScroller.scrollPolicyV = 'off'; //禁止垂直滚动
+                that.scrTerval = setInterval(function () {
+                    egret.Tween.get(that.moreGroup).to({ y: that.moreGroup.y - 450 }, 1000).wait(100).call(function () {
+                        if (that.moreGroup.y <= -that.moreGroup.height) {
+                            that.moreGroup.y = that.moreGroup2.y + that.moreGroup2.height;
+                        }
+                    });
+                    egret.Tween.get(that.moreGroup2).to({ y: that.moreGroup2.y - 450 }, 1000).wait(100).call(function () {
+                        if (that.moreGroup2.y <= -that.moreGroup.height) {
+                            that.moreGroup2.y = that.moreGroup.y + that.moreGroup.height;
+                        }
+                    });
+                }, 3000);
             }
         }, 500);
         egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
@@ -103,17 +124,6 @@ var startScene = (function (_super) {
         that.addGold.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
         userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
     };
-    // public moveScroller(): void {
-    // 	//改变滚动的位置
-    // 	var sc = this.moreScroller;
-    // 	if ((sc.viewport.scrollV + sc.height) >= sc.viewport.contentHeight) {
-    // 		sc.viewport.scrollV =0;
-    // 	}else{
-    //        sc.viewport.scrollV += 10;
-    // 	}
-    // 	//停止正在滚动的动画
-    // 	// sc.stopAnimation();
-    // }
     startScene.prototype.addGoldFun = function () {
         var that = this;
         switch (userDataMaster.todayVideoEnergy) {
@@ -222,6 +232,17 @@ var startScene = (function (_super) {
     startScene.prototype.startFun = function () {
         var that = this;
         egret.Tween.removeAllTweens();
+        clearInterval(that.scrTerval);
+        that.houseBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
+        that.travelBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this);
+        that.rankBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this);
+        that.shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
+        that.friendBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this);
+        that.energyBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this);
+        that.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
+        that.tryBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
+        that.addGold.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+        userDataMaster.myCollection.removeEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
         var parent = that.parent;
         parent.removeChild(that);
         var currentBall = -1;

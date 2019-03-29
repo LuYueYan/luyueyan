@@ -122,5 +122,25 @@
         "path": "modal\\moreItem.ts",
         "class": "moreItem",
         "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
+    },
+    "169c237f633": {
+        "path": "component.ts",
+        "class": "component",
+        "parentPath": ""
+    },
+    "169c239fb48": {
+        "path": "component\\colorBgCom.ts",
+        "class": "colorBgCom",
+        "parentPath": ""
+    },
+    "169c2571dd3": {
+        "path": "component\\ramdonThemeCom.ts",
+        "class": "ramdonThemeCom",
+        "parentPath": ""
+    },
+    "169c82b5c5b": {
+        "path": "modal\\moreScroller.ts",
+        "class": "moreScroller",
+        "parentPath": ""
     }
 }

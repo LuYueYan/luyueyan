@@ -70,6 +70,9 @@ var userDataMaster = (function () {
                     if (data.energy > 0) {
                         userDataMaster.myGold = data.energy;
                     }
+                    if (data.high_score) {
+                        userDataMaster.bestScore = data.high_score;
+                    }
                     if (data.spirit_data.length > 0) {
                         userDataMaster.MyCats = JSON.parse(data.spirit_data);
                     }
@@ -279,6 +282,8 @@ var userDataMaster = (function () {
                     if (parseInt(suc.code) === 1 && suc.data) {
                         //修改用户信息成功
                         userDataMaster.userInfoBtn && userDataMaster.userInfoBtn.destroy();
+                        userDataMaster.loginCallback && userDataMaster.loginCallback();
+                        userDataMaster.loginCallback = null;
                     }
                 });
                 return [2 /*return*/];
@@ -379,7 +384,7 @@ var userDataMaster = (function () {
         { index: 31, id: 25, name: '万颗紫', state: 0 },
         { index: 32, id: 26, name: '七彩云', state: 0 },
         { index: 33, id: -1, name: '', state: 0 }
-    ];
+    ]; //state-当前状态 0--未获得 1--已获得 2--新获得尚未查看
     userDataMaster.travelList = []; //我拥有的印记
     userDataMaster.dayEnergy = { day: '', num: 0 }; //上次领取每日能量的日期
     userDataMaster.shareUid = 0; //分享人id
@@ -390,6 +395,8 @@ var userDataMaster = (function () {
     userDataMaster.requestTimes = 0; //请求游戏数据的次数
     userDataMaster.dayTry = ''; //上次试玩的日期
     userDataMaster.dayVideoEnergy = { day: '', num: 0 }; //每日通过看视频/分享获得能量
+    userDataMaster.loginCallback = null; //弹窗登录成功的回调
+    userDataMaster.degree = 0; //当前难度阶段
     return userDataMaster;
 }());
 __reflect(userDataMaster.prototype, "userDataMaster");

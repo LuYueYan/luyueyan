@@ -175,6 +175,7 @@ var Main = (function (_super) {
         AdMaster.init();
         soundMaster.init();
         CallbackMaster.init();
+        movieMaster.init();
         this.addChild(new startScene());
         Main.scene = this.stage;
         //添加右上角转发

@@ -5,8 +5,8 @@ var movieMaster = (function () {
     function movieMaster() {
     }
     movieMaster.init = function () {
-        var data = RES.getRes("gif2048_json");
-        var txtr = RES.getRes("gif2048_png");
+        var data = RES.getRes("ball_travel_gif_json");
+        var txtr = RES.getRes("ball_travel_gif_png");
         movieMaster.mcFactory = new egret.MovieClipDataFactory(data, txtr);
     };
     movieMaster.getGif = function (name) {

@@ -3,11 +3,6 @@
 	<w:Config id="1692d89b8d4" ></w:Config>
 	<e:Image id="bgImg" horizontalCenter="0" top="0" anchorOffsetY="0" height="1334" width="750" source="img_bg_revival_jpg"/>
 	<e:Image top="0" horizontalCenter="0" source="img_light_png"/>
-	<e:Image id="homeBtn" source="bnt_home_png" x="28" y="58" touchEnabled="true"/>
-	<e:Group id="addGold" x="148.38" y="66" touchEnabled="true">
-		<e:Image source="img_bg_fruit_number_png" x="0" y="0" touchEnabled="true"/>
-		<e:Label id="goldText" text="40" x="52.31" y="21.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
-	</e:Group>
 	<e:Group id="bodyGroup" height="410" horizontalCenter="0" width="750" anchorOffsetY="0" y="92.12">
 		<e:Group x="448" y="180" id="item_5" scaleX="0.3" scaleY="0.3" anchorOffsetX="141" anchorOffsetY="103" height="206">
 		<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
@@ -45,6 +40,11 @@
 		<e:Image source="img_base_02_png" y="135" horizontalCenter="0" alpha="0.7"/>
 		<e:Image rotation="0" id="img_0" width="160" height="160" horizontalCenter="0" top="0" source=""/>
 		</e:Group>
+	</e:Group>
+	<e:Image id="homeBtn" source="bnt_home_png" x="28" y="58" touchEnabled="true"/>
+	<e:Group id="addGold" x="148.38" y="66" touchEnabled="true">
+		<e:Image source="img_bg_fruit_number_png" x="0" y="0" touchEnabled="true"/>
+		<e:Label id="goldText" text="40" x="52.31" y="21.56" width="100" verticalAlign="middle" textAlign="center" size="26" fontFamily="Microsoft YaHei"/>
 	</e:Group>
 	<e:Image source="img_bg_text_png" y="501.12" horizontalCenter="0"/>
 	<e:Image id="nameImg" y="501.12" source="img_name_01_png" horizontalCenter="0"/>

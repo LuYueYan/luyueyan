@@ -4,20 +4,20 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public timing: eui.Image;
 	public rebornBtn: eui.Image;
 	public ignoreBtn: eui.Label;
-    public surpassGroup:eui.Group;
+	public surpassGroup: eui.Group;
 
 	public score = 0;
-	public energy=0;//本局能量果
-	public ballId=0;//本局使用的球
+	public energy = 0;//本局能量果
+	public ballId = 0;//本局使用的球
 	public terval = null;
 	public current_time = 5;
-	public energyAdd=0;//能量加成百分比
-	public constructor(score = 0,ballId=0,energy=0,energyAdd=0) {
+	public energyAdd = 0;//能量加成百分比
+	public constructor(score = 0, ballId = 0, energy = 0, energyAdd = 0) {
 		super();
 		this.score = score;
-		this.energy=energy;
-		this.ballId=ballId;
-		this.energyAdd=energyAdd;
+		this.energy = energy;
+		this.ballId = ballId;
+		this.energyAdd = energyAdd;
 	}
 
 	protected partAdded(partName: string, instance: any): void {
@@ -31,11 +31,11 @@ class reborn extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		this.bgImg.height=this.stage.stageHeight;
+		this.bgImg.height = this.stage.stageHeight;
 		this.scoreText.text = this.score + "";
 		platform.openDataContext.postMessage({
 			type: "passInit",
-			score:that.score,
+			score: that.score,
 			width: 80,
 			height: 80
 		});
@@ -57,8 +57,8 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public ignoreFun() {
 		let parent = this.parent.parent;
 		parent.removeChild(this.parent);
-		let energy=parseInt(this.energy*(1+this.energyAdd)+'');
-		parent.addChild(new gameOver(this.score,this.ballId,energy));
+		// let energy=parseInt(this.energy*(1+this.energyAdd)+'');
+		parent.addChild(new gameOver(this.score, this.ballId, this.energy, this.energyAdd));
 	}
 
 }

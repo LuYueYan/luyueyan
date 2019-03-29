@@ -65,14 +65,14 @@ var gameOver = (function (_super) {
         that.travel_name_1.text = item_1.name;
         if (item_0.state == 0) {
             //初次获得
-            item_0.state = 1;
+            item_0.state = 2;
             that.travel_new_0.visible = true;
             userDataMaster.setTravel(newArr[0], item_0);
             userDataMaster.travelList.push(newArr[0]);
         }
         if (item_1.state == 0) {
             //初次获得
-            item_1.state = 1;
+            item_1.state = 2;
             that.travel_new_1.visible = true;
             userDataMaster.travelList.push(newArr[1]);
             userDataMaster.setTravel(newArr[1], item_1);
@@ -146,6 +146,16 @@ var gameOver = (function (_super) {
         });
     };
     gameOver.prototype.updateScore = function () {
+        var that = this;
+        platform.openDataContext.postMessage({
+            type: "updateScore",
+            score: that.score,
+            width: 80,
+            height: 80
+        });
+        if (this.score > userDataMaster.bestScore) {
+            userDataMaster.bestScore = this.score;
+        }
         var params = {
             score: this.score,
             uid: userDataMaster.getMyInfo.uid

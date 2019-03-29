@@ -22,7 +22,7 @@ var moreItem = (function (_super) {
     };
     moreItem.prototype.init = function () {
         var that = this;
-        this.image.mask = this.imgMask;
+        // this.image.mask = this.imgMask;
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             CallbackMaster.recommandClick(1, that.data);
             var type = 2;
@@ -43,7 +43,7 @@ var moreItem = (function (_super) {
     moreItem.prototype.dataChanged = function () {
         this.title.text = this.data.name;
         this.image.source = this.data.image || '';
-        this.image.mask = this.imgMask;
+        // this.image.mask = this.imgMask;
         // this.title.textColor = this.data.color || 0xFBF6E3;
     };
     return moreItem;

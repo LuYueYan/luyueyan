@@ -34,10 +34,14 @@
 		"getSuccess": "resource/modal/getSuccess.exml",
 		"myBalls": "resource/modal/myBalls.exml",
 		"guideModal": "resource/modal/guideModal.exml",
-		"tryModal": "resource/modal/tryModal.exml"
+		"tryModal": "resource/modal/tryModal.exml",
+		"component": "resource/component/component.exml",
+		"colorBgCom": "resource/component/colorBgCom.exml",
+		"moreScroller": "resource/modal/moreScroller.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
+		"resource/component/colorBgCom.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CheckBoxSkin.exml",
 		"resource/eui_skins/HScrollBarSkin.exml",
@@ -59,6 +63,7 @@
 		"resource/modal/grayBg.exml",
 		"resource/modal/guideModal.exml",
 		"resource/modal/moreItem.exml",
+		"resource/modal/moreScroller.exml",
 		"resource/modal/myBalls.exml",
 		"resource/modal/rankItem.exml",
 		"resource/modal/throughModal.exml",

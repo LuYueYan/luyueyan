@@ -1,10 +1,13 @@
 class getEnergyModal extends eui.Component implements eui.UIComponent {
 	public body: eui.Group;
+	public title: eui.Image;
 	public getBtn: eui.Image;
 	public getText: eui.Label;
 	public closeBtn: eui.Button;
 	public numText: eui.Label;
 	public state: eui.Image;
+	public numTip: eui.Image;
+
 
 
 	public currentNum = 0;//已领取
@@ -12,14 +15,17 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 	public suid = userDataMaster.myInfo.uid;
 	public day = userDataMaster.getToday();
 	public requestTime = 0;//请求次数
-	public constructor(suid = 0, day = '') {
+	public type = 1;
+	public constructor(suid = 0, day = '', type = 1) {
 		super();
+		// suid--分享源用户id day--日期  type--使用界面 1-每日能量界面 2-我的球球界面弹窗
 		if (suid) {
 			this.suid = suid;
 		}
 		if (day != '') {
-			day = day;
+			this.day = day;
 		}
+		this.type = type;
 	}
 	protected partAdded(partName: string, instance: any): void {
 		super.partAdded(partName, instance);
@@ -30,7 +36,16 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
-		that.getMyInfo()
+		if(that.type==1){
+          that.getMyInfo();
+		}else{
+			that.numTip.visible=true;
+			that.title.texture=RES.getRes('img_tittle_07_png');
+			that.getBtn.texture=RES.getRes('btn_share_get_png');
+			that.getText.text='分享到群，自己就能领取一份';
+			that.status =2;
+		}
+		
 		this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
 	}
@@ -52,7 +67,7 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 		}
 		ServiceMaster.post(ServiceMaster.getEnergy, params, (res) => {
 			if (res.code == 1 && res.data) {
-				that.currentNum = res.data.Received||0;
+				that.currentNum = res.data.Received || 0;
 				that.getText.text = "已领取（" + that.currentNum + "/5）";
 				if (that.currentNum >= 5) {
 					that.getBtn.texture = RES.getRes('btn_receive_03_png');
@@ -86,11 +101,11 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 			}
 			ServiceMaster.post(ServiceMaster.getEnergyDo, params, (res) => {
 				if (res.code == 1 && res.data) {
-					that.currentNum ++;;
+					that.currentNum++;;
 					that.getText.text = "已领取（" + that.currentNum + "/5）";
 					that.state.visible = true;
 					that.numText.visible = true;
-					let gold = userDataMaster.myGold + 40;
+					let gold = userDataMaster.myGold + 100;
 					userDataMaster.myGold = gold;
 					that.status = 2;
 					that.getBtn.texture = RES.getRes('btn_present_02_png');
@@ -98,7 +113,7 @@ class getEnergyModal extends eui.Component implements eui.UIComponent {
 			})
 
 		} else if (this.status == 2) {
-			CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid,1);
+			CallbackMaster.openShare(null, false, "&type=energy&day=" + this.day + "&suid=" + this.suid, 1);
 		}
 	}
 	public closeFun() {

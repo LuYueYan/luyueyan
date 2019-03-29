@@ -18,7 +18,7 @@ var soundMaster = (function () {
     soundMaster.playSongMusic = function (index) {
         if (index === void 0) { index = 0; }
         if (soundMaster.songArr[index].sound && soundMaster.isMusic) {
-            soundMaster.soundChannel = soundMaster.songArr[index].sound.play(0, 1);
+            soundMaster.soundChannel = soundMaster.songArr[index].sound.play(0, -1);
         }
     };
     soundMaster.stopSongMusic = function () {
@@ -50,6 +50,7 @@ var soundMaster = (function () {
         configurable: true
     });
     soundMaster.songArr = [
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_1.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_2.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_3.mp3', sound: null },

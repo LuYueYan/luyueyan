@@ -4,7 +4,7 @@
 	<ns1:grayBg top="0" left="0"/>
 	<e:Group id="body" y="191" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="-0.5">
 		<e:Image source="img_bullet_frame_png"/>
-		<e:Image source="img_tittle_03_png" y="46" horizontalCenter="0"/>
+		<e:Image id="title" source="img_tittle_03_png" y="46" horizontalCenter="0"/>
 		<e:Image source="img_gift_big_png" y="193.7" horizontalCenter="0"/>
 		<e:Image id="getBtn" y="651" horizontalCenter="0" touchEnabled="true" source="btn_receive_02_png"/>
 		<e:Label id="getText" text="已领取（0/5）" y="753" size="22" textColor="0x9382ff" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
@@ -16,7 +16,8 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Label id="numText" text="x 40" y="548" fontFamily="Microsoft YaHei" size="32" horizontalCenter="0" visible="false"/>
+		<e:Label id="numText" text="x 100" y="548" fontFamily="Microsoft YaHei" size="32" horizontalCenter="0" visible="false"/>
 		<e:Image id="state" x="430" y="199" source="img_received_png" visible="false"/>
+		<e:Image id="numTip" source="img_label_07_png" x="457" y="193" visible="false"/>
 	</e:Group>
 </e:Skin>

@@ -41,7 +41,7 @@ var myBalls = (function (_super) {
     };
     myBalls.prototype.init = function () {
         var cats = userDataMaster.cats;
-        for (var i = 0, len = this.positionArr.length; i < len; i++) {
+        for (var len = this.positionArr.length, i = len - 1; i >= 0; i--) {
             this['img_' + i].texture = RES.getRes('img_elf_' + i + '2_png');
             if (cats[i].state) {
                 //已获得
@@ -358,6 +358,9 @@ var myBalls = (function (_super) {
                 }
                 userDataMaster.setCat(this.currentBall, cat);
                 this.changeInfo(this.currentBall, true);
+            }
+            else {
+                this.addChild(new getEnergyModal(userDataMaster.myInfo.uid, userDataMaster.getToday(), 2));
             }
         }
         else if (cat.state && this.currentBall != userDataMaster.runCat) {

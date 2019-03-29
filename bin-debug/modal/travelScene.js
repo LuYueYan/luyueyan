@@ -61,39 +61,48 @@ var travelScene = (function (_super) {
         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
         this.scroller.height = this.stage.stageHeight;
         this.createFun();
+        AdMaster.closeBannerAd();
     };
     travelScene.prototype.createFun = function () {
         var that = this;
         var data = that.dataArr;
         var travels = userDataMaster.travels;
+        var travelList = userDataMaster.travelList;
         var _loop_1 = function (i) {
             var name_1 = void 0, travel = void 0, text = void 0;
             if (data[i].type == 1 && i > 0 && travels[i].state == 1) {
                 //已领取的礼包
                 name_1 = 'img_gift_a3_png';
             }
-            if (data[i].type == 1 && i > 0 && travels[i].state == 0 && data[i - 1].index < userDataMaster.travelList.length) {
+            if (data[i].type == 1 && i > 0 && travels[i].state == 0 && data[i - 1].index < travelList.length) {
                 //可领取的礼包
                 name_1 = 'img_gift_a2_png';
             }
-            if (data[i].type == 1 && i > 0 && data[i - 1].index >= userDataMaster.travelList.length) {
+            if (data[i].type == 1 && i > 0 && data[i - 1].index >= travelList.length) {
                 //不能领取的礼包
                 name_1 = 'img_gift_a1_png';
             }
-            if (data[i].type == 0 && data[i].index >= userDataMaster.travelList.length) {
+            if (data[i].type == 0 && data[i].index >= travelList.length) {
                 //未解锁
                 name_1 = 'img_bg_imprinting_2_png';
             }
-            if (data[i].type == 0 && data[i].index < userDataMaster.travelList.length) {
+            if (data[i].type == 0 && data[i].index < travelList.length) {
                 //已解锁
                 name_1 = 'img_bg_imprinting_1_png';
-                travel = that.createBitmapByName('img_imprinting_b' + (data[i].index + 1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
-                var txt = userDataMaster.travels[userDataMaster.travelList[data[i].index]].name;
+                var index = travelList[data[i].index];
+                travel = that.createBitmapByName('img_imprinting_b' + (travels[index].id + 1) + '_png', data[i].x - 15, data[i].y - 15, 156, 135);
+                var txt = travels[index].name;
                 text = new eui.Label(txt);
                 text.size = 20;
                 text.textColor = 0x473678;
                 text.x = data[i].x - 15 + (156 - text.width) / 2;
                 text.y = data[i].y + 130;
+                if (travels[index].state == 1) {
+                    //是新的
+                    travels[index].state = 1;
+                    var is_new = that.createBitmapByName('img_label_02_png', data[i].x + 30, data[i].y - 20);
+                    userDataMaster.setTravel(index, travels[index]);
+                }
             }
             var img = that.createBitmapByName(name_1, data[i].x - 15, data[i].y - 15);
             this_1.content.addChild(img);
@@ -128,6 +137,9 @@ var travelScene = (function (_super) {
     travelScene.prototype.closeFun = function () {
         var parent = this.parent;
         parent.removeChild(this);
+        if (AdMaster.cacheBannerAd) {
+            AdMaster.openBannerAd({ width: 700, height: 300 });
+        }
     };
     travelScene.prototype.createBitmapByName = function (name, x, y, center, vertical) {
         if (x === void 0) { x = 0; }
