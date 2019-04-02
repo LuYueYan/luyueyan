@@ -1,3 +1,5 @@
+declare class colorBgComSkin extends eui.Skin{
+}
 declare module skins{
 	class ButtonSkin extends eui.Skin{
 	}
@@ -65,6 +67,8 @@ declare class grayBgSkin extends eui.Skin{
 declare class guideModalSkin extends eui.Skin{
 }
 declare class moreItemSkin extends eui.Skin{
+}
+declare class moreScrollerSkin extends eui.Skin{
 }
 declare class myBallsSkin extends eui.Skin{
 }

@@ -145,3 +145,4 @@ var common = (function (_super) {
     return common;
 }(eui.Component));
 __reflect(common.prototype, "common", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=common.js.map

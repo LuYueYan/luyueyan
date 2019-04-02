@@ -79,3 +79,4 @@ var dayEnergy = (function (_super) {
     return dayEnergy;
 }(eui.Component));
 __reflect(dayEnergy.prototype, "dayEnergy", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=dayEnergy.js.map

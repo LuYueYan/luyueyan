@@ -106,3 +106,4 @@ var buildingCom = (function () {
 }());
 __reflect(buildingCom.prototype, "buildingCom");
 window['buildingCom'] = buildingCom;
+//# sourceMappingURL=buildingCom.js.map

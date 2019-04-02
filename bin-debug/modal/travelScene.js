@@ -97,10 +97,11 @@ var travelScene = (function (_super) {
                 text.textColor = 0x473678;
                 text.x = data[i].x - 15 + (156 - text.width) / 2;
                 text.y = data[i].y + 130;
-                if (travels[index].state == 1) {
+                if (travels[index].state == 2) {
                     //是新的
                     travels[index].state = 1;
-                    var is_new = that.createBitmapByName('img_label_02_png', data[i].x + 30, data[i].y - 20);
+                    var is_new = that.createBitmapByName('img_label_02_png', data[i].x + 80, data[i].y - 20);
+                    this_1.content.addChild(is_new);
                     userDataMaster.setTravel(index, travels[index]);
                 }
             }
@@ -163,3 +164,4 @@ var travelScene = (function (_super) {
     return travelScene;
 }(eui.Component));
 __reflect(travelScene.prototype, "travelScene", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=travelScene.js.map

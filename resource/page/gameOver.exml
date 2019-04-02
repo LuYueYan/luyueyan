@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="gameOverSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+<e:Skin class="gameOverSkin" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16913edb994" ></w:Config>
-	<e:Image id="bgImg" anchorOffsetY="0" horizontalCenter="0" top="0" height="1334" source="img_bg_revival_jpg"/>
-	<e:Image source="img_tittle_06_png" y="72" horizontalCenter="0"/>
-	<e:Label id="scoreText" text="0" y="253" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
-	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="58" touchEnabled="true"/>
-	<e:Button id="again" label="" x="78" y="961.48">
+	<e:Image id="bgImg" source="img_bg_revival_jpg" horizontalCenter="0" top="0"/>
+	<e:Label id="scoreText" text="0" y="258" fontFamily="Microsoft YaHei" size="60" bold="true" horizontalCenter="0"/>
+	<e:Image id="homeBtn" source="bnt_home_png" x="21" y="60" touchEnabled="false"/>
+	<e:Image id="travelBtn" source="btn_imprinting_png" x="151" y="46"/>
+	<e:Image id="newTip" source="img_label_02_png" x="226" y="36" visible="false"/>
+	<e:Image id="energyAddImg" source="img_label_03_png" x="146" y="-1" touchEnabled="false" visible="false"/>
+	<e:Group id="getEnergy" x="101" y="494">
+		<e:Image source="img_gift_a1_over_png" x="0"/>
+		<e:Label id="energyNum" text="50" fontFamily="Microsoft YaHei" size="34" horizontalCenter="0.5" y="284" textColor="0xffea00" bold="true"/>
+	</e:Group>
+	<e:Group id="doubleEnergy" x="400" y="494" width="250" height="350">
+		<e:Image source="img_gift_a2_over_png"/>
+		<e:Image id="light" source="gif_light_png" horizontalCenter="0" anchorOffsetX="125" anchorOffsetY="125" verticalCenter="0"/>
+		<e:Image id="gift" source="img_gift_a3_over_png" verticalCenter="0" horizontalCenter="0" anchorOffsetX="125" anchorOffsetY="125"/>
+		<e:Label id="doubleNum" text="50 x ?" fontFamily="Microsoft YaHei" size="34" textColor="0xFFEA00" y="284" horizontalCenter="0" bold="true"/>
+	</e:Group>
+	<e:Label id="titleText" text="继续加油" y="162" size="44" bold="true" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+	<e:Image id="again" source="btn_receive_07_png" x="61" y="945"/>
+	<e:Image id="shareBtn" source="btn_pk_png" y="903" horizontalCenter="0"/>
+	<e:Button id="openBall" label="" x="460" y="945" touchEnabled="true">
 		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="btn_receive_07_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:Button>
-	<e:Button id="openBall" label="" x="386" y="961.48" touchEnabled="true">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
+		<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="btn_receive_08_png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
+		</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Scroller width="650" height="505.64" y="428" anchorOffsetY="0" horizontalCenter="0">
-		<e:Group>
-			<e:Group x="0" y="0" scaleX="1" scaleY="1">
-				<e:Group y="0" width="650" height="160" x="0">
-				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
-				<e:Image x="30" y="20" source="img_gift_fruit_png"/>
-				<e:Label text="能量果" x="180" y="30" fontFamily="Microsoft YaHei" size="28"/>
-				<e:Label text="获取更多的能量果 可以喂养球球小精灵哦 " x="180" y="76" width="218" size="20" fontFamily="Microsoft YaHei" textColor="0xab9dff" lineSpacing="5"/>
-				<e:Label id="energyNum" text="x 50" x="294" y="33" fontFamily="Microsoft YaHei" size="28" textColor="0xffea00"/>
-				<e:Image id="getEnergy" x="527" touchEnabled="true" y="80.5" source="btn_receive_05_png" width="186" height="71" anchorOffsetX="93" anchorOffsetY="35.5"/>
-					<e:Image id="energyAddImg" source="text_list_json.img_label_03_png" x="146" y="-1" touchEnabled="false" visible="false"/>
-				</e:Group>
-				<e:Group id="travel_0" width="650" height="160" y="170" anchorOffsetX="0" anchorOffsetY="0" x="0">
-				<e:Image id="travel_img_0" x="30" verticalCenter="0" source="img_imprinting_a1_png"/>
-				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
-				<e:Label id="travel_name_0" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
-				<e:Image id="shareBtn_0" x="434" touchEnabled="true" y="45" source="btn_receive_06_png"/>
-					<e:Image id="travel_new_0" source="img_label_02_png" x="124" y="5.36" visible="false"/>
-				</e:Group>
-				<e:Group id="travel_1" width="650" height="160" y="340" anchorOffsetX="0" anchorOffsetY="0" x="0">
-				<e:Image id="travel_img_1" source="img_imprinting_a1_png" x="30" verticalCenter="0"/>
-				<e:Rect width="650" height="160" y="0" fillAlpha="0.2" ellipseWidth="20" horizontalCenter="0"/>
-				<e:Label id="travel_name_1" text="印记名称" x="180" verticalCenter="0" bold="true" fontFamily="Microsoft YaHei" size="28"/>
-				<e:Image id="shareBtn_1" source="btn_receive_06_png" x="434" touchEnabled="true" y="45"/>
-					<e:Image source="img_label_02_png" x="124" y="5.36" id="travel_new_1" visible="false"/>
-				</e:Group>
-			</e:Group>
+	<e:Group width="620" height="96" y="346" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" cacheAsBitmap="true">
+		<e:Image source="img_bg_schedule_png" horizontalCenter="0" verticalCenter="0"/>
+		<e:Rect id="proBar" width="100" height="14" fillColor="0xffffff" x="30" ellipseWidth="20" cacheAsBitmap="true" verticalCenter="0"/>
+		<e:Image source="img_bg_steps_01_png" left="0" verticalCenter="0"/>
+		<e:Image id="centerImg" source="img_bg_steps_02_png" horizontalCenter="0" verticalCenter="0" anchorOffsetX="30" anchorOffsetY="33"/>
+		<e:Image id="rightImg" source="img_bg_steps_02_png" right="0" verticalCenter="0"/>
+		<e:Label id="degree_0" text="二阶" y="28" size="22" fontFamily="Microsoft YaHei" width="60" left="0" textAlign="center" bold="true"/>
+		<e:Label text="二阶" y="28" size="22" fontFamily="Microsoft YaHei" id="degree_1" width="60" horizontalCenter="0" textAlign="center" bold="true"/>
+		<e:Label text="二阶" y="28" size="22" fontFamily="Microsoft YaHei" id="degree_2" right="0" width="60" textAlign="center" bold="true"/>
+		<e:Group id="headGroup" x="0" y="-62">
+			<e:Image source="img_bg_head_2_png" x="0" y="0"/>
+			<e:Image id="head" width="50" height="50" source="" horizontalCenter="0" y="4"/>
+			<e:Rect id="headMask" width="50" height="50" y="4" horizontalCenter="0" ellipseWidth="50"/>
 		</e:Group>
-	</e:Scroller>
-	<e:Group width="120" height="150" y="257" id="group_0" anchorOffsetX="60" anchorOffsetY="60" x="100">
-		<e:Rect width="120" height="120" horizontalCenter="0" ellipseWidth="40" ellipseHeight="40" id="mask_0" top="0"/>
-		<e:Image width="120" height="120" id="more_0" top="0"/>
+		<e:Group id="proGroup" y="84">
+			<e:Image source="img_frame_digital_png" scaleX="1" scaleY="1"/>
+			<e:Label id="percentText" text="100%" y="12" size="20" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		</e:Group>
+	</e:Group>
+	<e:Rect id="touchRect" fillColor="0x000000" width="750" height="1334" fillAlpha="0"/>
+	<e:Group width="120" height="150" y="223" id="group_0" anchorOffsetX="60" anchorOffsetY="60" x="100">
+		<e:Rect id="mask_0" width="120" height="120" horizontalCenter="0" ellipseWidth="40" ellipseHeight="40" top="0"/>
+		<e:Image id="more_0" width="120" height="120" top="0"/>
 		<e:Label id="text_0" text="" y="124" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0"/>
 	</e:Group>
-	<e:Group id="group_1" width="120" height="150" y="261.55" anchorOffsetX="60" anchorOffsetY="64.55" x="650">
+	<e:Group id="group_1" width="120" height="150" y="227.55" anchorOffsetX="60" anchorOffsetY="64.55" x="650">
 		<e:Rect id="mask_1" width="120" height="120" horizontalCenter="0" ellipseWidth="40" ellipseHeight="40" top="0"/>
 		<e:Image id="more_1" width="120" height="120"/>
-		<e:Label text="" y="124" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" id="text_1"/>
+		<e:Label id="text_1" text="" y="124" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0"/>
 	</e:Group>
 </e:Skin>

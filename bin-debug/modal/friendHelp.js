@@ -123,3 +123,4 @@ var friendHelp = (function (_super) {
     return friendHelp;
 }(eui.Component));
 __reflect(friendHelp.prototype, "friendHelp", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=friendHelp.js.map

@@ -9,7 +9,7 @@ var spiritCom = (function () {
         var that = this;
         var boxShape = new p2.Box({ width: 3.2, height: 3.2 });
         this.bee = new p2.Body({ mass: 5000, position: [7.5, 26 + adaptation] });
-        this.bee.collisionResponse = false;
+        // this.bee.collisionResponse = false;
         this.bee.addShape(boxShape);
         var display = new egret.Bitmap();
         var texture = RES.getRes('img_elf_' + currentBall + '2_png');
@@ -25,3 +25,4 @@ var spiritCom = (function () {
 }());
 __reflect(spiritCom.prototype, "spiritCom");
 window['spiritCom'] = spiritCom;
+//# sourceMappingURL=spiritCom.js.map

@@ -25,6 +25,7 @@ class colorBgCom extends eui.Component implements eui.UIComponent {
 		colorBgCom.stageHeight = this.stage.stageHeight;
 		this.addChild(colorBgCom.bgLinear);
 		this.changeTheme(this.currentTheme);
+		colorBgCom.shared = this;
 	}
 
 	public changeTheme(currentTheme) {

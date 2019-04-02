@@ -10,6 +10,7 @@ class soundMaster {
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_6.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_7.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_8.mp3', sound: null },
+        { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_9.mp3', sound: null },
         { path: 'https://lixi.h5.app81.com/minigame/game_lixi/ball_music/music_9.mp3', sound: null }
     ];//歌曲列表
 

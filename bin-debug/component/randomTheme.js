@@ -7,7 +7,7 @@ var randomTheme = (function () {
             { index: 1, num: 15, score: 52, energy: 2, width: 300, tw: 300, th: 18, left: 156, top: 55, name: 'img_castle_a', begin: 0x7a3fc3, end: 0x30368d },
             { index: 5, num: 30, score: 101, energy: 5, width: 300, tw: 270, th: 45, left: 155, top: 72, name: 'img_castle_e', begin: 0xca5b49, end: 0x8f3234 },
             { index: 8, num: 25, score: 101, energy: 5, width: 300, tw: 300, th: 18, left: 160, top: 55, name: 'img_castle_h', begin: 0xf8a5fd, end: 0xb295ff },
-            { index: 9, num: 20, score: 101, energy: 5, width: 300, tw: 300, th: 0, left: 146, top: 45, name: 'img_castle_i', begin: 0x4ddcae, end: 0x4dd4dc },
+            { index: 9, num: 20, score: 101, energy: 5, width: 300, tw: 245, th: 30, left: 156, top: 50, name: 'img_castle_i', begin: 0xf37a65, end: 0xffd4a6 },
             { index: 10, num: 15, score: 101, energy: 5, width: 300, tw: 288, th: 0, left: 154, top: 30, name: 'img_castle_j', begin: 0xd0faff, end: 0xc4d3ea },
             { index: 2, num: 20, score: 64, energy: 3, width: 250, tw: 250, th: 12, left: 130, top: 55, name: 'img_castle_b', begin: 0x4a3fac, end: 0x192c6f },
             { index: 3, num: 30, score: 76, energy: 4, width: 250, tw: 205, th: 12, left: 130, top: 45, name: 'img_castle_c', begin: 0xabdf85, end: 0x3ccd84 },
@@ -64,7 +64,14 @@ var randomTheme = (function () {
             return this.scoreInit + 12 * 3;
         }
     };
+    randomTheme.prototype.getProccess = function (currentTheme, hitNum) {
+        var degreeItem = this.degreeItem;
+        var all = degreeItem.scene * degreeItem.num;
+        var current = (currentTheme - 1) * degreeItem.num + hitNum;
+        return Math.floor(current / all * 100) / 100;
+    };
     return randomTheme;
 }());
 __reflect(randomTheme.prototype, "randomTheme");
 window['randomTheme'] = randomTheme;
+//# sourceMappingURL=randomTheme.js.map

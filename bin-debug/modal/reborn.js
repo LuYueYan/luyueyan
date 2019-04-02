@@ -10,7 +10,7 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var reborn = (function (_super) {
     __extends(reborn, _super);
-    function reborn(score, ballId, energy, energyAdd) {
+    function reborn(score, ballId, energy, energyAdd, pro) {
         if (score === void 0) { score = 0; }
         if (ballId === void 0) { ballId = 0; }
         if (energy === void 0) { energy = 0; }
@@ -22,10 +22,12 @@ var reborn = (function (_super) {
         _this.terval = null;
         _this.current_time = 5;
         _this.energyAdd = 0; //能量加成百分比
+        _this.pro = 0; //进度百分比0-1
         _this.score = score;
         _this.energy = energy;
         _this.ballId = ballId;
         _this.energyAdd = energyAdd;
+        _this.pro = pro;
         return _this;
     }
     reborn.prototype.partAdded = function (partName, instance) {
@@ -38,15 +40,11 @@ var reborn = (function (_super) {
     reborn.prototype.init = function () {
         var that = this;
         this.bgImg.height = this.stage.stageHeight;
-        this.scoreText.text = this.score + "";
-        platform.openDataContext.postMessage({
-            type: "passInit",
-            score: that.score,
-            width: 80,
-            height: 80
-        });
-        var surpass = platform.openDataContext.createDisplayObject();
-        this.surpassGroup.addChild(surpass);
+        this.titleText.text = userDataMaster.degree + '阶试炼';
+        this.degreeText.text = (userDataMaster.degree) + '阶';
+        this.percentText.text = this.pro * 100 + '%';
+        this.proGroup.x = 45 + 600 * this.pro;
+        this.proBar.width = 600 * this.pro;
         this.terval = setInterval(function () {
             that.current_time > 0 && that.current_time--;
             that.timing.texture = RES.getRes('img_time_0' + that.current_time + '_png');
@@ -62,9 +60,10 @@ var reborn = (function (_super) {
     reborn.prototype.ignoreFun = function () {
         var parent = this.parent.parent;
         parent.removeChild(this.parent);
-        var energy = parseInt(this.energy * (1 + this.energyAdd) + '');
-        parent.addChild(new gameOver(this.score, this.ballId, energy));
+        // let energy=parseInt(this.energy*(1+this.energyAdd)+'');
+        parent.addChild(new gameOver(this.score, this.ballId, this.energy, this.energyAdd, this.pro));
     };
     return reborn;
 }(eui.Component));
 __reflect(reborn.prototype, "reborn", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=reborn.js.map

@@ -16,7 +16,17 @@ var startScene = (function (_super) {
         _this.tryIndex = -1; //今日试玩index
         _this.trying = false; //是否是试玩结束返回
         _this.energyAdd = 0; //能量加成百分比
-        _this.scrTerval = null; //左侧滚动定时器
+        _this.touchPosition = [
+            { x: 0, y: 0, name: 'houseBtn', func: 'houseFun' },
+            { x: 0, y: 0, name: 'travelBtn', func: 'travelFun' },
+            { x: 0, y: 0, name: 'rankBtn', func: 'rankFun' },
+            { x: 0, y: 0, name: 'shareBtn', func: 'shareFun' },
+            { x: 0, y: 0, name: 'friendBtn', func: 'friendFun' },
+            { x: 0, y: 0, name: 'energyBtn', func: 'energyFun' },
+            { x: 0, y: 0, name: 'startBtn', func: 'startFun' },
+            { x: 0, y: 0, name: 'tryBtn', func: 'tryFun' },
+            { x: 0, y: 0, name: 'addGold', func: 'addGoldFun' }
+        ];
         _this.trying = trying;
         return _this;
     }
@@ -40,6 +50,10 @@ var startScene = (function (_super) {
                 AdMaster.openBannerAd({ width: 700, height: 300 });
             }
         }, 1000);
+        that.moreCom = new moreScroller();
+        that.moreCom.y = 300;
+        that.addChild(that.moreCom);
+        that.moreCom.cacheAsBitmap = true;
         var match = DeviceMaster.model.match(/iPhone ?X/ig);
         if (match) {
             that.collection.y = 80;
@@ -70,42 +84,6 @@ var startScene = (function (_super) {
             else {
                 egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600);
             }
-            if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
-                var list = userDataMaster.recommand['1'].games;
-                that.sourceArr = new eui.ArrayCollection(list);
-                that.dataGroup = new eui.DataGroup();
-                that.dataGroup.dataProvider = that.sourceArr;
-                that.dataGroup.useVirtualLayout = true;
-                var layout = new eui.VerticalLayout();
-                layout.gap = 20;
-                that.dataGroup.layout = layout;
-                that.dataGroup.itemRenderer = moreItem;
-                that.dataGroup2 = new eui.DataGroup();
-                that.dataGroup2.dataProvider = that.sourceArr;
-                that.dataGroup2.useVirtualLayout = true;
-                var layout2 = new eui.VerticalLayout();
-                layout2.gap = 20;
-                that.dataGroup2.layout = layout2;
-                that.dataGroup2.itemRenderer = moreItem;
-                that.moreGroup.height = list.length * 150;
-                that.moreGroup2.height = list.length * 150;
-                that.moreGroup.addChild(that.dataGroup);
-                that.moreGroup2.addChild(that.dataGroup2);
-                that.moreGroup2.y = that.moreGroup.height;
-                that.moreScroller.scrollPolicyV = 'off'; //禁止垂直滚动
-                that.scrTerval = setInterval(function () {
-                    egret.Tween.get(that.moreGroup).to({ y: that.moreGroup.y - 450 }, 1000).wait(100).call(function () {
-                        if (that.moreGroup.y <= -that.moreGroup.height) {
-                            that.moreGroup.y = that.moreGroup2.y + that.moreGroup2.height;
-                        }
-                    });
-                    egret.Tween.get(that.moreGroup2).to({ y: that.moreGroup2.y - 450 }, 1000).wait(100).call(function () {
-                        if (that.moreGroup2.y <= -that.moreGroup.height) {
-                            that.moreGroup2.y = that.moreGroup.y + that.moreGroup.height;
-                        }
-                    });
-                }, 3000);
-            }
         }, 500);
         egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
         // if (this.trying) {
@@ -113,16 +91,23 @@ var startScene = (function (_super) {
         // }
         egret.Tween.get(that.collection, { loop: true }).to({ x: 230 }, 500).to({ x: 244 }, 300);
         egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 1000).to({ scaleX: 1, scaleY: 1 }, 800);
-        that.houseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
-        that.travelBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this);
-        that.rankBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this);
-        that.shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
-        that.friendBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this);
-        that.energyBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this);
-        that.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-        that.tryBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
-        that.addGold.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+        that.touchRect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
+    };
+    startScene.prototype.touchFun = function (e) {
+        var that = this;
+        var tx = e.stageX;
+        var ty = e.stageY;
+        var arr = that.touchPosition;
+        for (var i = 0, len = arr.length; i < len; i++) {
+            var target = that[arr[i].name];
+            var dx = tx - (target.x - target.anchorOffsetX);
+            var dy = ty - (target.y - target.anchorOffsetY);
+            if (dx >= 0 && dx <= target.width && dy >= 0 && dy <= target.height) {
+                that[arr[i].func] && that[arr[i].func]();
+                return;
+            }
+        }
     };
     startScene.prototype.addGoldFun = function () {
         var that = this;
@@ -227,22 +212,13 @@ var startScene = (function (_super) {
     startScene.prototype.energyFun = function () {
         var that = this;
         that.addChild(new dayEnergy());
-        // that.energyTip.visible = false;
     };
     startScene.prototype.startFun = function () {
         var that = this;
         egret.Tween.removeAllTweens();
-        clearInterval(that.scrTerval);
-        that.houseBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.houseFun, this);
-        that.travelBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.travelFun, this);
-        that.rankBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.rankFun, this);
-        that.shareBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
-        that.friendBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this);
-        that.energyBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.energyFun, this);
-        that.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
-        that.tryBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.tryFun, this);
-        that.addGold.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.addGoldFun, this);
+        that.touchRect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         userDataMaster.myCollection.removeEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
+        clearInterval(moreScroller.getInstance().scrTerval);
         var parent = that.parent;
         parent.removeChild(that);
         var currentBall = -1;
@@ -254,3 +230,4 @@ var startScene = (function (_super) {
     return startScene;
 }(eui.Component));
 __reflect(startScene.prototype, "startScene", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=startScene.js.map

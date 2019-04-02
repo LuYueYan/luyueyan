@@ -50,9 +50,6 @@ var rank = (function (_super) {
         this.goHome.addEventListener(egret.TouchEvent.TOUCH_TAP, this.goHomeFun, this);
         this.friend.addEventListener(egret.TouchEvent.TOUCH_TAP, this.friendFun, this);
         this.world.addEventListener(egret.TouchEvent.TOUCH_TAP, this.worldFun, this);
-        // if (!userData.getInstance().haveNickName) {
-        // 	userData.getInstance().createLoginBtn(381, 124, 258, 112);
-        // }
     };
     rank.prototype.changePage = function (type) {
         if (this.currentType == 'friend') {
@@ -83,7 +80,6 @@ var rank = (function (_super) {
                 that.sourceArr.removeAll();
                 _this.pageText.text = that.worldPage + ' / ' + that.endPage;
                 for (var i = 0; i < data.length; i++) {
-                    // data[i].index = (that.worldPage - 1) * that.pageSize + i + 1;
                     that.sourceArr.addItem(data[i]);
                 }
             }
@@ -116,9 +112,8 @@ var rank = (function (_super) {
     rank.prototype.goHomeFun = function () {
         var parent = this.parent;
         parent.removeChild(this);
-        parent.addChild(new startScene());
-        // userData.getInstance().userInfoBtn&&userData.getInstance().userInfoBtn.destroy();
     };
     return rank;
 }(eui.Component));
 __reflect(rank.prototype, "rank", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=rank.js.map

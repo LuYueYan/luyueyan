@@ -24,7 +24,6 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public goldText: eui.Label;
 	public nameImg: eui.Image;
 	public natureText: eui.Label;
-	public musicText: eui.Label;
 	public travelImg_0: eui.Image;
 	public travelImg_1: eui.Image;
 	public travelImg_2: eui.Image;
@@ -37,6 +36,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 	public fireGroup: eui.Group;
 	public fireText: eui.Label;
 	public fireBtn: eui.Image;
+
 
 
 	public positionArr = [
@@ -293,7 +293,7 @@ class myBalls extends eui.Component implements eui.UIComponent {
 			that.nameImg.texture = RES.getRes('img_name_0' + (i + 1) + '_png');
 
 			that.natureText.text = "球球属性：" + cat.des;
-			that.musicText.text = "音乐主题：" + cat.music;
+
 			let travel = cat.belong;
 			let travels = userDataMaster.travels;
 			for (let n = 0; n < 3; n++) {

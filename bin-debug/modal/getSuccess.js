@@ -58,3 +58,4 @@ var getSuccess = (function (_super) {
     return getSuccess;
 }(eui.Component));
 __reflect(getSuccess.prototype, "getSuccess", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=getSuccess.js.map

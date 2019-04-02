@@ -452,8 +452,8 @@ var runningScene = (function (_super) {
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
         soundMaster.stopSongMusic();
         var parent = this.parent;
-        var energy = parseInt(this.energy * (1 + this.energyAdd) + '');
-        parent.addChild(new gameOver(this.score, this.currentBall, energy));
+        // let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
+        parent.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, 1));
         parent.removeChild(this);
     };
     runningScene.prototype.gameOver = function () {
@@ -461,17 +461,18 @@ var runningScene = (function (_super) {
         this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
         soundMaster.stopSongMusic();
+        var pro = randomTheme.getInstance().getProccess(this.currentTheme, this.hitNum);
         if (this.rebornNum == 0) {
             //可复活
             this.rebornNum++;
-            var born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd);
+            var born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd, pro);
             this.addChild(born);
             born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this);
         }
         else {
             var parent_1 = this.parent;
-            var energy = parseInt(this.energy * (1 + this.energyAdd) + '');
-            parent_1.addChild(new gameOver(this.score, this.currentBall, energy));
+            // let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
+            parent_1.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, pro));
             parent_1.removeChild(this);
         }
     };
@@ -518,3 +519,4 @@ var runningScene = (function (_super) {
     return runningScene;
 }(eui.Component));
 __reflect(runningScene.prototype, "runningScene", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=runningScene.js.map

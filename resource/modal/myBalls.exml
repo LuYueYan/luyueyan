@@ -48,12 +48,11 @@
 	</e:Group>
 	<e:Image source="img_bg_text_png" y="501.12" horizontalCenter="0"/>
 	<e:Image id="nameImg" y="501.12" source="img_name_01_png" horizontalCenter="0"/>
-	<e:Label id="natureText" text="球球属性：第一只拥有的精灵，洁白无一物" x="86" y="633.12" fontFamily="Microsoft YaHei" size="26"/>
-	<e:Label id="musicText" text="音乐主题：《水晶》" x="86" y="704.12" size="26" fontFamily="Microsoft YaHei"/>
-	<e:Label text="专属印记：" x="86" y="775.12" fontFamily="Microsoft YaHei" size="26"/>
-	<e:Image id="travelImg_0" source="img_imprinting_a1_png" x="242" y="754.12" width="55" height="64"/>
-	<e:Image id="travelImg_1" source="img_imprinting_a1_png" x="317" y="754.12" width="55" height="64"/>
-	<e:Image id="travelImg_2" source="img_imprinting_a1_png" x="392" y="754.12" width="55" height="64"/>
+	<e:Label id="natureText" text="球球属性：第一只拥有的精灵，洁白无一物" x="86" y="657.12" fontFamily="Microsoft YaHei" size="26"/>
+	<e:Label text="专属印记：" x="86" y="753.12" fontFamily="Microsoft YaHei" size="26"/>
+	<e:Image id="travelImg_0" source="img_imprinting_a1_png" x="242" y="732.12" width="55" height="64"/>
+	<e:Image id="travelImg_1" source="img_imprinting_a1_png" x="317" y="732.12" width="55" height="64"/>
+	<e:Image id="travelImg_2" source="img_imprinting_a1_png" x="392" y="732.12" width="55" height="64"/>
 	<e:Group id="popularGroup" y="885.12" anchorOffsetX="0" width="710" horizontalCenter="0">
 		<e:Label id="fruitText" text="能量果喂养中（2000 / 5000）" x="65" y="1" fontFamily="Microsoft YaHei" size="20" textColor="0xab9dff"/>
 		<e:Image source="img_fruit_small_png" x="36" y="0"/>

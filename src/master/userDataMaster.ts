@@ -1,5 +1,5 @@
 class userDataMaster {
-	public static myInfo: any = { uid: 0, openId: '', is_new_user: true, nickName: '' };//用户信息
+	public static myInfo: any = { uid: 0, openId: '', is_new_user: true, nickName: '', avatarUrl: '' };//用户信息
 	public static gold = 0;//能量果
 	public static cats = [
 		{ id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 1, 2], des: '第一只拥有的精灵，洁白无一物', music: '《水晶》' },
@@ -68,7 +68,7 @@ class userDataMaster {
 	public static dayTry = '';//上次试玩的日期
 	public static dayVideoEnergy = { day: '', num: 0 };//每日通过看视频/分享获得能量
 	public static loginCallback = null;//弹窗登录成功的回调
-	public static degree = 0;//当前难度阶段
+	public static degree = 10;//当前难度阶段
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -132,6 +132,9 @@ class userDataMaster {
 						if (info.dayVideoEnergy) {
 							userDataMaster.dayVideoEnergy = info.dayVideoEnergy;
 						}
+						// if (info.degree) {
+						// 	userDataMaster.degree = info.degree;
+						// }
 					}
 				}
 			})
@@ -261,6 +264,7 @@ class userDataMaster {
 	public static async updateUser(res: any = null) {
 		let userInfo = res.userInfo;
 		userDataMaster.myInfo.nickName = userInfo.nickName;
+		userDataMaster.myInfo.avatarUrl = userInfo.avatarUrl;
 		let params: any = {
 			uid: userDataMaster.getMyInfo.uid,
 			nickName: userInfo.nickName,

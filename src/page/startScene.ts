@@ -14,6 +14,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public tryTip: eui.Image;
 	public energyAddGroup: eui.Group;
 	public startBtn: eui.Image;
+	public degreeText: eui.Label;
 	public houseBtn: eui.Image;
 	public travelBtn: eui.Image;
 	public rankBtn: eui.Image;
@@ -23,6 +24,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 	public shareTip: eui.Image;
 	public energyTip: eui.Image;
 	public touchRect: eui.Rect;
+
 
 
 	public tryIndex = -1;//今日试玩index
@@ -72,6 +74,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 		if (match) {
 			that.collection.y = 80;
 		}
+		that.startBtn.filters=[CallbackMaster.glowFilter()]
 		setTimeout(function () {
 
 			//今天试玩
@@ -85,7 +88,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 			}
 			that.tryIndex = tryList[Math.floor(Math.random() * tryList.length)];
 			that.tryImg.texture = RES.getRes('img_elf_' + that.tryIndex + '2_png');
-			that.tryName.texture = RES.getRes('text_list_json.img_name_0' + (that.tryIndex + 1) + '_png');
+			that.tryName.texture = RES.getRes('img_name_0' + (that.tryIndex + 1) + '_png');
 			egret.Tween.get(that.tryBtn, { loop: true }).to({ rotation: 20 }, 100).to({ rotation: -20 }, 200).to({ rotation: 0 }, 100).wait(1000);
 
 			that.goldText.text = '' + userDataMaster.gold;
@@ -99,7 +102,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 			} else {
 				egret.Tween.get(that.goldImg, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 500).to({ scaleX: 1, scaleY: 1 }, 600)
 			}
-
+			that.degreeText.text = userDataMaster.degree + '阶';
 		}, 500);
 		egret.Tween.get(that.circle_light, { loop: true }).to({ scaleX: 0.5, scaleY: 0.5 }, 800).to({ scaleX: 1, scaleY: 1 }, 1500);
 		// if (this.trying) {

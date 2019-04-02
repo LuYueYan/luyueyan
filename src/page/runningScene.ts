@@ -9,6 +9,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	public perfectGroup: eui.Group;
 	public perfectText: eui.Label;
 	public startTips: eui.Group;
+	public degreeText: eui.Label;
 
 
 	public world: p2.World;
@@ -104,14 +105,20 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.worldSpeed = this.speed.still;
 		that.degree = userDataMaster.degree;
 		if (that.rebornNum == 0) {
-			new randomTheme(that.degree).init(() => {
+			new randomTheme().init(() => {
 				that.addChildAt(new colorBgCom(that.currentTheme), 0);
 				that.themeArr = randomTheme.getInstance().degreeThemeArr;
+				that.speed.common = randomTheme.getInstance().degreeItem.speed;
+
 			});
 		} else {
 			that.addChildAt(new colorBgCom(that.currentTheme), 0);
 			that.themeArr = randomTheme.getInstance().degreeThemeArr;
+			that.speed.common = randomTheme.getInstance().degreeItem.speed;
 		}
+		// console.log(that.degree, randomTheme.getInstance().degreeItem);
+		// console.log(that.themeArr)
+		this.degreeText.text = '当前难度为' + that.degree + '阶';
 		this.scoreText.text = this.score + '';
 		this.adaptation = (this.stage.stageHeight - 1334) / this.factor;
 		let ball = userDataMaster.cats[this.currentBall];
@@ -317,7 +324,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 
 					that.perfectGroup.scaleX = 2.5, that.perfectGroup.scaleY = 2.5;
 					that.perfectGroup.alpha = 1;
-					that.perfectGif.gotoAndPlay(0, 1)
+					that.perfectGif.gotoAndPlay(0, 1);
 					that.perfectText.text = 'Combo x' + that.perfectNum;
 					that.score += 100;
 					that.addChildAt(that.perfectGroup, 2);
@@ -363,22 +370,27 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			let judgeHitNum = that.hitNum == degreeInfo.num;
 			if (judgeHitNum) {
 				that.hitNum = 0;
-				if (that.currentTheme < that.themeArr.length) {
-					that.currentTheme++;
+				if (that.degree < 10) {
+					if (that.currentTheme < that.themeArr.length) {
+						that.currentTheme++;
+					} else {
+						//通关成功
+						that.successOver();
+						return;
+					}
+					that.showProcess();
 				} else {
-					//通关成功
-					that.successOver();
-					return;
+					if (that.currentTheme < that.themeArr.length) {
+						that.currentTheme++;
+					} else {
+						that.currentTheme = 1;
+					}
 				}
-				// that.currentTheme < that.themeArr.length ? that.currentTheme++ : that.currentTheme = 1;
+
 				currentTheme = that.themeArr[that.currentTheme - 1];
 
-				// if (that.currentTheme % 2 == 1) {
-				// 	that.worldSpeed = this.speed.common - Math.floor(that.currentTheme / 2) * 80;
-				// }
 				//场景切换
-				colorBgCom.getInstance().changeTheme(that.currentTheme)
-
+				colorBgCom.getInstance().changeTheme(that.currentTheme);
 				let current = currentTheme.name;
 				for (let i = 0; i < that.flowerArr.length; i++) {
 					that.flowerArr[i].boxBody.shapes[0].width = currentTheme.width / this.factor;
@@ -399,23 +411,26 @@ class runningScene extends eui.Component implements eui.UIComponent {
 
 			that.flowerArr[0].boxBody.displays[0].texture = RES.getRes(currentTheme.name + '1_png');
 			egret.Tween.get(that.flowerArr[0].boxBody.displays[1]).to({ height: 313 }, 500);
-			setTimeout(function () {
-				let type = r.type == 2 ? 1 : 2;
-				let building;
-				if (that.buildingLoop[currentTheme.name].length > 2) {
-					building = that.buildingLoop[currentTheme.name].shift();
-					building.unpdateBuilding(type);
-				} else {
-					building = new buildingCom(type, that.adaptation);
-					building.init(currentTheme);
-				}
-				that.world.addBody(building.boxBody);
+			if (!(that.currentTheme == that.themeArr.length && that.hitNum >= degreeInfo.num - 4)) {
 				setTimeout(function () {
-					that.flowerGroup.addChildAt(building.boxBody.displays[0], 0);
-					that.flowerGroup.addChildAt(building.boxBody.displays[1], 1);
-				}, 100);
-				that.flowerArr.push(building);
-			}, 50);
+					let type = r.type == 2 ? 1 : 2;
+					let building;
+					if (that.buildingLoop[currentTheme.name].length > 2) {
+						building = that.buildingLoop[currentTheme.name].shift();
+						building.unpdateBuilding(type);
+					} else {
+						building = new buildingCom(type, that.adaptation);
+						building.init(currentTheme);
+					}
+					that.world.addBody(building.boxBody);
+					setTimeout(function () {
+						that.flowerGroup.addChildAt(building.boxBody.displays[0], 0);
+						that.flowerGroup.addChildAt(building.boxBody.displays[1], 1);
+					}, 100);
+					that.flowerArr.push(building);
+				}, 50);
+			}
+
 		} else {
 			//是否撞墙
 			let hitright = that.ceilArr[0].overlaps(that.bee);
@@ -445,32 +460,99 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			}
 		}
 	}
+	public showProcess() {
+		//显示当前进度
+		let that = this;
+		let text = Math.floor((that.currentTheme - 1) / that.themeArr.length * 100) + '%';
+		let pro = new eui.Label(text);
+		pro.x = 375;
+		pro.y = 1150;
+		pro.bold = true;
+		pro.size = 80;
+		pro.anchorOffsetX = pro.width / 2;
+		pro.anchorOffsetY = pro.height / 2;
+		pro.scaleX = 2;
+		pro.scaleY = 2;
+		that.addChild(pro);
+		egret.Tween.get(pro).to({ scaleX: 1, scaleY: 1 }, 500).wait(2000).to({ alpha: 0 }, 2000).call(() => {
+			that.removeChild(pro);
+		})
+
+	}
 	public successOver() {
+		let that = this;
 		userDataMaster.degree++;
 		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
 		soundMaster.stopSongMusic();
 		let parent = this.parent;
-		// let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
-		parent.addChild(new gameOver(this.score, this.currentBall, this.energy,this.energyAdd));
-		parent.removeChild(this);
+		// parent.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, 1));
+		// parent.removeChild(this);
+		this.bee.gravityScale = 0;
+		this.bee.velocity = [0, 0];
+		this.bee.angle = 0;
+		for (let x = 0, len = this.removeArr.length; x < len; x++) {
+			if (this.removeArr[x] && this.removeArr[x].boxBody.displays) {
+				let y = this.removeArr[x].boxBody.displays[0].y;
+				egret.Tween.get(this.removeArr[x].boxBody.displays[0]).to({ y: y + 1500 }, 1000);
+				let y1 = this.removeArr[x].boxBody.displays[1].y;
+				egret.Tween.get(this.removeArr[x].boxBody.displays[1]).to({ y: y1 + 1500 }, 1000);
 
+			}
+		}
+		egret.Tween.get(this.bee.displays[0])
+			.to({ scaleX: 2, scaleY: 2, x: 375, y: 350 }, 2000)
+			.call(() => {
+				that.addChild(new grayBg());
+				that.addChild(that.bee.displays[0]);
+				let through = movieMaster.getGif('through');
+				through.y = 100;
+				that.addChild(through);
+				through.gotoAndPlay(0, -1);
+
+				let text = new eui.Label(' 恭喜通过 第' + this.degree + '阶');
+				text.size = 60;
+				text.bold = true;
+				text.width = 280;
+				text.lineSpacing = 10;
+				text.textAlign = 'center';
+				text.x = (750 - text.width) / 2;
+				text.y = 538;
+				that.addChild(text);
+				setTimeout(function () {
+					let texture = RES.getRes('btn_know_png');
+					let btn = new eui.Image(texture);
+					btn.y = 744;
+					btn.x = (750 - 250) / 2;
+					btn.touchEnabled = true;
+					that.addChild(btn);
+					that.addEventListener(egret.TouchEvent.TOUCH_TAP, callback, this);
+					function callback() {
+						that.removeEventListener(egret.TouchEvent.TOUCH_TAP, callback, this);
+						through.stop();
+						parent.addChild(new gameOver(that.score, that.currentBall, that.energy, that.energyAdd, 1));
+						parent.removeChild(that);
+					}
+				}, 1000);
+			});
 	}
 	public gameOver() {
 		//died
 		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
 		soundMaster.stopSongMusic();
+		let pro = randomTheme.getInstance().getProccess(this.currentTheme, this.hitNum);
 		if (this.rebornNum == 0) {
 			//可复活
 			this.rebornNum++;
-			let born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd);
+			let born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd, pro);
 			this.addChild(born);
 			born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this)
 		} else {
 			let parent = this.parent;
 			// let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
-			parent.addChild(new gameOver(this.score, this.currentBall,this.energy,this.energyAdd));
+
+			parent.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, pro));
 			parent.removeChild(this);
 		}
 	}

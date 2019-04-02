@@ -36,3 +36,4 @@ var travelItem = (function (_super) {
 }(eui.ItemRenderer));
 __reflect(travelItem.prototype, "travelItem", ["eui.UIComponent", "egret.DisplayObject"]);
 window['travelItem'] = travelItem;
+//# sourceMappingURL=travelItem.js.map

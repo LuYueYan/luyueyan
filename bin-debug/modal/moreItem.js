@@ -50,3 +50,4 @@ var moreItem = (function (_super) {
 }(eui.ItemRenderer));
 __reflect(moreItem.prototype, "moreItem", ["eui.UIComponent", "egret.DisplayObject"]);
 window['moreItem'] = moreItem;
+//# sourceMappingURL=moreItem.js.map

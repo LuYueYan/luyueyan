@@ -6,7 +6,7 @@ class CallbackMaster {
 	public static hasChecked: boolean = false;
 
 	public static saveShareSuc = null;//保存上次分享的回调
-	public static shareFailText='分享到不同的群才能获得奖励哦~';//分享失败的弹窗文案
+	public static shareFailText = '分享到不同的群才能获得奖励哦~';//分享失败的弹窗文案
 	public constructor() {
 	}
 	public static init() {
@@ -24,8 +24,8 @@ class CallbackMaster {
 					//能量分享
 					userDataMaster.sourceEnergy.uid = option.query.suid || option.query.uid;
 					userDataMaster.sourceEnergy.day = option.query.day;
-					if(Main.scene&&Main.scene.getChildAt(0)){
-						Main.scene.getChildAt(0).addChild(new getEnergyModal(userDataMaster.sourceEnergy.uid,userDataMaster.sourceEnergy.day));
+					if (Main.scene && Main.scene.getChildAt(0)) {
+						Main.scene.getChildAt(0).addChild(new getEnergyModal(userDataMaster.sourceEnergy.uid, userDataMaster.sourceEnergy.day));
 					}
 				}
 			}
@@ -34,7 +34,7 @@ class CallbackMaster {
 				//超过三秒，算分享成功
 				CallbackMaster.shareSuc && CallbackMaster.shareSuc();
 				CallbackMaster.saveShareSuc = null;
-				CallbackMaster.shareFailText='分享到不同的群才能获得奖励哦~';
+				CallbackMaster.shareFailText = '分享到不同的群才能获得奖励哦~';
 			} else {
 				CallbackMaster.saveShareSuc = CallbackMaster.shareSuc;
 				//分享失败弹窗
@@ -45,8 +45,8 @@ class CallbackMaster {
 					success(res) {
 						if (res.confirm) {
 							CallbackMaster.openShare(CallbackMaster.saveShareSuc)
-						}else{
-							CallbackMaster.shareFailText='分享到不同的群才能获得奖励哦~';
+						} else {
+							CallbackMaster.shareFailText = '分享到不同的群才能获得奖励哦~';
 						}
 					}
 				}
@@ -66,7 +66,8 @@ class CallbackMaster {
 				dayEnergy: userDataMaster.dayEnergy,
 				dayTry: userDataMaster.dayTry,
 				travelList: userDataMaster.travelList,
-				dayVideoEnergy: userDataMaster.dayVideoEnergy
+				dayVideoEnergy: userDataMaster.dayVideoEnergy,
+				degree: userDataMaster.degree
 			};
 			let params = {
 				uid: userDataMaster.getMyInfo.uid,
@@ -94,7 +95,7 @@ class CallbackMaster {
 		},
 		{
 			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_3.jpg',
-			title:'给你采集了一大袋能量果，快来领一份吧~'
+			title: '给你采集了一大袋能量果，快来领一份吧~'
 		},
 	]
 	public static openShare(Callback: Function = null, judge = true, query = '', shareType = 0) {
@@ -102,13 +103,13 @@ class CallbackMaster {
 		// 好友助力
 		if (CallbackMaster.hasChecked) {
 			//如果审核通过了
-			let s=CallbackMaster.shareInfo[0];
+			let s = CallbackMaster.shareInfo[0];
 			if (shareType == 0) {
 				//默认随机分享
 				s = CallbackMaster.shareInfo[Math.floor(Math.random() * 2)];
 			} else {
-				s.imageUrl=CallbackMaster.shareInfo[2].imageUrl;
-				s.title=(userDataMaster.myInfo.nickName || '') +CallbackMaster.shareInfo[2].title;
+				s.imageUrl = CallbackMaster.shareInfo[2].imageUrl;
+				s.title = (userDataMaster.myInfo.nickName || '') + CallbackMaster.shareInfo[2].title;
 			}
 
 			let obj = {
@@ -143,5 +144,19 @@ class CallbackMaster {
 
 				}
 			})
+	}
+	public static glowFilter(color=0x6d3ec5,alpha=0.8,blurX=35,blurY=35) {
+		//发光滤镜
+		// var color: number = 0x33CCFF;        /// 光晕的颜色，十六进制，不包含透明度
+		// var alpha: number = 0.8;             /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
+		// var blurX: number = 35;              /// 水平模糊量。有效值为 0 到 255.0（浮点）
+		// var blurY: number = 35;              /// 垂直模糊量。有效值为 0 到 255.0（浮点）
+		var strength: number = 2;            /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
+		var quality: number = egret.BitmapFilterQuality.HIGH;        /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
+		var inner: boolean = false;            /// 指定发光是否为内侧发光，暂未实现
+		var knockout: boolean = false;            /// 指定对象是否具有挖空效果，暂未实现
+		var glowFilter: egret.GlowFilter = new egret.GlowFilter(color, alpha, blurX, blurY,
+			strength, quality, inner, knockout);
+		return glowFilter;
 	}
 }

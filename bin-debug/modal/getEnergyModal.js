@@ -130,3 +130,4 @@ var getEnergyModal = (function (_super) {
     return getEnergyModal;
 }(eui.Component));
 __reflect(getEnergyModal.prototype, "getEnergyModal", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=getEnergyModal.js.map

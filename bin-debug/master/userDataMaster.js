@@ -96,6 +96,9 @@ var userDataMaster = (function () {
                         if (info.dayVideoEnergy) {
                             userDataMaster.dayVideoEnergy = info.dayVideoEnergy;
                         }
+                        if (info.degree) {
+                            userDataMaster.degree = info.degree;
+                        }
                     }
                 }
             });
@@ -272,6 +275,7 @@ var userDataMaster = (function () {
             return __generator(this, function (_a) {
                 userInfo = res.userInfo;
                 userDataMaster.myInfo.nickName = userInfo.nickName;
+                userDataMaster.myInfo.avatarUrl = userInfo.avatarUrl;
                 params = {
                     uid: userDataMaster.getMyInfo.uid,
                     nickName: userInfo.nickName,
@@ -336,7 +340,7 @@ var userDataMaster = (function () {
         var day = date.getDate() > 9 ? (date.getDate()) + '' : '0' + date.getDate();
         return date.getFullYear() + '-' + month + '-' + day;
     };
-    userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: true, nickName: '' }; //用户信息
+    userDataMaster.myInfo = { uid: 0, openId: '', is_new_user: true, nickName: '', avatarUrl: '' }; //用户信息
     userDataMaster.gold = 0; //能量果
     userDataMaster.cats = [
         { id: 1, name: '白白球', state: true, process: 1000, target: 1000, belong: [0, 1, 2], des: '第一只拥有的精灵，洁白无一物', music: '《水晶》' },
@@ -401,3 +405,4 @@ var userDataMaster = (function () {
 }());
 __reflect(userDataMaster.prototype, "userDataMaster");
 window['userDataMaster'] = userDataMaster;
+//# sourceMappingURL=userDataMaster.js.map

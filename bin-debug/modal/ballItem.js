@@ -36,3 +36,4 @@ var ballItem = (function (_super) {
 }(eui.ItemRenderer));
 __reflect(ballItem.prototype, "ballItem", ["eui.UIComponent", "egret.DisplayObject"]);
 window['ballItem'] = ballItem;
+//# sourceMappingURL=ballItem.js.map

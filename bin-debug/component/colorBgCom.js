@@ -52,3 +52,4 @@ var colorBgCom = (function (_super) {
 }(eui.Component));
 __reflect(colorBgCom.prototype, "colorBgCom", ["eui.UIComponent", "egret.DisplayObject"]);
 window['colorBgCom'] = colorBgCom;
+//# sourceMappingURL=colorBgCom.js.map

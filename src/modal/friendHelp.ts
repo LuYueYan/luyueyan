@@ -139,6 +139,7 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 	}
 	public closeFun() {
 		let that = this;
+		this.fireBall.stop();
 		egret.Tween.get(this.body).to({ scaleX: 2, scaleY: 2, alpha: 0 }, 200).call(() => {
 			that.parent.removeChild(that);
 		});

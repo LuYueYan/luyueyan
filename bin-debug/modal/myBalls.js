@@ -296,7 +296,6 @@ var myBalls = (function (_super) {
             that.currentBall = i;
             that.nameImg.texture = RES.getRes('img_name_0' + (i + 1) + '_png');
             that.natureText.text = "球球属性：" + cat.des;
-            that.musicText.text = "音乐主题：" + cat.music;
             var travel = cat.belong;
             var travels = userDataMaster.travels;
             for (var n = 0; n < 3; n++) {
@@ -372,3 +371,4 @@ var myBalls = (function (_super) {
     return myBalls;
 }(eui.Component));
 __reflect(myBalls.prototype, "myBalls", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=myBalls.js.map

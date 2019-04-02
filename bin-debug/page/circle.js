@@ -123,3 +123,4 @@ var circle = (function (_super) {
     return circle;
 }(eui.Component));
 __reflect(circle.prototype, "circle", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=circle.js.map

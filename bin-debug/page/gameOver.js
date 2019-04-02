@@ -10,21 +10,41 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var gameOver = (function (_super) {
     __extends(gameOver, _super);
-    function gameOver(score, ballId, energy) {
+    function gameOver(score, ballId, energy, energyAdd, pro) {
         if (score === void 0) { score = 0; }
         if (ballId === void 0) { ballId = 0; }
         if (energy === void 0) { energy = 0; }
+        if (energyAdd === void 0) { energyAdd = 0; }
         var _this = _super.call(this) || this;
+        _this.multip = 1; //视频奖励多少倍
         _this.score = 0;
         _this.ballId = 0; //这局用的球类型
         _this.energy = 0; //本局获得的能量果数量
+        _this.energyAdd = 0; //能量果加成百分几
         _this.more_list = []; //推荐位列表v
         _this.terval = null; //定时器
         _this.more_index_0 = 0;
         _this.more_index_1 = 0;
+        _this.pro = 0; //本阶段进度
+        _this.touchPosition = [
+            { name: 'homeBtn', func: 'homeFun' },
+            { name: 'travelBtn', func: 'travelFun' },
+            { name: 'getEnergy', func: 'getEnergyFun' },
+            { name: 'doubleEnergy', func: 'doubleEnergyFun' },
+            { name: 'again', func: 'againFun' },
+            { name: 'shareBtn', func: 'shareFun' },
+            { name: 'openBall', func: 'openBallFun' }
+        ];
+        _this.haveGet = {
+            one: false,
+            double: false
+        }; //是否已领取奖励
+        // score--分数 ballId--精灵索引 energy--获得的能量果 energyAdd--能量果是否加成 pro--本阶段进度
         _this.score = score;
         _this.ballId = ballId;
-        _this.energy = energy;
+        _this.energy = parseInt(energy * (1 + energyAdd) + '');
+        _this.energyAdd = energyAdd;
+        _this.pro = pro;
         return _this;
     }
     gameOver.prototype.partAdded = function (partName, instance) {
@@ -42,13 +62,34 @@ var gameOver = (function (_super) {
     gameOver.prototype.init = function () {
         var that = this;
         soundMaster.stopSongMusic();
-        that.bgImg.height = that.stage.stageHeight;
         if (AdMaster.cacheBannerAd) {
             AdMaster.openBannerAd({ width: 700, height: 300 });
         }
         that.scoreText.text = that.score + '';
         userDataMaster.myGold += that.energy;
-        that.energyNum.text = 'x ' + that.energy;
+        var degree = userDataMaster.degree;
+        if (that.pro == 1) {
+            that.centerImg.texture = RES.getRes('img_bg_steps_01_png');
+            that.titleText.text = '完整通关';
+        }
+        else {
+            degree++;
+        }
+        that.degree_0.text = (degree - 1) + '阶';
+        that.degree_1.text = degree + '阶';
+        that.degree_2.text = (degree + 1) + '阶';
+        var w = 280 * that.pro;
+        that.headGroup.x = w;
+        that.head.source = userDataMaster.myInfo.avatarUrl;
+        that.head.mask = that.headMask;
+        that.proGroup.x = w;
+        that.proBar.width = w;
+        that.percentText.text = Math.floor(that.pro * 100) + '%';
+        that.energyNum.text = '' + that.energy;
+        that.doubleNum.text = that.energy + ' x ?';
+        // if (that.energyAdd != 0) {
+        // 	that.energyAddImg.visible = true;
+        // }
         var travel = userDataMaster.MyCats[that.ballId].belong;
         var ran = Math.floor(Math.random() * travel.length);
         var newArr = [];
@@ -59,23 +100,19 @@ var gameOver = (function (_super) {
         }
         var item_0 = userDataMaster.travels[newArr[0]];
         var item_1 = userDataMaster.travels[newArr[1]];
-        that.travel_img_0.texture = RES.getRes('img_imprinting_a' + (item_0.id + 1) + '_png');
-        that.travel_name_0.text = item_0.name;
-        that.travel_img_1.texture = RES.getRes('img_imprinting_a' + (item_1.id + 1) + '_png');
-        that.travel_name_1.text = item_1.name;
         if (item_0.state == 0) {
             //初次获得
             item_0.state = 2;
-            that.travel_new_0.visible = true;
+            that.newTip.visible = true;
             userDataMaster.setTravel(newArr[0], item_0);
             userDataMaster.travelList.push(newArr[0]);
         }
         if (item_1.state == 0) {
             //初次获得
             item_1.state = 2;
-            that.travel_new_1.visible = true;
-            userDataMaster.travelList.push(newArr[1]);
+            that.newTip.visible = true;
             userDataMaster.setTravel(newArr[1], item_1);
+            userDataMaster.travelList.push(newArr[1]);
         }
         if (userDataMaster.recommand && userDataMaster.recommand['2'] && userDataMaster.recommand['2'].games) {
             that.more_list = userDataMaster.recommand['2'].games;
@@ -120,12 +157,22 @@ var gameOver = (function (_super) {
         }
         egret.Tween.get(that.getEnergy, { loop: true }).to({ scaleX: 1.1, scaleY: 1.1 }, 800).to({ scaleX: 1, scaleY: 1 }, 1000);
         this.updateScore();
-        this.again.addEventListener(egret.TouchEvent.TOUCH_TAP, this.againFun, this);
-        this.shareBtn_0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
-        this.shareBtn_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shareFun, this);
-        this.getEnergy.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
-        this.openBall.addEventListener(egret.TouchEvent.TOUCH_TAP, this.ballFun, this);
-        this.homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.homeFun, this);
+        that.touchRect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
+    };
+    gameOver.prototype.touchFun = function (e) {
+        var that = this;
+        var tx = e.stageX;
+        var ty = e.stageY;
+        var arr = that.touchPosition;
+        for (var i = 0, len = arr.length; i < len; i++) {
+            var target = that[arr[i].name];
+            var dx = tx - (target.x - target.anchorOffsetX);
+            var dy = ty - (target.y - target.anchorOffsetY);
+            if (dx >= 0 && dx <= target.width && dy >= 0 && dy <= target.height) {
+                that[arr[i].func] && that[arr[i].func]();
+                return;
+            }
+        }
     };
     gameOver.prototype.jumpFun = function (index) {
         var that = this;
@@ -167,13 +214,25 @@ var gameOver = (function (_super) {
         });
     };
     gameOver.prototype.homeFun = function () {
+        this.touchRect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         this.terval && clearInterval(this.terval);
         var parent = this.parent;
         parent.removeChild(this);
         parent.addChild(new startScene());
     };
-    gameOver.prototype.getFun = function () {
+    gameOver.prototype.getEnergyFun = function () {
         var that = this;
+        if (that.haveGet.one) {
+            return;
+        }
+        that.addChild(new getSuccess(-1, '' + that.energy));
+        that.haveGet.one = true;
+    };
+    gameOver.prototype.doubleEnergyFun = function () {
+        var that = this;
+        if (that.haveGet.double) {
+            return;
+        }
         AdMaster.useVideo(function () {
             suc();
         }, function () {
@@ -182,23 +241,26 @@ var gameOver = (function (_super) {
             });
         });
         function suc() {
-            userDataMaster.myGold += that.energy;
-            that.getEnergy.texture = RES.getRes('btn_receive_04_png');
+            that.multip = 2 + Math.floor(Math.random() * 3); //2-4倍
+            userDataMaster.myGold += that.energy * (that.multip - 1);
+            that.doubleNum.text = that.energy + ' x ' + that.multip;
             egret.Tween.removeTweens(that.getEnergy);
-            that.getEnergy.removeEventListener(egret.TouchEvent.TOUCH_TAP, that.getFun, that);
             that.addChild(new getSuccess(-1, 'x ' + that.energy * 2));
+            that.haveGet.double = true;
         }
     };
     gameOver.prototype.shareFun = function () {
         CallbackMaster.openShare(null, false);
     };
     gameOver.prototype.againFun = function () {
+        this.touchRect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         this.terval && clearInterval(this.terval);
         var parent = this.parent;
         parent.removeChild(this);
         parent.addChild(new runningScene());
     };
-    gameOver.prototype.ballFun = function () {
+    gameOver.prototype.openBallFun = function () {
+        this.touchRect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
         this.terval && clearInterval(this.terval);
         var parent = this.parent;
         parent.removeChild(this);
@@ -209,3 +271,4 @@ var gameOver = (function (_super) {
     return gameOver;
 }(eui.Component));
 __reflect(gameOver.prototype, "gameOver", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=gameOver.js.map
