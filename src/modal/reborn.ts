@@ -1,9 +1,12 @@
 class reborn extends eui.Component implements eui.UIComponent {
 	public bgImg: eui.Image;
 	public titleText: eui.Label;
+	public tips: eui.Group;
 	public degreeText: eui.Label;
+	public infoGroup: eui.Group;
 	public proBar: eui.Rect;
 	public centerImg: eui.Image;
+	public rightImg: eui.Image;
 	public degree_0: eui.Label;
 	public degree_1: eui.Label;
 	public degree_2: eui.Label;
@@ -12,10 +15,6 @@ class reborn extends eui.Component implements eui.UIComponent {
 	public timing: eui.Image;
 	public rebornBtn: eui.Image;
 	public ignoreBtn: eui.Label;
-	public rightImg: eui.Image;
-
-
-
 
 
 	public score = 0;
@@ -56,9 +55,15 @@ class reborn extends eui.Component implements eui.UIComponent {
 			that.degree_2.visible = false;
 		}
 		if (degree == 11) {
-			that.centerImg.visible = false;
-			that.degree_1.visible = false;
-			w = 560 * that.pro;
+			that.removeChild(that.infoGroup);
+			that.removeChild(that.tips);
+			let text=new eui.Label(this.score+'分');
+			text.size=80;
+			text.width=750;
+			text.bold=true;
+			text.textAlign='center';
+			text.y=250;
+			this.addChild(text);
 		}
 		that.degree_0.text = (degree - 1) + '阶';
 		that.degree_1.text = degree + '阶';

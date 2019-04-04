@@ -68,7 +68,7 @@ class userDataMaster {
 	public static dayTry = '';//上次试玩的日期
 	public static dayVideoEnergy = { day: '', num: 0 };//每日通过看视频/分享获得能量
 	public static loginCallback = null;//弹窗登录成功的回调
-	public static degree = 10;//当前难度阶段
+	public static degree =0;//当前难度阶段默认0
 	public constructor() {
 	}
 	public static shared: userDataMaster;
@@ -132,9 +132,9 @@ class userDataMaster {
 						if (info.dayVideoEnergy) {
 							userDataMaster.dayVideoEnergy = info.dayVideoEnergy;
 						}
-						// if (info.degree) {
-						// 	userDataMaster.degree = info.degree;
-						// }
+						if (info.degree) {
+							userDataMaster.degree = info.degree;
+						}
 					}
 				}
 			})

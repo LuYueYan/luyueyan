@@ -195,7 +195,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		})
 	}
 	public startFun() {
-		soundMaster.playSongMusic(this.degree);
+		soundMaster.playSongMusic(this.degree, this.rebornNum);
 		this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.startFun, this);
 		this.removeChild(this.startImg);
 		this.removeChild(this.startTips);
@@ -256,7 +256,8 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			this.gameOver();
 			return;
 		}
-		if (this.guide && (this.guideProcess % 2 == 1) && that.flowerArr[0].type == 2 && Math.abs(this.bee.position[0] - this.flowerArr[0].boxBody.position[0]) < 1) {
+		let c=that.flowerArr[0].boxBody.displays[0].x + 30 >= that.bee.displays[0].x && that.flowerArr[0].boxBody.displays[0].x - 30 <= that.bee.displays[0].x;
+		if (this.guide && (this.guideProcess % 2 == 1) && that.flowerArr[0].type == 2 && c) {
 			//第二次引导
 			this.addChild(this.guide);
 			this.guide.process_3.visible = false;
@@ -268,7 +269,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 			this.worldSpeed = this.speed.still;
 			this.guideProcess++;//第二/四步引导结束
 		}
-		if (this.guide && (this.guideProcess % 2 == 0) && that.flowerArr[0].type == 1 && Math.abs(this.bee.position[0] - this.flowerArr[0].boxBody.position[0]) < 1) {
+		if (this.guide && (this.guideProcess % 2 == 0) && that.flowerArr[0].type == 1 &&c) {
 			//第三次引导
 			this.addChild(this.guide);
 			this.guide.process_2.visible = false;
@@ -481,10 +482,10 @@ class runningScene extends eui.Component implements eui.UIComponent {
 	}
 	public successOver() {
 		let that = this;
-		userDataMaster.degree++;
+		console.log(this.degree, egret.getTimer())
 		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
-		soundMaster.stopSongMusic();
+
 		let parent = this.parent;
 		// parent.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, 1));
 		// parent.removeChild(this);
@@ -520,6 +521,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 				text.y = 538;
 				that.addChild(text);
 				setTimeout(function () {
+					soundMaster.stopSongMusic();
 					let texture = RES.getRes('btn_know_png');
 					let btn = new eui.Image(texture);
 					btn.y = 744;
@@ -540,17 +542,17 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		//died
 		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 		this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchFun, this);
-		soundMaster.stopSongMusic();
 		let pro = randomTheme.getInstance().getProccess(this.currentTheme, this.hitNum);
 		if (this.rebornNum == 0) {
 			//可复活
+			soundMaster.stopSongMusic(true);
 			this.rebornNum++;
 			let born = new reborn(this.score, this.currentBall, this.energy, this.energyAdd, pro);
 			this.addChild(born);
 			born.rebornBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.judgeReborn, this)
 		} else {
 			let parent = this.parent;
-			// let energy = parseInt(this.energy * (1 + this.energyAdd) + '');
+			soundMaster.stopSongMusic();
 
 			parent.addChild(new gameOver(this.score, this.currentBall, this.energy, this.energyAdd, pro));
 			parent.removeChild(this);
@@ -589,6 +591,7 @@ class runningScene extends eui.Component implements eui.UIComponent {
 		this.bee.angle = 0;
 		this.bee.angularVelocity = 0;
 		if (this.guide && this.guide.parent) {
+			
 			this.guide.process_3.visible = false;
 			this.guide['process_' + this.guideProcess].visible = false;
 			this.guide.parent.removeChild(this.guide);

@@ -3,10 +3,12 @@
 	<w:Config id="16928b7ac6a" ></w:Config>
 	<e:Image id="bgImg" source="img_bg_revival_jpg" height="1334"/>
 	<e:Label id="titleText" text="一阶试炼" y="120" size="40" fontFamily="Microsoft YaHei" horizontalCenter="0" bold="true"/>
-	<e:Rect width="400" height="50" y="194" ellipseWidth="60" fillAlpha="0.2" horizontalCenter="0"/>
-	<e:Label text="再坚持一下就能升到        啦" y="207.33" fontFamily="Microsoft YaHei" size="24" textColor="0xab9dff" horizontalCenter="0.5"/>
-	<e:Label id="degreeText" text="2阶" x="437.05" y="207.34" width="70" textAlign="center" textColor="0xfff600" fontFamily="Microsoft YaHei" size="24"/>
-	<e:Group width="620" height="96" y="283.32" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" cacheAsBitmap="true">
+	<e:Group id="tips" x="175" y="194">
+		<e:Rect width="400" height="50" y="0" ellipseWidth="60" fillAlpha="0.2" x="0"/>
+		<e:Label text="再坚持一下就能升到        啦" y="13.33" fontFamily="Microsoft YaHei" size="24" textColor="0xab9dff" x="52"/>
+		<e:Label id="degreeText" text="2阶" x="262.05" y="13.340000000000003" width="70" textAlign="center" textColor="0xfff600" fontFamily="Microsoft YaHei" size="24" scaleX="1" scaleY="1"/>
+	</e:Group>
+	<e:Group id="infoGroup" width="620" height="96" y="283.32" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" cacheAsBitmap="true">
 		<e:Image source="img_bg_schedule_png" horizontalCenter="0" verticalCenter="0"/>
 		<e:Rect id="proBar" width="560" height="14" verticalCenter="0" fillColor="0xFFFFFF" x="30"/>
 		<e:Image source="img_bg_steps_01_png" left="0" verticalCenter="0"/>

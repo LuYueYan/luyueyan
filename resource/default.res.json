@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,ball_travel_gif_png,ball_travel_gif_json,gif_light_png,img_bg_base_01_png,img_aperture_png,img_base_01_png,img_base_02_png,img_bg_game_png,img_bg_click_png,img_bg_home_02_png,img_bg_gift_png,img_bg_home_01_png,img_bg_revival_jpg,img_bg_imprinting_bottom_png,img_bg_imprinting_top_png,img_bg_play_try_png,img_bg_ranking_01_png,img_bg_ranking_02_png,img_castle_d2_png,img_castle_e1_png,img_castle_e2_png,img_castle_f1_png,img_castle_f2_png,img_castle_g1_png,img_bg_text_png,img_bg_time_png,img_bullet_frame_png,img_castle_a1_png,img_castle_a2_png,img_castle_b1_png,img_castle_b2_png,img_castle_c1_png,img_castle_c2_png,img_castle_d1_png,img_castle_j2_png,img_castle_g2_png,img_castle_h1_png,img_castle_h2_png,img_castle_i1_png,img_castle_i2_png,img_castle_j1_png,img_cloud_png,img_gift_a2_over_png,img_fruit_big_png,img_game_tittle_png,img_gift_a1_over_png,img_gift_big_png,img_gift_a3_over_png,img_light_png,img_text_11_png,img_text_07_png,btns_json,first_json,text_json,text2_json,img_elf_fire_png,img_elf_02_png,img_elf_12_png,img_elf_22_png,img_elf_32_png,img_elf_42_png,img_elf_52_png,img_elf_62_png,img_elf_72_png,img_elf_82_png,img_elf_a2_png,img_elf_b1_png,tryTip_png,lightning2_png,imprinting_black_json,imprinting_light_json,continue_bg_png,img_bg_schedule_png,glow_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,ball_travel_gif_png,ball_travel_gif_json,gif_light_png,img_bg_base_01_png,img_aperture_png,img_base_01_png,img_base_02_png,img_bg_game_png,img_bg_click_png,img_bg_home_02_png,img_bg_gift_png,img_bg_home_01_png,img_bg_revival_jpg,img_bg_imprinting_bottom_png,img_bg_imprinting_top_png,img_bg_play_try_png,img_bg_ranking_01_png,img_bg_ranking_02_png,img_castle_d2_png,img_castle_e1_png,img_castle_e2_png,img_castle_f1_png,img_castle_f2_png,img_castle_g1_png,img_bg_text_png,img_bg_time_png,img_bullet_frame_png,img_castle_a1_png,img_castle_a2_png,img_castle_b1_png,img_castle_b2_png,img_castle_c1_png,img_castle_c2_png,img_castle_d1_png,img_castle_j2_png,img_castle_g2_png,img_castle_h1_png,img_castle_h2_png,img_castle_i1_png,img_castle_i2_png,img_castle_j1_png,img_cloud_png,img_gift_a2_over_png,img_fruit_big_png,img_game_tittle_png,img_gift_a1_over_png,img_gift_big_png,img_gift_a3_over_png,img_light_png,img_text_11_png,img_text_07_png,btns_json,first_json,text_json,text2_json,img_elf_fire_png,img_elf_02_png,img_elf_12_png,img_elf_22_png,img_elf_32_png,img_elf_42_png,img_elf_52_png,img_elf_62_png,img_elf_72_png,img_elf_82_png,img_elf_a2_png,img_elf_b1_png,tryTip_png,lightning2_png,imprinting_black_json,imprinting_light_json,continue_bg_png,img_bg_schedule_png,glow_png,img_hight_png",
 			"name": "preload"
 		},
 		{
@@ -526,6 +526,11 @@
 			"name": "glow_png",
 			"type": "image",
 			"url": "assets/Aimages/glow.png"
+		},
+		{
+			"name": "img_hight_png",
+			"type": "image",
+			"url": "assets/Aimages/img_hight.png"
 		}
 	]
 }

@@ -4,7 +4,9 @@ class rankItem extends eui.ItemRenderer implements eui.UIComponent {
 	public headimgMask: eui.Rect;
 	public headimg: eui.Image;
 	public nickName: eui.Label;
+	public level: eui.Label;
 	public score: eui.Label;
+
 
 
 
@@ -27,6 +29,7 @@ class rankItem extends eui.ItemRenderer implements eui.UIComponent {
 		}
 		this.index.text = this.data.rank + '';
 		this.headimg.source = this.data.avatarUrl;
+		this.level.text = this.data.level + '阶';
 		this.score.text = this.data.score;
 		if (this.data.nickName.length > 5) {
 			this.data.nickName = this.data.nickName.slice(0, 5) + "…";
@@ -39,6 +42,7 @@ class rankItem extends eui.ItemRenderer implements eui.UIComponent {
 		} else {
 			this.bestHat.visible = false;
 		}
+
 		// if (this.data.uid != userData.getInstance().getMyInfo.uid) {
 		// 	this.bgImg.texture = RES.getRes('bg_friend_png');
 		// 	this.score.textColor = 0x5A5BE9;

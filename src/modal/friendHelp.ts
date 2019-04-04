@@ -55,11 +55,11 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 
 		this.getBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getFun, this);
 		this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closeFun, this);
-		if (userDataMaster.cats[8].state) {
+		if (userDataMaster.cats[4].state) {
 			//已解锁
 			that.getBtn.texture = RES.getRes('btn_have_unlock_png');
 		}
-		if (!userDataMaster.cats[8].state && that.list.length >= 6) {
+		if (!userDataMaster.cats[4].state && that.list.length >= 6) {
 			//可解锁
 			that.getBtn.texture = RES.getRes('btn_unlocking_png');
 		}
@@ -115,11 +115,11 @@ class friendHelp extends eui.Component implements eui.UIComponent {
 		let that = this;
 		if (that.list.length >= 6) {
 			//邀请完成 --解锁
-			if (!userDataMaster.cats[8].state) {
+			if (!userDataMaster.cats[4].state) {
 				//未解锁
-				let cat = userDataMaster.cats[8];
+				let cat = userDataMaster.cats[4];
 				cat.state = true;
-				userDataMaster.setCat(8, cat);
+				userDataMaster.setCat(4, cat);
 				that.getBtn.texture = RES.getRes('btn_have_unlock_png');
 				that.addChild(new getSuccess(4, '火火球'));
 			} else {

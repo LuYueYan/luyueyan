@@ -30,6 +30,7 @@ class moreScroller extends eui.Component implements eui.UIComponent {
 	}
 	public init() {
 		let that = this;
+		
 		if (userDataMaster.recommand && userDataMaster.recommand['1'] && userDataMaster.recommand['1'].games) {
 			let list = userDataMaster.recommand['1'].games;
 			that.sourceArr = new eui.ArrayCollection(list);

@@ -13,17 +13,17 @@ class randomTheme {
 	];
 	public scoreInit = 52;//初始单个分数
 	public degreeArr = [
-		{ degree: 0, scene: 2, num: 15, energy: 8, speed: 2000 },
-		{ degree: 1, scene: 3, num: 15, energy: 8, speed: 1700 },
-		{ degree: 2, scene: 4, num: 20, energy: 9, speed: 1500 },
-		{ degree: 3, scene: 5, num: 20, energy: 9, speed: 1200 },
-		{ degree: 4, scene: 6, num: 20, energy: 10, speed: 1000 },
-		{ degree: 5, scene: 7, num: 20, energy: 10, speed: 900 },
-		{ degree: 6, scene: 8, num: 20, energy: 11, speed: 800 },
-		{ degree: 7, scene: 9, num: 20, energy: 11, speed: 750 },
-		{ degree: 8, scene: 10, num: 20, energy: 13, speed: 700 },
-		{ degree: 9, scene: 10, num: 20, energy: 15, speed: 650 },
-		{ degree: 10, scene: 10, num: 20, energy: 20, speed: 650 }
+		{ degree: 0, scene: 2, num: 15, energy: 6, speed: 2000 },
+		{ degree: 1, scene: 3, num: 15, energy: 6, speed: 1700 },
+		{ degree: 2, scene: 4, num: 20, energy: 6, speed: 1500 },
+		{ degree: 3, scene: 5, num: 20, energy: 7, speed: 1200 },
+		{ degree: 4, scene: 6, num: 20, energy: 7, speed: 1000 },
+		{ degree: 5, scene: 7, num: 20, energy: 7, speed: 900 },
+		{ degree: 6, scene: 8, num: 20, energy: 8, speed: 800 },
+		{ degree: 7, scene: 9, num: 20, energy: 8, speed: 750 },
+		{ degree: 8, scene: 10, num: 20, energy: 8, speed: 700 },
+		{ degree: 9, scene: 10, num: 20, energy: 8, speed: 650 },
+		{ degree: 10, scene: 10, num: 20, energy: 8, speed: 650 }
 	];
 	public degreeThemeArr = [];//本阶段主题
 	public degree = 0;//阶段

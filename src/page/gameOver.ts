@@ -15,6 +15,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public again: eui.Image;
 	public shareBtn: eui.Image;
 	public openBall: eui.Button;
+	public processGroup: eui.Group;
 	public proBar: eui.Rect;
 	public centerImg: eui.Image;
 	public rightImg: eui.Image;
@@ -26,6 +27,8 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public headMask: eui.Rect;
 	public proGroup: eui.Group;
 	public percentText: eui.Label;
+	public topGroup: eui.Group;
+	public surpassText: eui.Label;
 	public touchRect: eui.Rect;
 	public group_0: eui.Group;
 	public mask_0: eui.Rect;
@@ -35,6 +38,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public mask_1: eui.Rect;
 	public more_1: eui.Image;
 	public text_1: eui.Label;
+
 
 
 
@@ -91,7 +95,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		that.scoreText.text = that.score + '';
 		userDataMaster.myGold += that.energy;
 		this.bgImg.height = this.stage.stageHeight;
-		let degree = userDataMaster.degree;
+		var degree = userDataMaster.degree + 1;
 		let w = 280 * that.pro;
 		if (that.pro == 1) {
 			that.centerImg.texture = RES.getRes('img_bg_steps_01_png');
@@ -102,21 +106,21 @@ class gameOver extends eui.Component implements eui.UIComponent {
 			that.through.y = 100;
 			that.addChild(that.through);
 			that.through.gotoAndPlay(0, -1);
-		} else {
-			degree++;
 		}
-
 		if (degree >= 10) {
 			that.rightImg.visible = false;
 			that.degree_2.visible = false;
 		}
 		if (degree == 11) {
-			userDataMaster.degree--;
 			w = 560 * that.pro;
 			that.degree_1.visible = false;
 			that.centerImg.visible = false;
 		}
-
+		if (userDataMaster.degree == 10) {
+			that.titleText.text = '游戏结束';
+			that.removeChild(that.processGroup);
+			that.topGroup.visible = true;
+		}
 		that.degree_0.text = (degree - 1) + '阶';
 		that.degree_1.text = degree + '阶';
 		that.degree_2.text = (degree + 1) + '阶';
@@ -242,16 +246,17 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	}
 	public updateScore() {
 		let that = this;
+		let level = userDataMaster.degree;
 		platform.openDataContext.postMessage({
 			type: "updateScore",
 			score: that.score,
+			level: level,
 			width: 80,
 			height: 80
 		});
-		if (this.score > userDataMaster.bestScore) {
-			userDataMaster.bestScore = this.score;
-		}
+
 		let params = {
+			level,
 			score: this.score,
 			uid: userDataMaster.getMyInfo.uid
 		}
@@ -261,13 +266,29 @@ class gameOver extends eui.Component implements eui.UIComponent {
 			function (suc) {
 				if (parseInt(suc.code) === 1 && suc.data) {
 					//分数提交成功
+					if (userDataMaster.degree == 10) {
+						//第10阶段
+						if (suc.data.transcend == 1) {
+							let texture = RES.getRes('img_hight_png');
+							let img = new eui.Image(texture);
+							img.x = 370, img.y = 205;
+							that.addChild(img);
+						}
+						if (suc.data.proportion >= 0) {
+							that.surpassText.text = suc.data.proportion + '%';
+						}
+					}
 				}
 			}
 		);
+
+		if (that.pro == 1) {
+			userDataMaster.degree++;
+		}
 	}
 	public homeFun() {
 		let parent = this.closeSceneFun();
-		let start=new startScene()
+		let start = new startScene()
 		parent.addChild(start);
 		start.addChild(new friendHelp());
 	}

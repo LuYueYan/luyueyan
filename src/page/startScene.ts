@@ -69,12 +69,11 @@ class startScene extends eui.Component implements eui.UIComponent {
 		that.moreCom = new moreScroller();
 		that.moreCom.y = 300;
 		that.addChild(that.moreCom);
-		that.moreCom.cacheAsBitmap = true;
 		let match = DeviceMaster.model.match(/iPhone ?X/ig);
 		if (match) {
 			that.collection.y = 80;
 		}
-		that.startBtn.filters=[CallbackMaster.glowFilter()]
+		// that.startBtn.filters=[CallbackMaster.glowFilter()]
 		setTimeout(function () {
 
 			//今天试玩
@@ -110,7 +109,7 @@ class startScene extends eui.Component implements eui.UIComponent {
 		// }
 		egret.Tween.get(that.collection, { loop: true }).to({ x: 230 }, 500).to({ x: 244 }, 300);
 		egret.Tween.get(that.startBtn, { loop: true }).to({ scaleX: 1.2, scaleY: 1.2 }, 1000).to({ scaleX: 1, scaleY: 1 }, 800);
-
+       
 		that.touchRect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchFun, this);
 
 		userDataMaster.myCollection.addEventListener(eui.CollectionEvent.COLLECTION_CHANGE, this.updateData, this);
