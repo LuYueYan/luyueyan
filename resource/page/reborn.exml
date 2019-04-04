@@ -10,7 +10,7 @@
 	</e:Group>
 	<e:Group id="infoGroup" width="620" height="96" y="283.32" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" cacheAsBitmap="true">
 		<e:Image source="img_bg_schedule_png" horizontalCenter="0" verticalCenter="0"/>
-		<e:Rect id="proBar" width="560" height="14" verticalCenter="0" fillColor="0xFFFFFF" x="30"/>
+		<e:Rect id="proBar" width="50" height="14" verticalCenter="0" fillColor="0xFFFFFF" x="30" ellipseWidth="20"/>
 		<e:Image source="img_bg_steps_01_png" left="0" verticalCenter="0"/>
 		<e:Image id="centerImg" source="img_bg_steps_02_png" horizontalCenter="0" verticalCenter="0" anchorOffsetX="30" anchorOffsetY="33"/>
 		<e:Image id="rightImg" source="img_bg_steps_02_png" right="0" verticalCenter="0"/>

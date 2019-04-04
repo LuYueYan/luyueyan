@@ -7,7 +7,7 @@
 	<e:Image id="travelBtn" source="btn_imprinting_png" x="151" y="46"/>
 	<e:Image id="newTip" source="img_label_02_png" x="226" y="36" visible="false"/>
 	<e:Image id="energyAddImg" source="img_label_03_png" x="146" y="-1" touchEnabled="false" visible="false"/>
-	<e:Group id="getEnergy" x="101" y="494">
+	<e:Group id="getEnergy" x="101" y="494" width="250" height="350">
 		<e:Image source="img_gift_a1_over_png" x="0"/>
 		<e:Label id="energyNum" text="50" fontFamily="Microsoft YaHei" size="34" horizontalCenter="0.5" y="284" textColor="0xffea00" bold="true"/>
 	</e:Group>
@@ -15,7 +15,8 @@
 		<e:Image source="img_gift_a2_over_png"/>
 		<e:Image id="light" source="gif_light_png" horizontalCenter="0" anchorOffsetX="125" anchorOffsetY="125" verticalCenter="0"/>
 		<e:Image id="gift" source="img_gift_a3_over_png" verticalCenter="0" horizontalCenter="0" anchorOffsetX="125" anchorOffsetY="125"/>
-		<e:Label id="doubleNum" text="50 x ?" fontFamily="Microsoft YaHei" size="34" textColor="0xFFEA00" y="284" horizontalCenter="0" bold="true"/>
+		<e:Label id="doubleNum" text="50 x " fontFamily="Microsoft YaHei" size="34" textColor="0xFFEA00" y="284" bold="true" width="125" textAlign="right" x="26.67"/>
+		<e:Label id="doubleTimes" text="?" fontFamily="Microsoft YaHei" size="50" textColor="0xFFEA00" y="271.9" horizontalCenter="47.5" bold="true"/>
 	</e:Group>
 	<e:Label id="titleText" text="继续加油" y="162" size="44" bold="true" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 	<e:Image id="again" source="btn_receive_07_png" x="61" y="945"/>

@@ -11,6 +11,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public light: eui.Image;
 	public gift: eui.Image;
 	public doubleNum: eui.Label;
+	public doubleTimes: eui.Label;
 	public titleText: eui.Label;
 	public again: eui.Image;
 	public shareBtn: eui.Image;
@@ -40,8 +41,6 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	public text_1: eui.Label;
 
 
-
-
 	public multip = 1;//视频奖励多少倍
 	public score = 0;
 	public ballId = 0;//这局用的球类型
@@ -61,10 +60,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		{ name: 'shareBtn', func: 'shareFun' },
 		{ name: 'openBall', func: 'openBallFun' }
 	];
-	public haveGet = {
-		one: false,
-		double: false
-	};//是否已领取奖励
+	public haveGet = false;//是否已领取奖励
 	public through;//烟花效果
 	public constructor(score = 0, ballId = 0, energy = 0, energyAdd = 0, pro) {
 		super();
@@ -137,7 +133,7 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		that.percentText.text = Math.floor(that.pro * 100) + '%';
 
 		that.energyNum.text = '' + that.energy;
-		that.doubleNum.text = that.energy + ' x ?';
+		that.doubleNum.text = that.energy + ' x';
 		// if (that.energyAdd != 0) {
 		// 	that.energyAddImg.visible = true;
 		// }
@@ -294,15 +290,18 @@ class gameOver extends eui.Component implements eui.UIComponent {
 	}
 	public getEnergyFun() {
 		let that = this;
-		if (that.haveGet.one) {
+		if (that.haveGet) {
 			return;
 		}
 		that.addChild(new getSuccess(-1, '' + that.energy));
-		that.haveGet.one = true;
+		that.haveGet = true;
+		that.removeChild(that.doubleEnergy);
+		that.getEnergy.x = (750 - that.getEnergy.width) / 2;
+		that.getEnergy.addChild(that.createGot());
 	}
 	public doubleEnergyFun() {
 		let that = this;
-		if (that.haveGet.double) {
+		if (that.haveGet) {
 			return;
 		}
 		AdMaster.useVideo(() => {
@@ -315,14 +314,22 @@ class gameOver extends eui.Component implements eui.UIComponent {
 		function suc() {
 			that.multip = 2 + Math.floor(Math.random() * 3);//2-4倍
 			userDataMaster.myGold += that.energy * (that.multip - 1);
-			that.doubleNum.text = that.energy + ' x ' + that.multip;
+			that.doubleTimes.text = '' + that.multip;
 			egret.Tween.removeTweens(that.light);
 			egret.Tween.removeTweens(that.gift);
 			that.gift.scaleX = 1;
 			that.gift.scaleY = 1;
 			that.addChild(new getSuccess(-1, 'x ' + that.energy * that.multip));
-			that.haveGet.double = true;
+			that.haveGet = true;
+			that.removeChild(that.getEnergy);
+			that.doubleEnergy.x = (750 - that.doubleEnergy.width) / 2;
+			that.doubleEnergy.addChild(that.createGot());
 		}
+	}
+	public createGot() {
+		let img = new eui.Image();
+		img.texture = RES.getRes('gameover_got_png');
+		return img;
 	}
 	public shareFun() {
 		CallbackMaster.openShare(null, false);
