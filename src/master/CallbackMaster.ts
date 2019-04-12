@@ -91,10 +91,10 @@ class CallbackMaster {
 		},
 		{
 			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_2.jpg',
-			title: '我就是宇宙第一酷，酷跑酷跑一起奔跑吧！'
+			title: '快来测试一下你的手速是几阶吧？听说单身10年的人手速才达到5阶'
 		},
 		{
-			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_3.jpg',
+			imageUrl: 'https://lixi.h5.app81.com/minigame/game_lixi/share_img/share_3.jpg?t=1',
 			title: '给你采集了一大袋能量果，快来领一份吧~'
 		},
 	]
